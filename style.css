@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+#items-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.item-card {
+    width: 180px;
+    border: 3px solid #000;
+    border-radius: 12px;
+    background-color: #fff;
+    text-align: center;
+    padding: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.item-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+.item-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.item-name {
+    font-size: 16px;
+    margin: 8px 0 4px;
+}
+
+.item-rarity {
+    margin: 0;
+}
+
+.item-desc {
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
+}
+
+.category-link {
+    display: inline-block;
+    margin: 10px;
+    padding: 8px 12px;
+    background-color: #3b82f6;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.category-link:hover {
+    background-color: #2563eb;
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fruits - Blox Fruits Wiki</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Fruits</h1>
+    <input type="text" id="search" placeholder="Search fruits...">
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="fruits.html">Fruits</a>
+    <a href="swords.html">Swords</a>
+    <a href="styles.html">Fighting Styles</a>
+    <a href="accessories.html">Accessories</a>
+    <a href="islands.html">Islands</a>
+    <a href="bosses.html">Bosses</a>
+    <a href="npcs.html">NPCs</a>
+  </nav>
+
+  <main>
+    <div id="fruits-list" class="grid"></div>
+  </main>
+
+  <script>
+    loadData("fruits", "fruits-list");
+  </script>
+</body>
+</html>
