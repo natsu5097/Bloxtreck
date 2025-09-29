@@ -366,4 +366,25 @@ footer a:hover{color:#ddd;}
   input[type="text"]{width:100px;}
   .header-controls{flex-direction:column;gap:.25rem;}
   .header-controls button,.header-controls input[type="text"]{width:100%;box-sizing:border-box;}
+} 
+@media(prefers-reduced-motion:reduce){
+  *, *::before, *::after{transition:none !important;animation:none !important;}
 }
+.category-card:focus-within,
+.item-card:focus-within {
+  outline: 3px solid var(--primary);
+  outline-offset: 4px;
+}
+
+.dark .search-results::-webkit-scrollbar {
+  width: 8px;
+}
+.dark .search-results::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 4px;
+}
+.dark .search-results::-webkit-scrollbar-track {
+  background-color: var(--card);
+}
+
+
