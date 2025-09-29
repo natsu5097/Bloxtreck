@@ -21,6 +21,7 @@ body {
   padding: 0;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 a{color:var(--primary);text-decoration:none}
@@ -34,15 +35,17 @@ header {
   color: #fff;
   padding: 1rem;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 header h1 {margin:0;font-size:2rem}
 
-header .header-controls{margin-top:.5rem;display:flex;gap:.5rem}
+.header-controls{display:flex;gap:.5rem;align-items:center}
 
-input#search-box{padding:.5rem;border-radius:6px;border:1px solid #ccc;width:250px}
+input[type="text"]{padding:.5rem;border-radius:6px;border:1px solid #ccc;width:250px}
 
 button{padding:.4rem .8rem;border-radius:6px;border:none;cursor:pointer;background-color:var(--primary);color:#fff;transition:background-color .15s}
 button:hover{background-color:var(--primary-strong)}
@@ -65,10 +68,14 @@ nav {
 nav a {
   color: #fff;
   font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
 }
 
-nav a:hover {
-  text-decoration: underline;
+nav a:hover, nav a.active {
+  background-color: rgba(255,255,255,0.2);
+  text-decoration: none;
 }
 
 /* ================= SEARCH RESULTS ================= */
@@ -80,11 +87,14 @@ nav a:hover {
   transform: translateX(-50%);
   width: 90%;
   max-width: 800px;
+  max-height: 500px;
+  overflow-y: auto;
   background-color: #ffffff;
   border: 1px solid #1a73e8;
   border-radius: 5px;
   padding: 1rem;
   z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .search-results.active {
@@ -96,12 +106,29 @@ nav a:hover {
   gap: 1rem;
   padding: 0.5rem;
   border-bottom: 1px solid #e0e7ff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.result-card:hover, .result-card.selected {
+  background-color: #f0f7ff;
 }
 
 .result-card img {
   width: 50px;
   height: 50px;
   object-fit: contain;
+  border-radius: 4px;
+}
+
+.result-card .meta h3 {
+  margin: 0 0 0.25rem 0;
+}
+
+.result-card .meta p {
+  margin: 0.1rem 0;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 /* ================= CATEGORY CARDS ================= */
@@ -129,6 +156,41 @@ nav a:hover {
 
 .category-card a{color:var(--text);font-weight:700;font-size:1.05rem;display:block}
 
+/* ================= ITEM CARDS ================= */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.item-card {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s, background-color 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+  background-color: var(--card-hover);
+}
+
+.item-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+.item-card h3 {
+  margin: 0.5rem 0;
+}
+
 /* ================= COLLAPSIBLES ================= */
 .collapsible-section{margin:1rem auto;max-width:90%;border:1px solid var(--primary);border-radius:6px;overflow:hidden}
 
@@ -138,14 +200,31 @@ nav a:hover {
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-weight: bold;
+  transition: background-color 0.2s;
 }
 
-.collapsible-header.active {
+.collapsible-header:hover, .collapsible-header.active {
   background-color: #145dbf;
 }
 
 .collapsible-content{display:none;background-color:#f0f7ff;padding:1rem}
 .collapsible-content.active{display:block}
+
+.item-image {
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: contain;
+  margin-right: 1rem;
+  float: left;
+}
+
+.item-meta {
+  overflow: hidden;
+}
+
+.item-meta p {
+  margin: 0.25rem 0;
+}
 
 table.dataTable{width:100%;border-collapse:collapse;margin-top:.5rem}
 table.dataTable th, table.dataTable td{border:1px solid var(--primary);padding:.5rem;text-align:left}
@@ -155,7 +234,23 @@ table.dataTable th{background-color:var(--primary);color:#fff}
 footer{text-align:center;padding:1rem;background-color:var(--header);color:#fff;margin-top:2rem}
 
 /* ================= SCROLL TOP ================= */
-.scroll-top-btn{position:fixed;bottom:2rem;right:2rem;display:none;z-index:999}
+.scroll-top-btn{
+  position:fixed;
+  bottom:2rem;
+  right:2rem;
+  display:none;
+  z-index:999;
+  padding: 0.75rem;
+  font-size: 1.2rem;
+}
+
+/* ================= LOADING SPINNER ================= */
+.loading-spinner {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
 
 /* ================= DARK MODE ================= */
 .dark {
@@ -164,7 +259,77 @@ footer{text-align:center;padding:1rem;background-color:var(--header);color:#fff;
   --primary: #1a73e8;
   --header: #0b1430;
   --card: #1a2e5b;
-  --card-hover: #0f1c3f;
+  --card-hover: #2a3d6b;
+  --muted: #a0aec0;
+}
+
+.dark input[type="text"] {
+  background-color: #1a2e5b;
+  color: #e6f0fa;
+  border-color: #2a3d6b;
+}
+
+.dark .search-results {
+  background-color: #1a2e5b;
+  color: #e6f0fa;
+  border-color: #2a3d6b;
+}
+
+.dark .result-card:hover, .dark .result-card.selected {
+  background-color: #2a3d6b;
 }
 
 .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+
+/* ================= RESPONSIVE DESIGN ================= */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .header-controls {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  input[type="text"] {
+    width: 200px;
+  }
+  
+  nav {
+    gap: 0.5rem;
+  }
+  
+  nav a {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .categories {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+  
+  .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .items-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  nav {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}

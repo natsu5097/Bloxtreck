@@ -1,54 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Fruits - Blox Fruits Wiki</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- ================= HEADER ================= -->
-  <header>
-    <h1>Blox Fruits Fan Wiki</h1>
-    <div class="header-controls">
-      <input type="text" id="search-box" placeholder="Search fruits...">
-      <button id="darkModeToggle"><span class="icon">🌙</span></button>
-    </div>
-  </header>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Fruits — Bloxtreck</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <h1>Fruits</h1>
+      <div class="header-controls">
+        <input id="search-box" type="search" placeholder="Filter fruits..." aria-label="Filter fruits">
+        <button id="darkToggle" aria-pressed="false" title="Toggle dark mode">🌙</button>
+      </div>
+    </header>
 
-  <!-- ================= NAVIGATION ================= -->
-  <nav>
-    <a href="../index.html">Home</a>
-    <a href="fruits.html" class="active">Fruits</a>
-    <a href="../swords.html">Swords</a>
-    <a href="../styles.html">Fighting Styles</a>
-    <a href="../accessories.html">Accessories</a>
-    <a href="../islands.html">Islands</a>
-    <a href="../bosses.html">Bosses</a>
-    <a href="../npcs.html">NPCs</a>
-  </nav>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="fruits.html" class="active">Fruits</a>
+      <a href="swords.html">Swords</a>
+      <a href="guns.html">Guns</a>
+      <a href="styles.html">Fighting Styles</a>
+    </nav>
 
-  <!-- ================= SEARCH RESULTS ================= -->
-  <div id="search-results" class="search-results"></div>
-  <button id="clear-search" style="display:none; position:fixed; top:100px; right:20px;">Clear Search</button>
+    <main>
+      <section class="categories" id="fruits-list" aria-label="Fruit list">
+        <div class="category-card"><h3><a href="fruits_pages/rocket.html">Rocket</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/spin.html">Spin</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/blade.html">Blade</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/spring.html">Spring</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/bomb.html">Bomb</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/smoke.html">Smoke</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/spike.html">Spike</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/flame.html">Flame</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/ice.html">Ice</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/sand.html">Sand</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/dark.html">Dark</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/eagle.html">Eagle</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/diamond.html">Diamond</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/light.html">Light</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/rubber.html">Rubber</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/ghost.html">Ghost</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/magma.html">Magma</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/quake.html">Quake</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/buddha.html">Buddha</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/love.html">Love</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/creation.html">Creation</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/spider.html">Spider</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/sound.html">Sound</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/phoenix.html">Phoenix</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/portal.html">Portal</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/lightning.html">Lightning</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/pain.html">Pain</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/blizzard.html">Blizzard</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/gravity.html">Gravity</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/t-rex.html">T-Rex</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/dough.html">Dough</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/shadow.html">Shadow</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/venom.html">Venom</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/control.html">Control</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/gas.html">Gas</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/spirit.html">Spirit</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/leopard.html">Leopard</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/yeti.html">Yeti</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/kitsune.html">Kitsune</a></h3></div>
+        <div class="category-card"><h3><a href="fruits_pages/dragon.html">Dragon</a></h3></div>
+      </section>
+    </main>
 
-  <!-- ================= MAIN CONTENT ================= -->
-  <main>
-    <h2>Fruits</h2>
-    <p>Click on a fruit to explore its page:</p>
+    <footer>
+      <small>© Bloxtreck — community wiki</small>
+    </footer>
 
-    <section id="fruits-sections" class="categories">
-      <!-- Fruits cards will be dynamically inserted by script.js -->
-    </section>
-  </main>
+    <button id="scrollTopBtn" class="scroll-top-btn" aria-hidden="true">⬆️</button>
 
-  <!-- ================= SCROLL TOP BUTTON ================= -->
-  <button id="scrollTopBtn" class="scroll-top-btn">⬆️ Top</button>
+    <script>
+      // Simple client-side filter for the static cards
+      (function(){
+        const searchBox = document.getElementById('search-box');
+        const cards = Array.from(document.querySelectorAll('#fruits-list .category-card'));
+        const darkToggle = document.getElementById('darkToggle');
+        const scrollBtn = document.getElementById('scrollTopBtn');
 
-  <footer>
-    <p>Fan-made Blox Fruits Wiki &copy; Natsu</p>
-  </footer>
+        function filter(q){
+          const s = (q||'').trim().toLowerCase();
+          cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            card.style.display = (!s || text.includes(s)) ? '' : 'none';
+          });
+        }
 
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.basic.min.js" defer></script>
-  <script src="script.js" defer></script>
-</body>
+        if (searchBox){
+          searchBox.addEventListener('input', e => filter(e.target.value));
+        }
+
+        // Dark mode toggle
+        if (darkToggle){
+          if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+          darkToggle.addEventListener('click', ()=>{
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+          });
+        }
+
+        // Scroll top
+        if (scrollBtn){
+          window.addEventListener('scroll', ()=>{ scrollBtn.style.display = window.scrollY>200 ? 'block' : 'none'; });
+          scrollBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+        }
+      })();
+    </script>
+  </body>
 </html>

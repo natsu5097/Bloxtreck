@@ -1,161 +1,367 @@
-/* Consolidated site script
-   - Renders fruitsData into #fruits-sections
-   - Provides search using Fuse.js when available, falls back to simple substring search
-   - Collapsible sections, lazy image loading, dark mode toggle, scroll-to-top
-*/
+// ------------------ GLOBAL MOCK DATA ------------------
+// Move sample/mock data to top-level so it can be reused by other functions
+const allItems = [
+  { id: 1, name: "Dragon", category: "Fruits", type: "Mythical", image_url: "", price_money: 5000, price_robux: 50, description: "Legendary fruit" },
+  { id: 2, name: "Blade", category: "Swords", type: "Weapon", image_url: "", price_money: 3000, price_robux: 30, description: "Sharp sword" },
+  { id: 3, name: "Pistol", category: "Guns", type: "Ranged", image_url: "", price_money: 2500, price_robux: 25, description: "Basic gun" },
+  { id: 4, name: "Karate", category: "FightingStyles", type: "Melee", image_url: "", description: "Martial art" },
+  { id: 5, name: "Ring", category: "Accessories", type: "Accessory", image_url: "", description: "Increases strength" },
+  { id: 6, name: "Marine Captain", category: "Bosses", type: "Boss", image_url: "", description: "Sea-based boss" },
+  { id: 7, name: "Starter Island", category: "Islands", type: "Island", image_url: "", description: "Beginning area" },
+  { id: 8, name: "Black Leg", category: "FightingStyles", type: "Melee", image_url: "", description: "Powerful kicking style" }
+];
 
-const App = (() => {
-  const placeholder = 'fruits_pages/images/placeholder.svg';
-  const inlineFallback = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAQCAYAAAB49l3hAAAAJ0lEQVR42u3BMQEAAADCoPVPbQhPoAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwG4kAAc4b0/8AAAAASUVORK5CYII=';
 
-  // Keep a simple, editable dataset here. You can later fetch JSON from the server.
-  const fruitsData = {
-    Common: [
-      { name: "Rocket", desc: "Rocket is a common fruit used for fast attacks.", img: "fruits_pages/images/rocket.png", link: "fruits_pages/rocket.html" },
-      { name: "Spin", desc: "Spin fruit allows you to spin attacks.", img: "fruits_pages/images/spin.png", link: "fruits_pages/spin.html" },
-      { name: "Blade", desc: "Blade fruit enhances your sword skills.", img: "fruits_pages/images/blade.png", link: "fruits_pages/blade.html" }
-    ],
-    Rare: [
-      { name: "Creation", desc: "Creation fruit lets you create objects.", img: "fruits_pages/images/creation.png", link: "fruits_pages/creation.html" },
-      { name: "Phoenix", desc: "Phoenix fruit grants rebirth abilities.", img: "fruits_pages/images/phoenix.png", link: "fruits_pages/phoenix.html" }
-    ],
-    Mythical: [
-      { name: "Dragon", desc: "Dragon fruit gives you dragon powers.", img: "fruits_pages/images/dragon.png", link: "fruits_pages/dragon.html" }
-    ]
-  };
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize all components
+  initializeDarkMode();
+  initializeSearch();
+  initializeScrollTop();
+  initializeCollapsibles();
+  loadPageContent();
+});
 
-  const safeText = v => (v === undefined || v === null ? "" : String(v));
+// ================= DARK MODE =================
+function initializeDarkMode() {
+  // support either ID used across pages: darkModeToggle or darkToggle
+  const darkToggle = document.getElementById("darkModeToggle") || document.getElementById("darkToggle");
+  if (!darkToggle) return;
 
-  // Render collapsible sections with cards
-  function renderAll() {
-    const container = document.getElementById('fruits-sections');
-    if (!container) return;
-    container.innerHTML = '';
-
-    Object.keys(fruitsData).forEach(rarity => {
-      const section = document.createElement('section');
-      section.className = 'collapsible-section';
-
-      const header = document.createElement('h3');
-      header.className = 'collapsible-header';
-      header.textContent = `${rarity} (${fruitsData[rarity].length})`;
-
-      const content = document.createElement('div');
-      content.className = 'collapsible-content';
-
-      fruitsData[rarity].forEach(fruit => {
-        const card = document.createElement('div');
-        card.className = 'category-card';
-        const imgSrc = safeText(fruit.img) || placeholder;
-        card.innerHTML = `
-          <img data-src="${imgSrc}" alt="${fruit.name}" loading="lazy" class="card-img" style="width:48px;height:48px;object-fit:contain"/>
-          <h3><a href="${fruit.link}">${fruit.name}</a></h3>
-          <p>${fruit.desc}</p>
-        `;
-        content.appendChild(card);
-      });
-
-      section.appendChild(header);
-      section.appendChild(content);
-      container.appendChild(section);
-
-      header.addEventListener('click', () => {
-        header.classList.toggle('active');
-        content.classList.toggle('active');
-      });
-    });
-
-    lazyLoadImages(container);
+  const icon = darkToggle.querySelector(".icon");
+  const currentTheme = localStorage.getItem("theme") || "light";
+  
+  if (currentTheme === "dark") {
+    document.body.classList.add("dark");
+    if (icon) icon.textContent = "☀️";
   }
 
-  function lazyLoadImages(root) {
-    const imgs = root.querySelectorAll('img[data-src]');
-    if (!imgs.length) return;
-    const obs = new IntersectionObserver((entries, o) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const img = e.target;
-          img.src = img.getAttribute('data-src') || placeholder;
-          img.removeAttribute('data-src');
-          img.onerror = () => { img.src = inlineFallback; };
-          o.unobserve(img);
-        }
-      });
-    }, { rootMargin: '100px' });
-    imgs.forEach(i => obs.observe(i));
-  }
-
-  // Search: use Fuse if available, otherwise substring match
-  function search(query) {
-    if (!query) return [];
-    const hay = Object.values(fruitsData).flat();
-    if (window.Fuse) {
-      const fuse = new Fuse(hay, { keys: ['name', 'desc'], threshold: 0.35 });
-      return fuse.search(query).map(r => r.item);
+  darkToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    const isDark = document.body.classList.contains("dark");
+    
+    if (isDark) {
+      localStorage.setItem("theme", "dark");
+      if (icon) icon.textContent = "☀️";
+    } else {
+      localStorage.setItem("theme", "light");
+      if (icon) icon.textContent = "🌙";
     }
-    const q = query.toLowerCase();
-    return hay.filter(f => (f.name && f.name.toLowerCase().includes(q)) || (f.desc && f.desc.toLowerCase().includes(q)));
+  });
+}
+
+// ================= SEARCH FUNCTIONALITY =================
+function initializeSearch() {
+  // accept inputs like <input id="search-box"> or inputs named search-*
+  const searchInputs = document.querySelectorAll('input[id*="search"]');
+  const searchResults = document.getElementById("search-results");
+  const clearSearchBtn = document.getElementById("clear-search");
+  
+  if (!searchInputs.length) return;
+
+  // Initialize Fuse.js for fuzzy search if available, otherwise create a tiny fallback
+  let fuse = null;
+  if (typeof Fuse === 'function') {
+    fuse = new Fuse(allItems, {
+      keys: ["name", "description", "category", "type"],
+      threshold: 0.35,
+      includeScore: true
+    });
+  } else {
+    // fallback - simple substring matcher wrapped to emulate Fuse result shape
+    fuse = {
+      search: (q, opts) => {
+        const s = String(q || '').trim().toLowerCase();
+        if (!s) return [];
+        const matches = allItems.filter(item => (
+          (item.name || '').toLowerCase().includes(s) ||
+          (item.description || '').toLowerCase().includes(s) ||
+          (item.category || '').toLowerCase().includes(s) ||
+          (item.type || '').toLowerCase().includes(s)
+        ));
+        return matches.map(item => ({ item }));
+      }
+    };
   }
+
+  let selectedIndex = -1;
 
   function renderSearchResults(results) {
-    const container = document.getElementById('search-results');
-    const clearBtn = document.getElementById('clear-search');
-    if (!container) return;
-    container.innerHTML = '';
-    results.forEach(fruit => {
-      const card = document.createElement('div');
-      card.className = 'result-card';
+    if (!searchResults) return;
+    searchResults.innerHTML = "";
+    
+    if (!results || results.length === 0) {
+      searchResults.classList.remove("active");
+      return;
+    }
+    
+    results.forEach((r, i) => {
+      const item = r.item || r;
+      const card = document.createElement("div");
+      card.className = "result-card";
+      card.dataset.index = i;
       card.innerHTML = `
-        <img src="${safeText(fruit.img) || placeholder}" alt="${fruit.name}" loading="lazy" onerror="this.onerror=null;this.src='${inlineFallback}'"/>
+        <img src="${safeText(item.image_url) || getPlaceholderImage(item.category)}" 
+             alt="${safeText(item.name)}" 
+             loading="lazy" 
+             onerror="this.onerror=null;this.src='${getPlaceholderImage(item.category)}'"/>
         <div class="meta">
-          <a href="${fruit.link}"><h3>${fruit.name}</h3></a>
-          <p>${fruit.desc}</p>
+          <h3>${safeText(item.name)}</h3>
+          <p>${safeText(item.category)} • ${safeText(item.type)}</p>
+          <p>${safeText(item.description || "")}</p>
         </div>
       `;
-      container.appendChild(card);
+      card.addEventListener("click", () => {
+        // Navigate to the appropriate page based on category
+        navigateToItem(item);
+      });
+      searchResults.appendChild(card);
     });
-    container.classList.toggle('active', results.length > 0);
-    if (clearBtn) clearBtn.style.display = results.length ? 'inline-block' : 'none';
-  }
-
-  function initUI() {
-    const searchBox = document.getElementById('search-box');
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
-    const darkToggle = document.getElementById('darkModeToggle');
-    const clearBtn = document.getElementById('clear-search');
-
-    if (searchBox) {
-      searchBox.addEventListener('input', e => {
-        const q = (e.target.value || '').trim();
-        if (!q) return renderSearchResults([]);
-        renderSearchResults(search(q));
-      });
-    }
-
-    if (clearBtn) clearBtn.addEventListener('click', () => { const sb = document.getElementById('search-box'); if (sb) sb.value = ''; renderSearchResults([]); });
-
-    if (scrollTopBtn) {
-      window.addEventListener('scroll', () => { scrollTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none'; });
-      scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    }
-
-    if (darkToggle) {
-      const icon = darkToggle.querySelector('.icon');
-      if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark'); if (icon) icon.textContent = '☀️'; }
-      darkToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark');
-        if (document.body.classList.contains('dark')) { localStorage.setItem('theme', 'dark'); if (icon) icon.textContent = '☀️'; }
-        else { localStorage.setItem('theme', 'light'); if (icon) icon.textContent = '🌙'; }
-      });
+    
+    searchResults.classList.add("active");
+    selectedIndex = -1;
+    
+    if (clearSearchBtn) {
+      clearSearchBtn.style.display = "block";
     }
   }
 
-  function start() {
-    renderAll();
-    initUI();
+  function performSearch(query) {
+    if (!searchResults) return;
+    if (!query || !String(query).trim()) {
+      searchResults.classList.remove("active");
+      if (clearSearchBtn) clearSearchBtn.style.display = "none";
+      return;
+    }
+    
+    const results = fuse.search(query, { limit: 20 });
+    renderSearchResults(results);
   }
 
-  return { start };
-})();
+  function navigateToItem(item) {
+    // Simple navigation - in a real app, you'd have proper routing
+    const pageMap = {
+      "Fruits": "fruits.html",
+      "Swords": "swords.html",
+      "Guns": "guns.html",
+      "FightingStyles": "styles.html",
+      "Accessories": "accessories.html",
+      "Bosses": "bosses.html",
+      "Islands": "islands.html"
+    };
+    
+    const page = pageMap[item.category] || "index.html";
+    window.location.href = page;
+  }
 
-document.addEventListener('DOMContentLoaded', () => App.start());
+  // Add event listeners to all search inputs
+  searchInputs.forEach(input => {
+    input.addEventListener("input", (e) => {
+      performSearch(e.target.value);
+    });
+    
+    input.addEventListener("keydown", (e) => {
+      const cards = searchResults ? searchResults.querySelectorAll(".result-card") : [];
+      if (!cards.length) return;
+
+      if (e.key === "ArrowDown") {
+        selectedIndex = (selectedIndex + 1) % cards.length;
+        updateSelectedCard(cards);
+        e.preventDefault();
+      } else if (e.key === "ArrowUp") {
+        selectedIndex = (selectedIndex - 1 + cards.length) % cards.length;
+        updateSelectedCard(cards);
+        e.preventDefault();
+      } else if (e.key === "Enter" && selectedIndex >= 0) {
+        cards[selectedIndex].click();
+      } else if (e.key === "Escape") {
+        if (searchResults) searchResults.classList.remove("active");
+        input.value = "";
+        selectedIndex = -1;
+      }
+    });
+    
+    // Close search results when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!searchResults) return;
+      if (!searchResults.contains(e.target) && !input.contains(e.target)) {
+        searchResults.classList.remove("active");
+      }
+    });
+  });
+
+  function updateSelectedCard(cards) {
+    cards.forEach(c => c.classList.remove("selected"));
+    if (selectedIndex >= 0) {
+      cards[selectedIndex].classList.add("selected");
+      cards[selectedIndex].scrollIntoView({ block: "nearest" });
+    }
+  }
+
+  if (clearSearchBtn) {
+    clearSearchBtn.addEventListener("click", () => {
+      searchInputs.forEach(input => input.value = "");
+      if (searchResults) searchResults.classList.remove("active");
+      clearSearchBtn.style.display = "none";
+      selectedIndex = -1;
+    });
+  }
+}
+
+// ================= SCROLL TO TOP =================
+function initializeScrollTop() {
+  const scrollTopBtn = document.getElementById("scrollTopBtn");
+  if (!scrollTopBtn) return;
+
+  window.addEventListener("scroll", () => {
+    scrollTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
+  });
+
+  scrollTopBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+// ================= COLLAPSIBLE SECTIONS =================
+function initializeCollapsibles() {
+  const collapsibleHeaders = document.querySelectorAll(".collapsible-header");
+  
+  collapsibleHeaders.forEach(header => {
+    header.addEventListener("click", () => {
+      const content = header.nextElementSibling;
+      if (!content) return;
+      const isActive = content.classList.contains("active");
+      
+      // Close all other sections if this is being opened
+      if (!isActive) {
+        document.querySelectorAll(".collapsible-content.active").forEach(activeContent => {
+          if (activeContent !== content) {
+            activeContent.classList.remove("active");
+            if (activeContent.previousElementSibling) activeContent.previousElementSibling.classList.remove("active");
+          }
+        });
+      }
+      
+      content.classList.toggle("active");
+      header.classList.toggle("active");
+    });
+  });
+}
+
+// ================= PAGE CONTENT LOADING =================
+function loadPageContent() {
+  const path = window.location.pathname;
+  const page = path.split("/").pop() || "index.html";
+  
+  // Set active nav link
+  setActiveNavLink(page);
+  
+  // Load content based on page
+  if (page === "index.html" || page === "" || page === "/") {
+    loadHomePage();
+  } else {
+    loadCategoryPage(page);
+  }
+}
+
+function setActiveNavLink(currentPage) {
+  const navLinks = document.querySelectorAll("nav a");
+  const pageMap = {
+    "index.html": "Home",
+    "fruits.html": "Fruits",
+    "swords.html": "Swords",
+    "guns.html": "Guns",
+    "styles.html": "Fighting Styles",
+    "accessories.html": "Accessories",
+    "islands.html": "Islands",
+    "bosses.html": "Bosses",
+    "npcs.html": "NPCs"
+  };
+  
+  navLinks.forEach(link => {
+    link.classList.remove("active");
+    const linkPage = link.getAttribute("href");
+    if (pageMap[linkPage] === pageMap[currentPage]) {
+      link.classList.add("active");
+    }
+  });
+}
+
+function loadHomePage() {
+  // Home page specific initialization
+  console.log("Loading home page content");
+}
+
+function loadCategoryPage(page) {
+  const containerMap = {
+    "fruits.html": "fruits-sections",
+    "swords.html": "swords-container", 
+    "guns.html": "guns-container",
+    "styles.html": "styles-container",
+    "accessories.html": "accessories-container",
+    "islands.html": "islands-container",
+    "bosses.html": "bosses-container",
+    "npcs.html": "npcs-container"
+  };
+  
+  const containerId = containerMap[page];
+  if (!containerId) return;
+  
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  
+  // In a real app, you would fetch data from an API or JSON file
+  // For now, we'll use mock data
+  const mockData = generateMockDataForPage(page);
+  renderItemsGrid(mockData, container);
+}
+
+function generateMockDataForPage(page) {
+  // Filter the allItems array by category
+  const categoryMap = {
+    "fruits.html": "Fruits",
+    "swords.html": "Swords", 
+    "guns.html": "Guns",
+    "styles.html": "FightingStyles",
+    "accessories.html": "Accessories",
+    "islands.html": "Islands",
+    "bosses.html": "Bosses",
+    "npcs.html": "NPCs"
+  };
+  
+  const category = categoryMap[page];
+  if (!category) {
+    return [
+      { name: "Sample Item", type: "Type", image_url: "", price_money: 1000, description: "Sample description" }
+    ];
+  }
+  return allItems.filter(item => item.category === category);
+}
+
+function renderItemsGrid(items, container) {
+  container.innerHTML = "";
+  
+  items.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "item-card";
+    card.innerHTML = `
+      <img src="${safeText(item.image_url) || getPlaceholderImage()}" 
+           alt="${safeText(item.name)}"
+           onerror="this.onerror=null;this.src='${getPlaceholderImage()}'">
+      <h3>${safeText(item.name)}</h3>
+      <p>Type: ${safeText(item.type)}</p>
+      ${item.price_money ? `<p>Price: $${Number(item.price_money).toLocaleString()}</p>` : ''}
+      <p>${safeText(item.description)}</p>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ================= UTILITY FUNCTIONS =================
+function safeText(value) {
+  return (value === undefined || value === null) ? "" : String(value);
+}
+
+function getPlaceholderImage(category = "") {
+  // In a real app, you would have actual placeholder images
+  return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZDNlM2ZmIi8+CjxwYXRoIGQ9Ik01MCAzMEM1My44MTM3IDMwIDU3IDMzLjE4NjMgNTcgMzdDNTcgNDAuODEzNyA1My44MTM3IDQ0IDUwIDQ0QzQ2LjE4NjMgNDQgNDMgNDAuODEzNyA0MyAzN0M0MyAzMy4xODYzIDQ2LjE4NjMgMzAgNTAgMzBaIiBmaWxsPSIjNzE5MWZmIi8+CjxwYXRoIGQ9Ik0zNSA2NUMzNSA2NSAzNSA2MCAzNSA1NUMzNSA1MCA0MCA0MCA1MCA0MEM2MCA0MCA2NSA1MCA2NSA1NUM2NSA2MCA2NSA2NSAzNSA2NVoiIGZpbGw9IiM3MTkxZmYiLz4KPC9zdmc+Cg==";
+}

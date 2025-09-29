@@ -15,7 +15,58 @@
   <main>
     <section id="bosses-container">
       <!-- Bosses will be dynamically inserted here -->
+    </section><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bosses - Blox Fruits Wiki</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ================= HEADER ================= -->
+  <header>
+    <h1>👹 Bosses</h1>
+    <div class="header-controls">
+      <input type="text" id="search-bosses" placeholder="Search bosses...">
+      <button id="darkModeToggle"><span class="icon">🌙</span></button>
+    </div>
+  </header>
+
+  <!-- ================= NAVIGATION ================= -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="fruits.html">Fruits</a>
+    <a href="swords.html">Swords</a>
+    <a href="guns.html">Guns</a>
+    <a href="styles.html">Fighting Styles</a>
+    <a href="accessories.html">Accessories</a>
+    <a href="islands.html">Islands</a>
+    <a href="bosses.html" class="active">Bosses</a>
+    <a href="npcs.html">NPCs</a>
+  </nav>
+
+  <!-- ================= SEARCH RESULTS ================= -->
+  <div id="search-results" class="search-results"></div>
+  <button id="clear-search" style="display:none; position:fixed; top:100px; right:20px;">Clear Search</button>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main>
+    <section class="items-grid" id="bosses-container">
+      <!-- Bosses will be dynamically inserted here -->
     </section>
+  </main>
+
+  <!-- ================= SCROLL TOP BUTTON ================= -->
+  <button id="scrollTopBtn" class="scroll-top-btn">⬆️ Top</button>
+
+  <footer>
+    <p>Fan-made Blox Fruits Wiki &copy; Natsu</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.basic.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
   </main>
 
   <footer>
