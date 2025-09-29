@@ -200,16 +200,17 @@ footer a:hover{color:#ddd;}
 @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 
 /* ================= DARK MODE ================= */
-.dark{
-  --bg:#0f1c3f;
-  --text:#e6f0fa;
-  --primary:#1a73e8;
-  --primary-strong:#145dbf;
-  --header:#0b1430;
-  --card:#2a3d6b;
-  --card-hover:#3a4d7b;
-  --muted:#a0aec0;
+.dark {
+  --bg: #0f1c3f;          /* keeps dark background */
+  --text: #000000;         /* text black */
+  --primary: #1a73e8;
+  --primary-strong: #145dbf;
+  --header: #0b1430;
+  --card: #2a3d6b;
+  --card-hover: #3a4d7b;
+  --muted: #a0aec0;
 }
+
 
 /* Dark mode adjustments for forms, buttons, search results, cards, etc. */
 .dark input, .dark textarea { background-color:#2a3d6b; color:#e6f0fa; border-color:#3a4d7b; }
