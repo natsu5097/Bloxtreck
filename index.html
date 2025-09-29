@@ -6,11 +6,16 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- ================= HEADER ================= -->
   <header>
     <h1>Blox Fruits Fan Wiki</h1>
-    <input type="text" id="search" placeholder="Search items...">
+    <div class="header-controls">
+      <input type="text" id="search-box" placeholder="Search items...">
+      <button id="darkModeToggle"><span class="icon">🌙</span></button>
+    </div>
   </header>
 
+  <!-- ================= NAVIGATION ================= -->
   <nav>
     <a href="index.html">Home</a>
     <a href="fruits.html">Fruits</a>
@@ -22,7 +27,13 @@
     <a href="npcs.html">NPCs</a>
   </nav>
 
+  <!-- ================= SEARCH RESULTS ================= -->
+  <div id="search-results" class="search-results"></div>
+  <button id="clear-search" style="display:none; position:fixed; top:100px; right:20px;">Clear Search</button>
+
+  <!-- ================= MAIN CONTENT ================= -->
   <main>
+    <!-- Categories Section -->
     <section class="categories">
       <div class="category-card"><h3><a href="fruits.html">🍏 Fruits</a></h3></div>
       <div class="category-card"><h3><a href="swords.html">⚔️ Swords</a></h3></div>
@@ -32,14 +43,36 @@
       <div class="category-card"><h3><a href="bosses.html">👹 Bosses</a></h3></div>
       <div class="category-card"><h3><a href="npcs.html">🧍 NPCs</a></h3></div>
     </section>
+
+    <!-- Featured Collapsible Sections -->
+    <section class="collapsible-section">
+      <h3 class="collapsible-header">Latest Updates</h3>
+      <div class="collapsible-content">
+        <p>New fruits, swords, and bosses have been added! Click on any category above to explore.</p>
+      </div>
+    </section>
+
+    <section class="collapsible-section">
+      <h3 class="collapsible-header">Tips & Tricks</h3>
+      <div class="collapsible-content">
+        <ul>
+          <li>Check daily for new updates and events.</li>
+          <li>Use the search bar to quickly find items and NPCs.</li>
+          <li>Toggle dark mode for comfortable browsing at night.</li>
+        </ul>
+      </div>
+    </section>
   </main>
 
+  <!-- ================= SCROLL TOP BUTTON ================= -->
+  <button id="scrollTopBtn" class="scroll-top-btn">⬆️ Top</button>
+
+  <!-- ================= FOOTER ================= -->
   <footer>
-    <p>Fan-made Blox Fruits Wiki
-      Credits : Natsu
-    </p>
+    <p>Fan-made Blox Fruits Wiki &copy; Natsu</p>
   </footer>
 
+  <!-- ================= SCRIPT ================= -->
   <script src="script.js"></script>
 </body>
 </html>
