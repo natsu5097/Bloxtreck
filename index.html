@@ -7,8 +7,11 @@
 </head>
 <body>
   <!-- ================= HEADER ================= -->
-  <header>
-    <h1>Blox Fruits Fan Wiki</h1>
+  <header class="site-header">
+    <div class="logo-title">
+      <img src="assets/logo.png" alt="Blox Fruits Wiki Logo" class="site-logo">
+      <h1>Blox Fruits Fan Wiki</h1>
+    </div>
     <div class="header-controls">
       <input type="text" id="search-box" placeholder="Search items...">
       <button id="darkModeToggle"><span class="icon">🌙</span></button>
@@ -17,7 +20,7 @@
 
   <!-- ================= NAVIGATION ================= -->
   <nav>
-    <a href="index.html">Home</a>
+    <a href="index.html" class="active">Home</a>
     <a href="fruits.html">Fruits</a>
     <a href="swords.html">Swords</a>
     <a href="styles.html">Fighting Styles</a>
@@ -29,19 +32,49 @@
 
   <!-- ================= SEARCH RESULTS ================= -->
   <div id="search-results" class="search-results"></div>
-  <button id="clear-search" style="display:none; position:fixed; top:100px; right:20px;">Clear Search</button>
 
   <!-- ================= MAIN CONTENT ================= -->
   <main>
+    <!-- Intro Section -->
+    <section class="intro">
+      <h2>Welcome to the Blox Fruits Wiki</h2>
+      <p>
+        This is a fan-made wiki for <strong>Blox Fruits</strong>, one of the most popular Roblox games.
+        Here you’ll find detailed information about fruits, swords, bosses, NPCs, fighting styles,
+        and more — all organized in one place to help you progress faster in your adventure!
+      </p>
+    </section>
+
     <!-- Categories Section -->
     <section class="categories">
-      <div class="category-card"><h3><a href="fruits.html">🍏 Fruits</a></h3></div>
-      <div class="category-card"><h3><a href="swords.html">⚔️ Swords</a></h3></div>
-      <div class="category-card"><h3><a href="styles.html">🥋 Fighting Styles</a></h3></div>
-      <div class="category-card"><h3><a href="accessories.html">🎭 Accessories</a></h3></div>
-      <div class="category-card"><h3><a href="islands.html">🏝️ Islands</a></h3></div>
-      <div class="category-card"><h3><a href="bosses.html">👹 Bosses</a></h3></div>
-      <div class="category-card"><h3><a href="npcs.html">🧍 NPCs</a></h3></div>
+      <div class="category-card">
+        <img src="assets/fruits-icon.png" alt="Fruits">
+        <h3><a href="fruits.html">🍏 Fruits</a></h3>
+      </div>
+      <div class="category-card">
+        <img src="assets/swords-icon.png" alt="Swords">
+        <h3><a href="swords.html">⚔️ Swords</a></h3>
+      </div>
+      <div class="category-card">
+        <img src="assets/styles-icon.png" alt="Fighting Styles">
+        <h3><a href="styles.html">🥋 Fighting Styles</a></h3>
+      </div>
+      <div class="category-card">
+        <img src="assets/accessories-icon.png" alt="Accessories">
+        <h3><a href="accessories.html">🎭 Accessories</a></h3>
+      </div>
+      <div class="category-card">
+        <img src="assets/islands-icon.png" alt="Islands">
+        <h3><a href="islands.html">🏝️ Islands</a></h3>
+      </div>
+      <div class="category-card">
+        <img src="assets/bosses-icon.png" alt="Bosses">
+        <h3><a href="bosses.html">👹 Bosses</a></h3>
+      </div>
+      <div class="category-card">
+        <img src="assets/npcs-icon.png" alt="NPCs">
+        <h3><a href="npcs.html">🧍 NPCs</a></h3>
+      </div>
     </section>
 
     <!-- Featured Collapsible Sections -->

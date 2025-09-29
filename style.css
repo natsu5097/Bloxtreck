@@ -333,3 +333,651 @@ footer{text-align:center;padding:1rem;background-color:var(--header);color:#fff;
     gap: 0.25rem;
   }
 }
+/* ================= LOGO ================= */
+.site-header {
+  flex-direction: column;
+  text-align: center;
+}
+.logo-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+.site-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+/* ================= INTRO SECTION ================= */
+.intro {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+  background-color: var(--card);
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.intro h2 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+/* ================= FRUIT CARDS WITH IMAGES ================= */
+.category-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+.category-card:hover img {
+  transform: scale (1.05);
+  transition:transform .2s;
+}
+/* ================= ITEM DETAIL PAGE ================= */
+.item-detail {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+  background-color: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.item-detail h2 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+.item-detail img {
+  max-width: 200px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+.item-detail p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.item-detail .meta {
+  margin-top: 1rem;
+}
+.item-detail .meta p {
+  margin: 0.25rem 0;
+}
+/* Responsive adjustments for item detail */
+@media (max-width: 600px) {
+  .item-detail img {
+    max-width: 100%;
+  }
+}
+/* ================= FORM STYLES ================= */
+form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+  background-color: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+form h2 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+form label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+}
+form input[type="text"],
+form input[type="email"],
+form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+form button {
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+form button:hover {
+  background-color: var(--primary-strong);
+}
+form .success-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+form .error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+/* Responsive adjustments for forms */
+@media (max-width: 600px) {
+  form {
+    padding: 1rem;
+  }
+}
+
+/* ================= CUSTOM SCROLLBAR ================= */
+/* For WebKit browsers */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 6px;
+  border: 3px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-strong);
+}
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--bg);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-strong);
+}
+/* ================= MEDIA QUERIES FOR SMALLER DEVICES ================= */
+@media (max-width: 400px) {
+  header h1 {
+    font-size: 1.2rem;
+  }
+  
+  input[type="text"] {
+    width: 150px;
+  }
+  
+  .categories {
+    grid-template-columns: 1fr;
+  }
+  
+  .items-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ================= ADDITIONAL STYLES ================= */
+.highlight {
+  background-color: yellow;
+}
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+.shadow {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.border {
+  border: 1px solid var(--primary);
+}
+.rounded {
+  border-radius: var(--radius);
+}
+.center {
+  text-align: center;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.mt-1 {margin-top: 1rem;}
+.mb-1 {margin-bottom: 1rem;}
+.ml-1 {margin-left: 1rem;}
+.mr-1 {margin-right: 1rem;}
+.p-1 {padding: 1rem;}
+.px-1 {padding-left: 1rem; padding-right: 1rem;}
+.py-1 {padding-top: 1rem; padding-bottom: 1rem;}
+.flex {display: flex;}
+.flex-column {display: flex; flex-direction: column;}
+.flex-center {display: flex; justify-content: center; align-items: center;}
+.flex-space-between {display: flex; justify-content: space-between; align-items: center;}
+.grid {display: grid;}
+.grid-center {display: grid; place-items: center;}
+.grid-gap-1 {gap: 1rem;}
+.hidden {display: none;}
+.visible {display: block;}
+.invisible {visibility: hidden;}
+.visible-inline {display: inline;}
+.visible-inline-block {display: inline-block;}
+.text-bold {font-weight: bold;}
+.text-italic {font-style: italic;}
+.text-underline {text-decoration: underline;}
+.text-uppercase {text-transform: uppercase;}
+.text-lowercase {text-transform: lowercase;}
+.text-capitalize {text-transform: capitalize;}
+.text-muted {color: var(--muted);}
+.text-primary {color: var(--primary);}
+.text-primary-strong {color: var(--primary-strong);}
+.bg-primary {background-color: var(--primary); color: #fff;}
+.bg-primary-strong {background-color: var(--primary-strong); color: #fff;}
+.bg-card {background-color: var(--card);}
+.bg-card-hover {background-color: var(--card-hover);}
+.cursor-pointer {cursor: pointer;}
+.transition {transition: all 0.3s ease;}
+.no-select {user-select: none;}
+@media (max-width: 320px) {
+  header h1 {
+    font-size: 1rem;
+  }
+  
+  input[type="text"] {
+    width: 120px;
+  }
+}
+@media (max-width: 280px) {
+  header h1 {
+    font-size: 0.9rem;
+  }
+  
+  input[type="text"] {
+    width: 100px;
+  }
+
+  .header-controls {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+    .header-controls button, .header-controls input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+  .category-card {
+  background-color: var(--card);
+  padding: 1rem;
+  border-radius: var(--radius);
+  text-align: center;
+  transition: transform .18s ease, background-color .18s ease, box-shadow .18s ease;
+  box-shadow: 0 1px 3px rgba(16,24,40,0.04);
+}
+
+.category-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+}
+
+.category-card h3 {
+  margin: 0.5rem 0 0;
+}
+
+.category-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  background-color: var(--card-hover);
+  box-shadow: 0 6px 18px rgba(16,24,40,0.08);
+}
+.category-card:hover img {
+  transform: scale(1.05);
+  transition: transform .2s;
+}
+.category-card a {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1.05rem;
+  display: block;
+}
+/* Responsive adjustments for category cards */
+@media (max-width: 600px) {
+  .category-card img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .category-card h3 {
+    font-size: 0.95rem;
+  }
+}
+/* ================= ITEM CARDS WITH IMAGES ================= */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  /* Added padding for better spacing */
+  box-sizing: border-box;}
+.item-card {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s, background-color 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.item-card:hover {
+  transform: translateY(-5px);
+  background-color: var(--card-hover);
+}
+.item-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+}
+.item-card h3 {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+.item-card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0.25rem 0 0;
+}
+
+/* Responsive adjustments for item cards */
+@media (max-width: 600px) {
+  .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+  
+  .item-card img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .item-card h3 {
+    font-size: 1rem;
+  }
+}
+.item-card p {
+  font-size: 0.85rem;
+}
+.item-card .price {
+  font-weight: bold;
+  color: var(--primary);
+  margin-top: 0.5rem;
+}
+.item-card .rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+} 
+.item-card .rating span {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.item-card .rating .star {
+  color: gold;
+  font-size: 1rem;
+}   
+.item-card .rating .star.half {
+  position: relative;
+} 
+.item-card .rating .star.half::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+  color: gold;
+}
+.item-card .rating .star.half::after {
+  content: '☆';
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+  color: var(--muted);
+  margin-left: 50%;
+}     
+/* ================= ITEM DETAIL PAGE ================= */                                                                                  
+.item-detail {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+  background-color: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}     
+.item-detail h2 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+.item-detail img {
+  max-width: 200px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+.item-detail p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}           
+.item-detail .meta {
+  margin-top: 1rem;
+}   
+.item-detail .meta p {
+  margin: 0.25rem 0;
+}
+.item-detail .price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin: 1rem 0;
+}
+.item-detail .rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+.item-detail .rating span {
+  font-size: 1rem;
+  color: var(--muted);
+}
+.item-detail .rating .star {
+  color: gold;
+  font-size: 1.2rem;
+}
+.item-detail .rating .star.half {
+  position: relative;
+}
+.item-detail .rating .star.half::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+  color: gold;
+}
+.item-detail .rating .star.half::after {
+  content: '☆';
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+  color: var(--muted);
+  margin-left: 50%;
+}
+/* Responsive adjustments for item detail */
+@media (max-width: 600px) {
+  .item-detail img {
+    max-width: 100%;
+  }
+}
+/* ================= FORM STYLES ================= */
+form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+  background-color: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+form h2 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+form label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+}
+form input[type="text"],
+form input[type="email"],
+form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: var(--text);
+}
+form input[type="text"]::placeholder,
+form input[type="email"]::placeholder,
+form textarea::placeholder {
+  color: var(--muted);
+}
+form button {
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+form button:hover {
+  background-color: var(--primary-strong);
+}
+form .success-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+form .error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+/* Responsive adjustments for forms */
+@media (max-width: 600px) {
+  form {
+    padding: 1rem;
+  }
+}
+/* ================= DARK MODE FORM STYLES ================= */
+.dark form input[type="text"],
+.dark form input[type="email"],
+.dark form textarea {
+  background-color: #1a2e5b;
+  color: #e6f0fa;
+  border-color: #2a3d6b;
+}
+.dark form input[type="text"]::placeholder,
+.dark form input[type="email"]::placeholder,
+.dark form textarea::placeholder {
+  color: var(--muted);
+}
+.dark form button {
+  background-color: var(--primary);
+  color: #fff;
+}
+.dark form button:hover {
+  background-color: var(--primary-strong);
+}
+.dark form .success-message {
+  color: lightgreen;
+}
+.dark form .error-message {
+  color: #ff6b6b;
+}
+/* ================= FOOTER ================= */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--header);
+  color: #fff;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+footer a {
+  color: #fff;
+  text-decoration: underline;
+}
+footer a:hover {
+  color: #ddd;
+}
+/* ================= SCROLL TOP ================= */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: none;
+  z-index: 999;
+  padding: 0.75rem;
+  font-size: 1.2rem;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.2s, transform 0.2s;
+}
+.scroll-top-btn:hover {
+  background-color: var(--primary-strong);
+  transform: scale(1.1);
+}
+.scroll-top-btn:focus {
+  outline: 3px solid color-mix(in srgb, var(--primary) 40%, transparent);
+  outline-offset: 2px;
+}
+/* Show button when scrolled down */
+.scroll-top-btn.visible {
+  display: block;
+}
+/* ================= LOADING SPINNER ================= */
+.loading-spinner {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+.loading-spinner.active {
+  display: block;
+}
+.spinner {
+  border: 4px solid var(--card);
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+@keyframes spin {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
