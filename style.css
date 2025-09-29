@@ -981,3 +981,79 @@ footer a:hover {
   from {transform: rotate(0deg);}
   to {transform: rotate(360deg);}
 }
+
+  /* ================= DARK MODE ================= */
+.dark {
+  --bg: #0f1c3f;         /* dark background */
+  --text: #000000;        /* all text black */
+  --primary: #1a73e8;
+  --header: #0b1430;
+  --card: #2a3d6b;        /* slightly lighter card for readability */
+  --card-hover: #3a4d7b;
+  --muted: #555555;       /* muted text gray */
+}
+
+/* Dark mode inputs, forms, search results */
+.dark input[type="text"],
+.dark input[type="email"],
+.dark textarea {
+  background-color: #2a3d6b; 
+  color: #000000;           /* black text */
+  border-color: #3a4d7b;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #555555;
+}
+
+.dark .search-results {
+  background-color: #2a3d6b;
+  color: #000000;           /* black text */
+  border-color: #3a4d7b;
+}
+
+.dark .result-card:hover, 
+.dark .result-card.selected {
+  background-color: #3a4d7b;
+}
+
+.dark .category-card a,
+.dark .item-card h3,
+.dark .item-card p,
+.dark .collapsible-content,
+.dark .intro,
+.dark .item-detail,
+.dark footer {
+  color: #000000;           /* force all content text black */
+}
+
+/* Dark mode buttons */
+.dark button,
+.dark form button {
+  color: #fff; /* buttons text remains white */
+}
+.dark button:hover,
+.dark form button:hover {
+  background-color: var(--primary-strong);
+}
+/* Dark mode footer links */
+.dark footer a {
+  color: #fff;
+}
+.dark footer a:hover {
+  color: #ddd;
+}
+/* Dark mode scroll top button */
+.dark .scroll-top-btn {
+  background-color: var(--primary);
+  color: #fff;
+}
+.dark .scroll-top-btn:hover {
+  background-color: var(--primary-strong);
+}
+/* Dark mode loading spinner */
+.dark .spinner {
+  border: 4px solid var(--card);
+  border-top: 4px solid var(--primary);
+}
