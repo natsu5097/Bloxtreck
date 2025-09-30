@@ -47,29 +47,13 @@
       <ul>
         <li><a href="#obtainment">Obtainment</a></li>
         <li><a href="#list">List of Guns</a></li>
+        <li><a href="#guns-list">Guns Directory</a></li>
         <li><a href="#explosive">Explosive Guns</a></li>
         <li><a href="#notes">Notes</a></li>
         <li><a href="#trivia">Trivia</a></li>
         <li><a href="#change-history">Change History</a></li>
         <li><a href="#navigation">Navigation</a></li>
       </ul>
-    </section>
-
-    <section class="categories" aria-label="Guns list">
-      <div class="category-card"><h3><a href="guns_pages/slingshot.html">Slingshot</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/flintlock.html">Flintlock</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/musket.html">Musket</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/acidum-rifle.html">Acidum Rifle</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/bizarre-revolver.html">Bizarre Revolver</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/cannon.html">Cannon</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/dual-flintlock.html">Dual Flintlock</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/magma-blaster.html">Magma Blaster</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/refined-slingshot.html">Refined Slingshot</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/bazooka.html">Bazooka</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/dragonstorm.html">Dragonstorm</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/kabucha.html">Kabucha</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/venom-bow.html">Venom Bow</a></h3></div>
-      <div class="category-card"><h3><a href="guns_pages/skull-guitar.html">Skull Guitar</a></h3></div>
     </section>
 
     <div class="collapsible-section" id="obtainment">
@@ -102,13 +86,49 @@
       </div>
     </div>
 
+    <!-- Toolbar for filtering -->
+    <section class="quick-links" id="gun-tools">
+      <h2 style="text-align:center; margin-bottom:0.75rem">Guns Directory</h2>
+      <div class="links-grid" style="grid-template-columns: 1fr 200px; align-items:center;">
+        <div>
+          <input id="gun-filter" type="search" placeholder="Filter guns by name..." aria-label="Filter guns" style="width:100%; padding:0.6rem 0.8rem; border:1px solid var(--border-color); border-radius:6px; background:var(--bg-color-alt); color:var(--text-color);" />
+        </div>
+        <div style="text-align:right; color:var(--text-color-muted); font-size:0.9rem">Showing <span id="gun-count">--</span></div>
+      </div>
+    </section>
+
+    <!-- Guns grid with images -->
+    <section class="categories" aria-label="Guns list" id="guns-list">
+      <div class="categories" id="guns-grid">
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Slingshot"><h3><a href="guns_pages/slingshot.html">Slingshot</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Flintlock"><h3><a href="guns_pages/flintlock.html">Flintlock</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Musket"><h3><a href="guns_pages/musket.html">Musket</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Acidum Rifle"><h3><a href="guns_pages/acidum-rifle.html">Acidum Rifle</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Bizarre Revolver"><h3><a href="guns_pages/bizarre-revolver.html">Bizarre Revolver</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Cannon"><h3><a href="guns_pages/cannon.html">Cannon</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Dual Flintlock"><h3><a href="guns_pages/dual-flintlock.html">Dual Flintlock</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Magma Blaster"><h3><a href="guns_pages/magma-blaster.html">Magma Blaster</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Refined Slingshot"><h3><a href="guns_pages/refined-slingshot.html">Refined Slingshot</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Bazooka"><h3><a href="guns_pages/bazooka.html">Bazooka</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Dragonstorm"><h3><a href="guns_pages/dragonstorm.html">Dragonstorm</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Kabucha"><h3><a href="guns_pages/kabucha.html">Kabucha</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Venom Bow"><h3><a href="guns_pages/venom-bow.html">Venom Bow</a></h3></div>
+        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Skull Guitar"><h3><a href="guns_pages/skull-guitar.html">Skull Guitar</a></h3></div>
+      </div>
+    </section>
+
     <div class="collapsible-section" id="explosive">
       <h3 class="collapsible-header">Explosive Guns</h3>
       <div class="collapsible-content">
         <p>
           Explosive guns have Area of Effect [M1] attacks that deal slight knockback, can hit multiple enemies and can damage enemies even if the shot does not directly hit. These [M1] attacks have Destructible Physics and are among the few [M1] attacks that can damage Sea Events, making them very useful indeed for Gun Mains. These [M1] attacks have more range than most other guns, but the projectiles are slower.
         </p>
-        <p>There are only 3 such guns in the game as of now: the Cannon, the Bazooka, and the Skull Guitar.</p>
+        <p>There are only 3 such guns in the game as of now:</p>
+        <ul>
+          <li><a href="guns_pages/cannon.html">Cannon</a></li>
+          <li><a href="guns_pages/bazooka.html">Bazooka</a></li>
+          <li><a href="guns_pages/skull-guitar.html">Skull Guitar</a></li>
+        </ul>
       </div>
     </div>
 
@@ -155,11 +175,36 @@
   </main>
 
   <!-- ================= SCROLL TOP BUTTON ================= -->
-  <button id="scrollTopBtn" class="scroll-top-btn">⬆️ Top</button>
+  <button id="scrollTopBtn" class="scroll-top-btn">���️ Top</button>
 
   <footer>
     <p>Fan-made Blox Fruits Wiki &copy; Natsu</p>
   </footer>
+
+  <!-- Filter script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const input = document.getElementById('gun-filter');
+      const grid = document.getElementById('guns-grid');
+      const cards = Array.from(grid ? grid.querySelectorAll('.category-card') : []);
+      const countEl = document.getElementById('gun-count');
+      function apply(){
+        const q = (input && input.value || '').trim().toLowerCase();
+        let shown = 0;
+        cards.forEach(c => {
+          const name = (c.textContent || '').toLowerCase();
+          const visible = !q || name.includes(q);
+          c.style.display = visible ? '' : 'none';
+          if (visible) shown++;
+        });
+        if (countEl) countEl.textContent = shown + ' / ' + cards.length;
+      }
+      if (input) {
+        input.addEventListener('input', apply);
+        apply();
+      }
+    });
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.basic.min.js"></script>
   <script src="script.js"></script>
