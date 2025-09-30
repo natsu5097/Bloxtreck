@@ -465,6 +465,19 @@ main {
   margin-bottom: 1rem;
 }
 
+/* Ensure lists inside overview sections align correctly */
+.blox-fruits-info ul {
+  text-align: left;
+  list-style-position: inside;
+  margin: var(--mb-1) auto 1rem;
+  padding-left: var(--mb-1);
+  max-width: 900px;
+}
+
+.blox-fruits-info ul li {
+  margin-bottom: var(--mb-0-5);
+}
+
 .intro ul li {
   margin-bottom: var(--mb-0-5);
 }
