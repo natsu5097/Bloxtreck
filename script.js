@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function getBasePrefix() {
   const path = window.location.pathname.replace(/\\\\/g, "/");
   // If inside a subfolder like fruits_pages/, swords_pages/, or accessories_pages/ use ../ links
-  return /(fruits_pages|swords_pages|accessories_pages)\//.test(path) ? "../" : "";
+  return /(fruits_pages|swords_pages|accessories_pages|guns_pages)\//.test(path) ? "../" : "";
 }
 
 function renderGlobalChrome() {
@@ -62,6 +62,7 @@ function renderGlobalChrome() {
   <a href="${base}index.html">Home</a>
   <a href="${base}fruits.html">Fruits</a>
   <a href="${base}swords.html">Swords</a>
+  <a href="${base}guns.html">Guns</a>
   <a href="${base}styles.html">Fighting Styles</a>
   <a href="${base}accessories.html">Accessories</a>
   <a href="${base}islands.html">Islands</a>
