@@ -13,6 +13,12 @@ const allItems = [
 
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Build global header/nav/footer first so controls exist across all pages
+  renderGlobalChrome();
+
+  // Ensure head has title and favicon
+  ensureHeadMeta();
+
   // Initialize all components
   initializeDarkMode();
   initializeSearch();
@@ -20,6 +26,130 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeCollapsibles();
   loadPageContent();
 });
+
+// ================= GLOBAL CHROME (Header/Nav/Footer) =================
+function getBasePrefix() {
+  const path = window.location.pathname.replace(/\\\\/g, "/");
+  // If inside a subfolder like fruits_pages/, swords_pages/, or accessories_pages/ use ../ links
+  return /(fruits_pages|swords_pages|accessories_pages)\//.test(path) ? "../" : "";
+}
+
+function renderGlobalChrome() {
+  const base = getBasePrefix();
+
+  // Remove any pre-existing duplicate search results containers to avoid ID conflicts
+  document.querySelectorAll('#search-results').forEach(el => el.remove());
+
+  const headerHtml = `
+<header class="site-header">
+  <div class="logo-title">
+    <a href="${base}index.html">
+      <img src="${base}images/sitelogo/bloxtrex.png" alt="Blox Fruits Wiki Logo" class="site-logo">
+    </a>
+    <h1><a href="${base}index.html" style="color:inherit; text-decoration:none;">Blox Fruits Fan Wiki</a></h1>
+  </div>
+  <div class="header-controls">
+    <div class="search-wrapper">
+      <input type="text" id="search-box" placeholder="Search items..." aria-label="Search items">
+      <div id="search-results" class="search-results"></div>
+    </div>
+    <button id="darkModeToggle" title="Toggle dark mode"><span class="icon">🌙</span></button>
+  </div>
+</header>`;
+
+  const navHtml = `
+<nav>
+  <a href="${base}index.html">Home</a>
+  <a href="${base}fruits.html">Fruits</a>
+  <a href="${base}swords.html">Swords</a>
+  <a href="${base}styles.html">Fighting Styles</a>
+  <a href="${base}accessories.html">Accessories</a>
+  <a href="${base}islands.html">Islands</a>
+  <a href="${base}bosses.html">Bosses</a>
+  <a href="${base}npcs.html">NPCs</a>
+</nav>`;
+
+  const footerHtml = `
+<footer>
+  <p>Fan-made Blox Fruits Wiki &copy; Natsu</p>
+</footer>`;
+
+  // Replace or insert header
+  const existingHeader = document.querySelector('header.site-header');
+  if (existingHeader) {
+    existingHeader.outerHTML = headerHtml;
+  } else if (document.body.firstElementChild) {
+    document.body.insertAdjacentHTML('afterbegin', headerHtml);
+  } else {
+    document.body.innerHTML = headerHtml + document.body.innerHTML;
+  }
+
+  // Replace or insert nav
+  const existingNav = document.querySelector('nav');
+  const headerEl = document.querySelector('header.site-header');
+  if (existingNav) {
+    existingNav.outerHTML = navHtml;
+  } else if (headerEl) {
+    headerEl.insertAdjacentHTML('afterend', navHtml);
+  } else {
+    document.body.insertAdjacentHTML('afterbegin', navHtml);
+  }
+
+  // Replace or insert footer
+  const existingFooter = document.querySelector('footer');
+  if (existingFooter) {
+    existingFooter.outerHTML = footerHtml;
+  } else {
+    document.body.insertAdjacentHTML('beforeend', footerHtml);
+  }
+
+  // Ensure a single scroll-to-top button exists
+  const existingBtns = document.querySelectorAll('#scrollTopBtn');
+  existingBtns.forEach((btn, idx) => { if (idx > 0) btn.remove(); });
+  if (!document.getElementById('scrollTopBtn')) {
+    const btn = document.createElement('button');
+    btn.id = 'scrollTopBtn';
+    btn.className = 'scroll-top-btn';
+    btn.textContent = '⬆️ Top';
+    document.body.appendChild(btn);
+  }
+}
+
+// ================= HEAD META (Title + Favicon) =================
+function ensureHeadMeta() {
+  const head = document.head || document.getElementsByTagName('head')[0];
+  if (!head) return;
+
+  const base = getBasePrefix();
+  const desiredIconHref = `${base}images/sitelogo/bloxtrex.png`;
+
+  // Favicon: add or enforce
+  let iconLink = head.querySelector('link[rel="icon"]');
+  if (!iconLink) {
+    iconLink = document.createElement('link');
+    iconLink.setAttribute('rel', 'icon');
+    iconLink.setAttribute('type', 'image/png');
+    head.appendChild(iconLink);
+  }
+  iconLink.setAttribute('href', desiredIconHref);
+
+  // Title: ensure there is a meaningful title and brand suffix
+  const brand = 'Blox Fruits Fan Wiki';
+  const title = document.title || '';
+  const hasBrand = /Blox\s*Fruits|Bloxtreck|BloxTreck/i.test(title);
+
+  function derivePageName() {
+    const candidate = document.querySelector('main h1, main h2, .blox-fruits-info h2, .logo-title h1');
+    return candidate ? candidate.textContent.trim() : '';
+  }
+
+  if (!title || /^\s*$/.test(title) || /^Document$/i.test(title)) {
+    const name = derivePageName();
+    document.title = name ? `${name} — ${brand}` : brand;
+  } else if (!hasBrand) {
+    document.title = `${title} — ${brand}`;
+  }
+}
 
 // ================= DARK MODE =================
 function initializeDarkMode() {
@@ -150,7 +280,8 @@ function initializeSearch() {
     };
     
     const page = pageMap[item.category] || "index.html";
-    window.location.href = page;
+    const base = getBasePrefix();
+    window.location.href = base + page;
   }
 
   // Add event listeners to all search inputs
@@ -265,22 +396,13 @@ function loadPageContent() {
 
 function setActiveNavLink(currentPage) {
   const navLinks = document.querySelectorAll("nav a");
-  const pageMap = {
-    "index.html": "Home",
-    "fruits.html": "Fruits",
-    "swords.html": "Swords",
-    "guns.html": "Guns",
-    "styles.html": "Fighting Styles",
-    "accessories.html": "Accessories",
-    "islands.html": "Islands",
-    "bosses.html": "Bosses",
-    "npcs.html": "NPCs"
-  };
+  const normalize = (p) => String(p || "").split("/").pop();
+  const current = normalize(currentPage);
   
   navLinks.forEach(link => {
     link.classList.remove("active");
-    const linkPage = link.getAttribute("href");
-    if (pageMap[linkPage] === pageMap[currentPage]) {
+    const linkPage = normalize(link.getAttribute("href"));
+    if (linkPage === current) {
       link.classList.add("active");
     }
   });
@@ -288,7 +410,7 @@ function setActiveNavLink(currentPage) {
 
 function loadHomePage() {
   // Home page specific initialization
-  console.log("Loading home page content");
+  // console.log("Loading home page content");
 }
 
 function loadCategoryPage(page) {

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{TITLE}} — BloxTreck</title>
+    <!-- If you copy this file into *_pages/ (e.g. fruits_pages/), keep the ../ paths below -->
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="icon" href="../images/sitelogo/bloxtrex.png" type="image/png" />
+  </head>
+  <body>
+    <!-- Header/Nav/Footer are auto-rendered and unified by script.js (renderGlobalChrome) -->
+    <header class="site-header"></header>
+    <nav></nav>
+
+    <main>
+      <section class="blox-fruits-info" data-category="{{CATEGORY}}" data-type="{{TYPE}}" data-rarity="{{RARITY}}">
+        <h2>{{TITLE}}</h2>
+        <p>{{SHORT_DESCRIPTION}}</p>
+      </section>
+
+      <section class="blox-contents">
+        <h3>Overview</h3>
+        <ul>
+          <li>Category: {{CATEGORY}}</li>
+          <li>Type: {{TYPE}}</li>
+          <li>Rarity: {{RARITY}}</li>
+          <li>Location/How to obtain: {{OBTAINMENT}}</li>
+        </ul>
+      </section>
+
+      <section class="featured-content">
+        <h2>Stats</h2>
+        <table class="dataTable">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Price (Money)</td><td>{{PRICE_MONEY}}</td></tr>
+            <tr><td>Price (Robux)</td><td>{{PRICE_ROBUX}}</td></tr>
+            <tr><td>Requirements</td><td>{{REQUIREMENTS}}</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="quick-links">
+        <h2>Abilities</h2>
+        <div class="links-grid">
+          <div class="link-card">{{ABILITY_1}}</div>
+          <div class="link-card">{{ABILITY_2}}</div>
+          <div class="link-card">{{ABILITY_3}}</div>
+          <div class="link-card">{{ABILITY_4}}</div>
+        </div>
+      </section>
+
+      <section class="community-spotlight">
+        <h2>Notes</h2>
+        <div class="spotlight-grid">
+          <div class="spotlight-card"><p>{{NOTE_1}}</p></div>
+          <div class="spotlight-card"><p>{{NOTE_2}}</p></div>
+          <div class="spotlight-card"><p>{{NOTE_3}}</p></div>
+        </div>
+      </section>
+    </main>
+
+    <footer></footer>
+    <button id="scrollTopBtn" class="scroll-top-btn" aria-hidden="true">⬆️ Top</button>
+
+    <!-- If copied into *_pages/, keep ../ below -->
+    <script src="../script.js"></script>
+  </body>
+</html>
