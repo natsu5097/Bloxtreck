@@ -240,3 +240,5 @@ footer {
 .dark .category-card, .dark .item-card { border-color: #333; }
 .dark .dataTable { border-color: #333; }
 .dark .dataTable th { background: var(--primary-strong); }
+.dark .dataTable tr:nth-child(even) { background-color: #2a2a3a; }
+.dark .dataTable tr:hover { background-color: #3a3a4a; }
