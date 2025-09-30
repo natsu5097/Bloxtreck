@@ -1,244 +1,424 @@
+/* === GOOGLE FONTS === */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ================= VARIABLES ================= */
 :root {
-  --bg: #f8faff;
-  --text: #0f1c3f;
-  --primary: #1a73e8;
-  --primary-strong: #145dbf;
-  --header: #1a4f9c;
-  --card: #ffffff;
-  --card-hover: #f1f6ff;
-  --muted: #6b7280;
-  --radius: 8px;
-  --gap: 1rem;
-  --container-max: 1100px;
-  --base-font-size: 16px;
-  --shadow-light: rgba(0, 0, 0, 0.05);
-  --shadow-heavy: rgba(0, 0, 0, 0.12);
+  --header-height: 5rem;
+
+  /* === Colors (Light Mode) === */
+  --bg-color: #f4f5f8;
+  --bg-color-alt: #fff;
+  --text-color: #1a1a1a;
+  --text-color-muted: #6c757d;
+  --primary-color: #007bff;
+  --primary-color-alt: #0056b3;
+  --border-color: #dee2e6;
+  --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.08);
+
+  /* === Font & Typography === */
+  --body-font: 'Poppins', sans-serif;
+  --h1-font-size: 2.25rem;
+  --h2-font-size: 1.75rem;
+  --h3-font-size: 1.25rem;
+  --normal-font-size: 1rem;
+  --small-font-size: 0.875rem;
+
+  /* === Font Weight === */
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+
+  /* === Margins & Paddings === */
+  --mb-0-5: 0.5rem;
+  --mb-1: 1rem;
+  --mb-1-5: 1.5rem;
+  --mb-2: 2rem;
+
+  /* === z-index === */
+  --z-fixed: 100;
 }
 
-/* ================= GLOBAL RESET ================= */
-*, *::before, *::after { box-sizing: border-box; }
-html { font-size: var(--base-font-size); scroll-behavior: smooth; }
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--bg);
-  color: var(--text);
-  margin: 0; padding: 0;
-  line-height: 1.6;
+/* ================= DARK MODE VARIABLES ================= */
+body.dark {
+  --bg-color: #1a1a2e;
+  --bg-color-alt: #16213e;
+  --text-color: #e0e1e6;
+  --text-color-muted: #a7a9af;
+  --primary-color: #3a9efd;
+  --primary-color-alt: #61b5ff;
+  --border-color: #394867;
+  --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --card-shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
-img { max-width: 100%; display: block; }
-a { color: var(--primary); text-decoration: none; }
-a:hover { text-decoration: underline; }
+
+/* ================= BASE ================= */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 {
+  color: var(--text-color);
+  font-weight: var(--font-semibold);
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: var(--primary-color-alt);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ================= LAYOUT ================= */
+.container {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--mb-1-5);
+}
 
 /* ================= HEADER ================= */
-header {
-  background-color: var(--header);
-  color: #fff;
-  padding: 1rem 2rem;
+.site-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-fixed);
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s, border-color 0.3s;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  box-shadow: 0 2px 5px var(--shadow-light);
+  padding: 1rem var(--mb-1-5);
 }
-header h1 { margin: 0; font-size: 1.6rem; }
-.logo-title { display: flex; align-items: center; gap: .75rem; }
+
+body.dark .site-header {
+  background-color: rgba(22, 33, 62, 0.8);
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: var(--mb-1);
+}
+
 .site-logo {
-  width: 42px; height: 42px;
-  object-fit: contain;
+  width: 40px;
+  height: 40px;
   border-radius: 6px;
-  transition: transform 0.2s;
+  transition: transform 0.3s ease;
 }
-.site-logo:hover { transform: scale(1.05); }
+
+.site-logo:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.logo-title h1 a {
+  font-size: 1.5rem;
+  color: var(--text-color);
+  font-weight: var(--font-semibold);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--mb-1);
+}
+
+#search-box {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--bg-color-alt);
+  color: var(--text-color);
+  width: 250px;
+  transition: all 0.3s;
+}
+
+#search-box:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+#darkToggle {
+  font-size: 1.5rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  padding: 0.25rem;
+}
 
 /* ================= NAVIGATION ================= */
 nav {
-  background: #ffffff;
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: .5rem;
-  padding: .5rem 1rem;
-  border-bottom: 1px solid #d0d7de;
+  padding: 1rem;
+  margin-top: var(--header-height);
+  background-color: var(--bg-color-alt);
+  border-bottom: 1px solid var(--border-color);
 }
+
 nav a {
-  padding: .4rem .8rem;
-  border-radius: var(--radius);
-  font-weight: 500;
-  color: var(--text);
-  transition: background .2s;
+  padding: 0.5rem 1rem;
+  color: var(--text-color-muted);
+  font-weight: var(--font-medium);
+  border-radius: 6px;
+  position: relative;
 }
-nav a:hover { background: var(--primary); color: #fff; }
-nav .active { background: var(--primary-strong); color: #fff; }
+
+nav a:hover {
+  color: var(--primary-color);
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+nav a.active {
+  color: #fff;
+  background-color: var(--primary-color);
+}
 
 /* ================= MAIN CONTENT ================= */
 main {
-  max-width: var(--container-max);
-  margin: 2rem auto;
-  padding: 0 1rem;
+  padding: var(--mb-2) 0;
 }
-main h2 {
-  font-size: 1.6rem;
-  margin-bottom: .5rem;
-  color: var(--header);
-}
-main p { margin-bottom: 1rem; color: var(--muted); }
 
 /* ================= CATEGORY CARDS ================= */
 .categories {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: var(--gap);
-  margin: 1.5rem 0;
+  gap: var(--mb-1-5);
+  margin-bottom: var(--mb-2);
 }
+
 .category-card {
-  background: var(--card);
-  padding: 1rem;
-  border: 1px solid #e5e9f0;
-  border-radius: var(--radius);
+  background-color: var(--bg-color-alt);
+  padding: var(--mb-1-5);
+  border-radius: 8px;
   text-align: center;
-  transition: transform .2s, box-shadow .2s, background-color .2s;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.category-card img {
-  width: 70px; height: 70px;
-  margin-bottom: .5rem;
-}
-.category-card h3 { margin: .5rem 0 0; font-size: 1rem; }
+
 .category-card:hover {
-  transform: translateY(-4px);
-  background: var(--card-hover);
-  box-shadow: 0 4px 12px var(--shadow-light);
+  transform: translateY(-5px);
+  box-shadow: var(--card-shadow-hover);
 }
 
-/* ================= BLOX FRUITS INFO SECTION ================= */
-.blox-fruits-info {
-    background-color: #2c2a24; /* Dark brown background */
-    border: 2px solid #b9975b; /* Gold border */
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    margin: 2rem 0;
-    text-align: center;
-    color: #e0e0e0; /* Light text color */
+.category-card img {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto var(--mb-0-5);
 }
 
-.welcome-banner {
-    background-color: #f0b90b; /* Bright yellow */
-    color: #000;
-    font-size: 1.8rem;
-    font-weight: bold;
-    padding: 0.75rem;
-    margin: -1.5rem -1.5rem 1.5rem -1.5rem; /* Extend to edges */
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom: 2px solid #b9975b;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+.category-card h3 {
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-medium);
 }
 
-.logo-container {
-    margin-bottom: 1.5rem;
-    display: flex;
-    justify-content: center;
+/* ================= INFO & CONTENTS SECTION ================= */
+.blox-fruits-info, .blox-contents {
+  background-color: var(--bg-color-alt);
+  padding: var(--mb-2);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin-bottom: var(--mb-2);
 }
 
-.wiki-logo {
-    max-width: 250px;
+.blox-fruits-info h2, .blox-contents h3 {
+  margin-bottom: var(--mb-1);
+  font-size: var(--h2-font-size);
+  color: var(--primary-color);
 }
 
-.blox-fruits-info p {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    color: #ccc; /* Slightly dimmer text */
+.blox-fruits-info p, .blox-contents ul {
+  color: var(--text-color-muted);
+  line-height: 1.7;
 }
 
-.blox-fruits-info p a {
-    color: #f0b90b; /* Yellow links */
-    font-weight: bold;
+.blox-contents ul {
+  list-style-position: inside;
 }
 
-.blox-fruits-info p a:hover {
-    color: #ffd700; /* Lighter yellow on hover */
-}
-
-.wiki-stats {
-    margin-top: 2rem;
-    font-size: 1rem;
-    color: #b9975b; /* Gold color for stats */
-    font-weight: 500;
-}
-
-/* ================= ITEM GRID ================= */
-.items-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: var(--gap);
-}
-.item-card {
-  background: var(--card);
-  border: 1px solid #e5e9f0;
-  border-radius: var(--radius);
-  padding: 1rem;
-  text-align: center;
-  transition: transform .2s, background-color .2s;
-}
-.item-card img {
-  width: 80px; height: 80px;
-  margin-bottom: .5rem;
-}
-.item-card h3 { margin: .5rem 0; font-size: 1.1rem; }
-.item-card p { color: var(--muted); font-size: .9rem; }
-.item-card:hover {
-  background: var(--card-hover);
-  transform: translateY(-4px);
-}
-
-/* ================= TABLES (for fruits, swords, etc.) ================= */
+/* ================= TABLES ================= */
 .dataTable {
   width: 100%;
   border-collapse: collapse;
-  margin: 1.5rem 0;
-  background: var(--card);
-  border: 1px solid #e5e9f0;
+  margin: var(--mb-2) 0;
+  background-color: var(--bg-color-alt);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
 }
+
 .dataTable th, .dataTable td {
-  padding: .75rem 1rem;
+  padding: 1rem;
   text-align: left;
-  border-bottom: 1px solid #e5e9f0;
+  border-bottom: 1px solid var(--border-color);
 }
+
 .dataTable th {
-  background: var(--primary);
+  background-color: var(--primary-color);
   color: #fff;
+  font-weight: var(--font-semibold);
   text-transform: uppercase;
-  font-size: .85rem;
+  font-size: var(--small-font-size);
 }
-.dataTable tr:nth-child(even) { background: #f9fbfd; }
-.dataTable tr:hover { background: #eef5ff; }
+
+.dataTable tr {
+  transition: background-color 0.3s;
+}
+
+.dataTable tr:nth-child(even) {
+  background-color: var(--bg-color);
+}
+
+.dataTable tr:last-child td {
+  border-bottom: none;
+}
+
+.dataTable tr:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+body.dark .dataTable tr:nth-child(even) {
+  background-color: #2c3e50;
+}
+
+body.dark .dataTable tr:hover {
+  background-color: #34495e;
+}
+
+/* ================= COLLAPSIBLE SECTIONS ================= */
+.collapsible-section {
+  margin-bottom: var(--mb-1);
+}
+
+.collapsible-header {
+  background-color: var(--bg-color-alt);
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 1rem;
+  width: 100%;
+  border: 1px solid var(--border-color);
+  text-align: left;
+  outline: none;
+  font-size: var(--h3-font-size);
+  transition: background-color 0.3s;
+  border-radius: 8px;
+}
+
+.collapsible-header:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.collapsible-content {
+  padding: 1.5rem;
+  background-color: var(--bg-color-alt);
+  border: 1px solid var(--border-color);
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
 
 /* ================= FOOTER ================= */
 footer {
   text-align: center;
-  padding: 1rem;
-  background: var(--header);
-  color: #fff;
-  margin-top: 2rem;
-  font-size: .9rem;
+  padding: var(--mb-2) 0;
+  margin-top: var(--mb-2);
+  background-color: var(--bg-color-alt);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-color-muted);
+  font-size: var(--small-font-size);
 }
 
-/* ================= DARK MODE ================= */
-.dark {
-  --bg: #0f111a;
-  --text: #e6f0fa;
-  --card: #1c1c2b;
-  --card-hover: #2b2b3a;
-  --muted: #aaa;
+/* ================= SCROLL TOP BUTTON ================= */
+#scrollTopBtn {
+  position: fixed;
+  bottom: -20%;
+  right: 1rem;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: bottom 0.4s, transform 0.3s;
+  z-index: var(--z-fixed);
 }
-.dark body { background: var(--bg); color: var(--text); }
-.dark nav { background: #111; border-color: #333; }
-.dark nav a { color: #eee; }
-.dark nav a:hover, .dark nav .active { background: var(--primary); color: #fff; }
-.dark .category-card, .dark .item-card { border-color: #333; }
-.dark .dataTable { border-color: #333; }
-.dark .dataTable th { background: var(--primary-strong); }
-.dark .dataTable tr:nth-child(even) { background-color: #2a2a3a; }
-.dark .dataTable tr:hover { background-color: #3a3a4a; }
+
+#scrollTopBtn:hover {
+  background-color: var(--primary-color-alt);
+  transform: scale(1.1);
+}
+
+#scrollTopBtn.show {
+  bottom: 1rem;
+}
+
+/* ================= ACCESSIBILITY ================= */
+:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* ================= MEDIA QUERIES ================= */
+@media screen and (max-width: 768px) {
+  :root {
+    --h1-font-size: 1.75rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.125rem;
+  }
+
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--mb-1);
+    position: static;
+  }
+
+  .logo-title h1 a {
+    font-size: 1.25rem;
+  }
+
+  nav {
+    margin-top: 0;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  
+  main {
+    margin-top: 0;
+  }
+}
