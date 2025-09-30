@@ -1,52 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Swords - Blox Fruits Wiki</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swords | Blox Fruits Fan Wiki</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/sitelogo/favicon_io/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/sitelogo/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
-  <!-- ================= HEADER ================= -->
-  <header>
-    <h1>⚔️ Swords</h1>
-    <div class="header-controls">
-      <input type="text" id="search-swords" placeholder="Search swords...">
-      <button id="darkModeToggle"><span class="icon">🌙</span></button>
-    </div>
-  </header>
+    <header class="site-header">
+        <div class="logo-title">
+            <a href="index.html">
+                <img src="images/sitelogo/bloxtrex.png" alt="Blox Fruits Wiki Logo" class="site-logo">
+            </a>
+            <h1><a href="index.html" style="color:inherit; text-decoration:none;">Blox Fruits Fan Wiki</a></h1>
+        </div>
+        <div class="header-controls">
+            <input id="search-box" type="search" placeholder="Filter swords..." aria-label="Filter swords">
+            <button id="darkToggle" aria-pressed="false" title="Toggle dark mode">🌙</button>
+        </div>
+    </header>
 
-  <!-- ================= NAVIGATION ================= -->
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="fruits.html">Fruits</a>
-    <a href="swords.html" class="active">Swords</a>
-    <a href="guns.html">Guns</a>
-    <a href="styles.html">Fighting Styles</a>
-    <a href="accessories.html">Accessories</a>
-    <a href="islands.html">Islands</a>
-    <a href="bosses.html">Bosses</a>
-    <a href="npcs.html">NPCs</a>
-  </nav>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="fruits.html">Fruits</a>
+        <a href="swords.html" class="active">Swords</a>
+        <a href="guns.html">Guns</a>
+        <a href="styles.html">Fighting Styles</a>
+    </nav>
 
-  <!-- ================= SEARCH RESULTS ================= -->
-  <div id="search-results" class="search-results"></div>
-  <button id="clear-search" style="display:none; position:fixed; top:100px; right:20px;">Clear Search</button>
+    <main>
+        <section class="blox-fruits-info">
+            <h2>Swords Overview</h2>
+            <p>
+                Swords are a weapon classification of up-close-and-personal melee weapons that can be found and bought everywhere in Blox Fruits.
+                Most swords have a focus on precise, close-ranged moves that deal high damage. All swords have two unique abilities, and some swords have imbued or skills that originate from their Blox Fruit counterpart (or from somewhere else).
+            </p>
+            <p>
+                All swords can also be upgraded via the Blacksmith and enchanted via the Dragon Talon Sage to deal extra damage or to gain unique abilities relative to the enchantments.
+            </p>
+            <div class="blox-contents">
+                <h3>Contents</h3>
+                <ul>
+                    <li><a href="#obtainment">Obtainment</a></li>
+                    <li><a href="#list">List of Swords</a></li>
+                    <li><a href="#notes">Notes</a></li>
+                    <li><a href="#change-history">Change History</a></li>
+                    <li><a href="#navigation">Navigation</a></li>
+                </ul>
+            </div>
+        </section>
 
-  <!-- ================= MAIN CONTENT ================= -->
-  <main>
-    <section class="items-grid" id="swords-container">
-      <!-- Swords will be dynamically inserted here -->
-    </section>
-  </main>
+        <section class="categories" id="swords-list" aria-label="Sword list">
+            <div class="category-card"><h3><a href="swords_pages/cutlass.html">Cutlass</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/dual-katana.html">Dual Katana</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/katana.html">Katana</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/iron-mace.html">Iron Mace</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/shark-saw.html">Shark Saw</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/triple-katana.html">Triple Katana</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/twin-hooks.html">Twin Hooks</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/dragon-trident.html">Dragon Trident</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/dual-headed-blade.html">Dual-Headed Blade</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/flail.html">Flail</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/gravity-blade.html">Gravity Blade</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/longsword.html">Longsword</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/pipe.html">Pipe</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/soul-cane.html">Soul Cane</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/trident.html">Trident</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/wardens-sword.html">Wardens Sword</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/bisento.html">Bisento</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/buddy-sword.html">Buddy Sword</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/canvander.html">Canvander</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/dark-dagger.html">Dark Dagger</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/dragonheart.html">Dragonheart</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/fox-lamp.html">Fox Lamp</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/koko.html">Koko</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/midnight-blade.html">Midnight Blade</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/oroshi.html">Oroshi</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/pole-1st-form.html">Pole (1st form)</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/pole-2nd-form.html">Pole (2nd form)</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/rengoku.html">Rengoku</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/saber.html">Saber</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/saishi.html">Saishi</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/shark-anchor.html">Shark Anchor</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/shizui.html">Shizui</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/spikey-trident.html">Spikey Trident</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/tushita.html">Tushita</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/yama.html">Yama</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/cursed-dual-katana.html">Cursed Dual Katana</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/dark-blade.html">Dark Blade</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/hollow-scythe.html">Hollow Scythe</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/triple-dark-blade.html">Triple Dark Blade</a></h3></div>
+            <div class="category-card"><h3><a href="swords_pages/true-triple-katana.html">True Triple Katana</a></h3></div>
+        </section>
 
-  <!-- ================= SCROLL TOP BUTTON ================= -->
-  <button id="scrollTopBtn" class="scroll-top-btn">⬆️ Top</button>
+        <div class="collapsible-section" id="obtainment">
+            <h3 class="collapsible-header">Obtainment</h3>
+            <div class="collapsible-content">
+                <p>There are several ways of obtaining swords, including:</p>
+                <ul>
+                    <li>Buying swords from NPCs.</li>
+                    <li>Drops from bosses.</li>
+                    <li>Completing puzzles and tasks, although these are usually boss drops as well.</li>
+                    <li>In the case of Dark Blade, players can obtain the Game Pass by purchasing it with Robux R$ , receiving it as a gift, or trading for it.</li>
+                </ul>
+            </div>
+        </div>
 
-  <footer>
-    <p>Fan-made Blox Fruits Wiki &copy; Natsu</p>
-  </footer>
+        <div class="collapsible-section" id="list">
+            <h3 class="collapsible-header">List of Swords</h3>
+            <div class="collapsible-content">
+                <p>There is a total of 40 swords in the game:</p>
+                <table class="dataTable" border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse; width:100%; max-width:600px; margin:auto;">
+                    <thead>
+                        <tr><th>Rarity</th><th>Amount</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Common</td><td>3</td><td>The weakest and cheapest swords usually used by low level players.</td></tr>
+                        <tr><td>Uncommon</td><td>4</td><td>Still weak, but slightly better than common swords. Only one of them is not as bad, which is the Twin Hooks.</td></tr>
+                        <tr><td>Rare</td><td>9</td><td>Decent, but still not as good as higher tier swords. Some of them are considered as great swords.</td></tr>
+                        <tr><td>Legendary</td><td>19</td><td>These swords are strong and are usually effective for both grinding and PvP. Most of them are popular amongst players for PvP.</td></tr>
+                        <tr><td>Mythical</td><td>5</td><td>These swords are the rarest and are considered as the best swords in most cases.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.basic.min.js"></script>
-  <script src="script.js"></script>
+        <div class="collapsible-section" id="notes">
+            <h3 class="collapsible-header">Notes</h3>
+            <div class="collapsible-content">
+                <ul>
+                    <li>All swords and their abilities cannot harm Blade users due to their passive immunity to swords, even by using Aura. However, certain sword abilities will still be able to stun-lock Blade users.</li>
+                    <li>However, bosses with swords can still damage Blade users because bosses can overcome all immunities.</li>
+                    <li>This also applies to the Chef who uses Blade, although he has a rare (1/3) chance of being hit.</li>
+                    <li>Koko is the only sword which is buffed by a fruit other than Buddha, and that fruit is Control.</li>
+                    <li>When the user is in Control Area, Koko's range and AoE output are significantly increased.</li>
+                    <li>In their transformations, Buddha can increase the size of the sword and the AoE of its M1 output of fighting styles or swords.</li>
+                    <li>Some sword abilities may not be affected by transformation. (e.g. Midnight Blade)</li>
+                    <li>The [M1] attacks' damage is slightly reduced by Buddha's transformation, but due to the defense buff of Buddha and increased AoE, this is not a significant issue.</li>
+                    <li>When Aura is active while using certain higher rarity swords, they will emanate a glowing aura, as seen with the Cursed Dual Katana.</li>
+                    <li>Many swords have Destructible Physics, similar to many other Guns, Fruits, and fighting styles.</li>
+                    <li>Some swords have level prerequisites (e.g. Tushita requires the player to be Lv. 2000+)</li>
+                    <li>Swords at higher rarities, especially Mythical and Legendary tend to have higher raw damage than fruits (both M1's and skills), presumably to make up for their fewer skills and inferior mobility.</li>
+                    <li>If the player is playing on console, swords will appear in their hotbar by name.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="collapsible-section" id="change-history">
+            <h3 class="collapsible-header">Change History</h3>
+            <div class="collapsible-content">
+                <p>...</p>
+            </div>
+        </div>
+
+        <div class="collapsible-section" id="navigation">
+            <h3 class="collapsible-header">Navigation</h3>
+            <div class="collapsible-content">
+                <p>...</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>Fan-made Blox Fruits Wiki | Credits: Natsu</p>
+        <button id="scrollTopBtn" class="scroll-top-btn" aria-hidden="true">⬆️</button>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
