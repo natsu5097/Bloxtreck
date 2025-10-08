@@ -49,6 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeComparisonTool();
   initializeRatingSystem();
   initializeAnimatedStats();
+  initializeBackToTop();
+  initializeSortableTables();
   loadPageContent();
   
   // Add smooth scrolling for better UX
@@ -197,26 +199,129 @@ function initializeDarkMode() {
   if (!darkToggle) return;
 
   const icon = darkToggle.querySelector(".icon");
-  const currentTheme = localStorage.getItem("theme") || "light";
+  const body = document.body;
   
-  if (currentTheme === "dark") {
-    document.body.classList.add("dark");
-    if (icon) icon.textContent = "☀️";
-  }
-
-  darkToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    const isDark = document.body.classList.contains("dark");
-    
-    if (isDark) {
-      localStorage.setItem("theme", "dark");
-      if (icon) icon.textContent = "☀️";
-    } else {
-      localStorage.setItem("theme", "light");
-      if (icon) icon.textContent = "🌙";
+  // Check for saved theme preference or default to system preference
+  const savedTheme = localStorage.getItem("theme");
+  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const currentTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
+  
+  // Apply the theme
+  applyTheme(currentTheme);
+  
+  // Listen for system theme changes
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+    if (!localStorage.getItem("theme")) {
+      applyTheme(e.matches ? "dark" : "light");
     }
   });
+
+  darkToggle.addEventListener("click", () => {
+    const isDark = body.classList.contains("dark");
+    const newTheme = isDark ? "light" : "dark";
+    applyTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    
+    // Show theme change notification
+    showThemeNotification(newTheme);
+  });
+  
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      body.classList.add("dark");
+      if (icon) {
+        icon.textContent = "☀️";
+        icon.setAttribute("aria-label", "Switch to light mode");
+      }
+      updateMetaThemeColor("#1a1a1a");
+    } else {
+      body.classList.remove("dark");
+      if (icon) {
+        icon.textContent = "🌙";
+        icon.setAttribute("aria-label", "Switch to dark mode");
+      }
+      updateMetaThemeColor("#ffffff");
+    }
+  }
+  
+  function updateMetaThemeColor(color) {
+    let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (!metaThemeColor) {
+      metaThemeColor = document.createElement("meta");
+      metaThemeColor.name = "theme-color";
+      document.head.appendChild(metaThemeColor);
+    }
+    metaThemeColor.content = color;
+  }
+  
+  function showThemeNotification(theme) {
+    const notification = document.createElement("div");
+    notification.className = "theme-notification";
+    notification.innerHTML = `
+      <div class="theme-notification-content">
+        <span class="theme-icon">${theme === "dark" ? "🌙" : "☀️"}</span>
+        <span class="theme-text">Switched to ${theme} mode</span>
+      </div>
+    `;
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: var(--card-shadow-hover);
+      z-index: 10000;
+      border: 1px solid var(--border-color);
+      animation: themeNotification 3s ease forwards;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.remove();
+    }, 3000);
+  }
 }
+
+// Add theme notification animation
+const themeStyle = document.createElement("style");
+themeStyle.textContent = `
+  @keyframes themeNotification {
+    0% {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    10% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    90% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+  
+  .theme-notification-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .theme-icon {
+    font-size: 1.2rem;
+  }
+  
+  .theme-text {
+    font-weight: var(--font-medium);
+  }
+`;
+document.head.appendChild(themeStyle);
 
 // ================= CATEGORY PAGE FILTERING =================
 function initializeCategoryFilter() {
@@ -280,15 +385,33 @@ function initializeSearch() {
   
   if (!searchInputs.length) return;
 
+  // Enhanced search data with more comprehensive information
+  const enhancedSearchData = [
+    ...allItems,
+    // Add more specific search terms
+    { id: 100, name: "Flame Fruit", category: "Fruits", type: "Natural", description: "Fire-based attacks and immunity", rarity: "Rare", searchTerms: ["fire", "burn", "heat"] },
+    { id: 101, name: "Ice Fruit", category: "Fruits", type: "Natural", description: "Ice attacks and freezing abilities", rarity: "Rare", searchTerms: ["freeze", "cold", "snow"] },
+    { id: 102, name: "Lightning Fruit", category: "Fruits", type: "Natural", description: "Electric attacks and speed boost", rarity: "Legendary", searchTerms: ["electric", "thunder", "speed"] },
+    { id: 103, name: "Dark Blade", category: "Swords", type: "Weapon", description: "Ultimate dark weapon with immense power", rarity: "Mythical", searchTerms: ["darkness", "shadow", "evil"] },
+    { id: 104, name: "Dragon Fruit", category: "Fruits", type: "Mythical", description: "Ultimate mythical dragon transformation", rarity: "Mythical", searchTerms: ["dragon", "mythical", "ultimate"] }
+  ];
+
   // Initialize Fuse.js for fuzzy search if available, otherwise create a tiny fallback
   let fuse = null;
   if (typeof Fuse === 'function') {
-    fuse = new Fuse(allItems, {
-      keys: ["name", "description", "category", "type", "rarity"],
-      threshold: 0.3, // Slightly more strict matching
+    fuse = new Fuse(enhancedSearchData, {
+      keys: [
+        { name: "name", weight: 0.4 },
+        { name: "description", weight: 0.2 },
+        { name: "category", weight: 0.2 },
+        { name: "type", weight: 0.1 },
+        { name: "rarity", weight: 0.1 }
+      ],
+      threshold: 0.4,
       includeScore: true,
       shouldSort: true,
-      minMatchCharLength: 2
+      minMatchCharLength: 1,
+      findAllMatches: true
     });
   } else {
     // Enhanced fallback with weighted scoring
@@ -298,7 +421,7 @@ function initializeSearch() {
         if (!s) return [];
         
         // Calculate relevance score for better sorting
-        const matches = allItems
+        const matches = enhancedSearchData
           .map(item => {
             let score = 0;
             // Name match (highest priority)
@@ -307,6 +430,12 @@ function initializeSearch() {
               // Exact match or starts with gets higher score
               if ((item.name || '').toLowerCase() === s) score += 5;
               if ((item.name || '').toLowerCase().startsWith(s)) score += 3;
+            }
+            // Search terms match
+            if (item.searchTerms) {
+              item.searchTerms.forEach(term => {
+                if (term.toLowerCase().includes(s)) score += 8;
+              });
             }
             // Category match
             if ((item.category || '').toLowerCase().includes(s)) score += 5;
@@ -329,7 +458,7 @@ function initializeSearch() {
 
   let selectedIndex = -1;
 
-  function renderSearchResults(results) {
+  function renderSearchResults(results, query = '') {
     if (!searchResults) return;
     searchResults.innerHTML = "";
     
@@ -340,7 +469,7 @@ function initializeSearch() {
     
     // Add header with result count and close button
     const header = document.createElement("div");
-    header.className = "search-header";
+    header.className = "search-results-header";
     header.innerHTML = `
       <span>${results.length} result${results.length > 1 ? 's' : ''} found</span>
       <button class="close-search" aria-label="Close search results">×</button>
@@ -352,50 +481,73 @@ function initializeSearch() {
     resultsContainer.className = "search-results-content";
     searchResults.appendChild(resultsContainer);
     
+    // Group results by category for better organization
+    const groupedResults = {};
     results.forEach((r, i) => {
       const item = r.item || r;
-      const card = document.createElement("div");
-      card.className = "result-card";
-      card.dataset.index = i;
-      card.setAttribute("tabindex", "0"); // Make focusable for keyboard navigation
+      const category = item.category || 'Other';
+      if (!groupedResults[category]) {
+        groupedResults[category] = [];
+      }
+      groupedResults[category].push({ ...r, originalIndex: i });
+    });
+    
+    // Render grouped results
+    Object.keys(groupedResults).forEach(category => {
+      const categoryHeader = document.createElement("div");
+      categoryHeader.className = "search-category-header";
+      categoryHeader.textContent = category;
+      resultsContainer.appendChild(categoryHeader);
       
-      // Format price if available
-      const priceDisplay = item.price_money ? 
-        `<span class="result-price">${Number(item.price_money).toLocaleString()} $</span>` : '';
-      
-      // Show rarity badge if available
-      const rarityBadge = item.rarity ? 
-        `<span class="rarity-badge ${(item.rarity || '').toLowerCase()}">${item.rarity}</span>` : '';
-      
-      card.innerHTML = `
-        <img src="${safeText(item.image_url) || getPlaceholderImage(item.category)}" 
-             alt="${safeText(item.name)}" 
-             loading="lazy" 
-             onerror="this.onerror=null;this.src='${getPlaceholderImage(item.category)}'"/>
-        <div class="meta">
-          <div class="result-header">
-            <h3>${safeText(item.name)}</h3>
-            ${rarityBadge}
+      groupedResults[category].forEach((r, i) => {
+        const item = r.item || r;
+        const card = document.createElement("div");
+        card.className = "result-card";
+        card.dataset.index = r.originalIndex;
+        card.setAttribute("tabindex", "0");
+        
+        // Format price if available
+        const priceDisplay = item.price_money ? 
+          `<span class="result-price">${Number(item.price_money).toLocaleString()} $</span>` : '';
+        
+        // Show rarity badge if available
+        const rarityBadge = item.rarity ? 
+          `<span class="rarity-badge ${(item.rarity || '').toLowerCase()}">${item.rarity}</span>` : '';
+        
+        // Highlight search terms in the name
+        const highlightedName = highlightSearchTerms(safeText(item.name), query);
+        const highlightedDescription = highlightSearchTerms(safeText(item.description || ""), query);
+        
+        card.innerHTML = `
+          <img src="${safeText(item.image_url) || getPlaceholderImage(item.category)}" 
+               alt="${safeText(item.name)}" 
+               loading="lazy" 
+               onerror="this.onerror=null;this.src='${getPlaceholderImage(item.category)}'"/>
+          <div class="meta">
+            <div class="result-header">
+              <h3>${highlightedName}</h3>
+              ${rarityBadge}
+            </div>
+            <p class="result-category">${safeText(item.category)} • ${safeText(item.type)}</p>
+            <p class="result-description">${highlightedDescription.substring(0, 70)}${highlightedDescription.length > 70 ? '...' : ''}</p>
+            ${priceDisplay}
           </div>
-          <p>${safeText(item.category)} • ${safeText(item.type)}</p>
-          <p>${safeText(item.description || "").substring(0, 70)}${(item.description || "").length > 70 ? '...' : ''}</p>
-          ${priceDisplay}
-        </div>
-      `;
-      
-      card.addEventListener("click", () => {
-        navigateToItem(item);
-      });
-      
-      // Add keyboard accessibility
-      card.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
+        `;
+        
+        card.addEventListener("click", () => {
           navigateToItem(item);
-        }
+        });
+        
+        // Add keyboard accessibility
+        card.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            navigateToItem(item);
+          }
+        });
+        
+        resultsContainer.appendChild(card);
       });
-      
-      resultsContainer.appendChild(card);
     });
     
     searchResults.classList.add("active");
@@ -414,6 +566,13 @@ function initializeSearch() {
     }
   }
 
+  // Helper function to highlight search terms
+  function highlightSearchTerms(text, query) {
+    if (!query || !text) return text;
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+  }
+
   function performSearch(query) {
     if (!searchResults) return;
     if (!query || !String(query).trim()) {
@@ -426,13 +585,23 @@ function initializeSearch() {
     
     if (results.length === 0) {
       searchResults.innerHTML = `
-        <div class="search-header">
+        <div class="search-results-header">
           <span>No results found</span>
           <button class="close-search" aria-label="Close search results">×</button>
         </div>
         <div class="no-results">
           <p>No items match your search for "${query}"</p>
           <p>Try using different keywords or check for typos</p>
+          <div class="search-suggestions">
+            <p>Popular searches:</p>
+            <div class="suggestion-tags">
+              <span class="suggestion-tag" data-search="dragon">Dragon</span>
+              <span class="suggestion-tag" data-search="flame">Flame</span>
+              <span class="suggestion-tag" data-search="ice">Ice</span>
+              <span class="suggestion-tag" data-search="legendary">Legendary</span>
+              <span class="suggestion-tag" data-search="mythical">Mythical</span>
+            </div>
+          </div>
         </div>
       `;
       searchResults.classList.add("active");
@@ -444,10 +613,22 @@ function initializeSearch() {
           searchResults.classList.remove("active");
         });
       }
+      
+      // Add click events to suggestion tags
+      const suggestionTags = searchResults.querySelectorAll('.suggestion-tag');
+      suggestionTags.forEach(tag => {
+        tag.addEventListener('click', () => {
+          const searchInput = document.querySelector('input[id*="search"]');
+          if (searchInput) {
+            searchInput.value = tag.dataset.search;
+            performSearch(tag.dataset.search);
+          }
+        });
+      });
       return;
     }
     
-    renderSearchResults(results);
+    renderSearchResults(results, query);
   }
 
   function navigateToItem(item) {
@@ -564,25 +745,82 @@ function initializeCollapsibles() {
   const collapsibleHeaders = document.querySelectorAll(".collapsible-header");
   
   collapsibleHeaders.forEach(header => {
+    // Add keyboard accessibility
+    header.setAttribute('tabindex', '0');
+    header.setAttribute('role', 'button');
+    header.setAttribute('aria-expanded', 'false');
+    
+    const content = header.nextElementSibling;
+    if (!content) return;
+    
+    // Set initial state
+    content.style.maxHeight = '0';
+    content.style.overflow = 'hidden';
+    content.style.transition = 'max-height 0.3s ease, padding 0.3s ease';
+    
     header.addEventListener("click", () => {
-      const content = header.nextElementSibling;
-      if (!content) return;
-      const isActive = content.classList.contains("active");
-      
-      // Close all other sections if this is being opened
-      if (!isActive) {
-        document.querySelectorAll(".collapsible-content.active").forEach(activeContent => {
-          if (activeContent !== content) {
-            activeContent.classList.remove("active");
-            if (activeContent.previousElementSibling) activeContent.previousElementSibling.classList.remove("active");
-          }
-        });
+      toggleCollapsible(header, content);
+    });
+    
+    // Keyboard support
+    header.addEventListener("keydown", (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleCollapsible(header, content);
       }
-      
-      content.classList.toggle("active");
-      header.classList.toggle("active");
     });
   });
+  
+  function toggleCollapsible(header, content) {
+    const isActive = content.classList.contains("active");
+    
+    // Close all other sections if this is being opened (accordion behavior)
+    if (!isActive) {
+      document.querySelectorAll(".collapsible-content.active").forEach(activeContent => {
+        if (activeContent !== content) {
+          const activeHeader = activeContent.previousElementSibling;
+          closeCollapsible(activeHeader, activeContent);
+        }
+      });
+    }
+    
+    if (isActive) {
+      closeCollapsible(header, content);
+    } else {
+      openCollapsible(header, content);
+    }
+  }
+  
+  function openCollapsible(header, content) {
+    content.classList.add("active");
+    header.classList.add("active");
+    header.setAttribute('aria-expanded', 'true');
+    
+    // Calculate the full height
+    const fullHeight = content.scrollHeight;
+    content.style.maxHeight = fullHeight + 'px';
+    
+    // Add a small delay to ensure smooth animation
+    setTimeout(() => {
+      content.style.maxHeight = 'none';
+    }, 300);
+  }
+  
+  function closeCollapsible(header, content) {
+    content.classList.remove("active");
+    header.classList.remove("active");
+    header.setAttribute('aria-expanded', 'false');
+    
+    // Set to current height first, then animate to 0
+    const currentHeight = content.scrollHeight;
+    content.style.maxHeight = currentHeight + 'px';
+    
+    // Force reflow
+    content.offsetHeight;
+    
+    // Animate to 0
+    content.style.maxHeight = '0';
+  }
 }
 
 // ================= PAGE CONTENT LOADING =================
@@ -846,88 +1084,519 @@ function initializeTooltips() {
 
 // ================= COMPARISON TOOL =================
 function initializeComparisonTool() {
-  const comparisonContainer = document.querySelector('.comparison-tool');
-  if (!comparisonContainer) return;
+  // Create comparison modal if it doesn't exist
+  let comparisonModal = document.getElementById('comparison-modal');
+  if (!comparisonModal) {
+    comparisonModal = document.createElement('div');
+    comparisonModal.id = 'comparison-modal';
+    comparisonModal.className = 'comparison-modal';
+    comparisonModal.innerHTML = `
+      <div class="comparison-modal-content">
+        <div class="comparison-header">
+          <h3>Item Comparison</h3>
+          <button class="close-comparison" aria-label="Close comparison">&times;</button>
+        </div>
+        <div class="comparison-grid" id="comparison-grid">
+          <!-- Comparison items will be populated here -->
+        </div>
+        <div class="comparison-actions">
+          <button class="btn btn-secondary" id="clear-comparison">Clear All</button>
+          <button class="btn btn-primary" id="export-comparison">Export Comparison</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(comparisonModal);
+  }
 
   const items = Array.from(document.querySelectorAll('.category-card'));
   const selectedItems = [];
+  const maxSelections = 3; // Allow up to 3 items for comparison
 
+  // Add comparison buttons to items
   items.forEach(item => {
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      
-      if (selectedItems.length < 2) {
-        if (!selectedItems.includes(item)) {
-          selectedItems.push(item);
-          item.classList.add('selected');
-          
-          if (selectedItems.length === 2) {
-            showComparison();
-          }
-        }
-      } else {
-        // Reset selection
-        selectedItems.forEach(selected => selected.classList.remove('selected'));
-        selectedItems.length = 0;
-        hideComparison();
-      }
+    const comparisonBtn = document.createElement('button');
+    comparisonBtn.className = 'compare-btn';
+    comparisonBtn.innerHTML = '⚖️';
+    comparisonBtn.title = 'Add to comparison';
+    comparisonBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleItemSelection(item);
     });
+    item.appendChild(comparisonBtn);
   });
 
-  function showComparison() {
-    // Implementation for showing comparison
-    console.log('Showing comparison between:', selectedItems.map(item => item.querySelector('h3 a').textContent));
+  function toggleItemSelection(item) {
+    const itemName = item.querySelector('h3 a')?.textContent || 'Unknown Item';
+    
+    if (selectedItems.includes(item)) {
+      // Remove from selection
+      selectedItems.splice(selectedItems.indexOf(item), 1);
+      item.classList.remove('selected');
+      item.querySelector('.compare-btn').textContent = '⚖️';
+    } else if (selectedItems.length < maxSelections) {
+      // Add to selection
+      selectedItems.push(item);
+      item.classList.add('selected');
+      item.querySelector('.compare-btn').textContent = '✓';
+    } else {
+      // Show limit reached message
+      showNotification(`Maximum ${maxSelections} items can be compared at once.`);
+      return;
+    }
+
+    updateComparisonDisplay();
   }
 
-  function hideComparison() {
-    // Implementation for hiding comparison
-    console.log('Hiding comparison');
+  function updateComparisonDisplay() {
+    const comparisonGrid = document.getElementById('comparison-grid');
+    comparisonGrid.innerHTML = '';
+
+    if (selectedItems.length === 0) {
+      comparisonModal.style.display = 'none';
+      return;
+    }
+
+    selectedItems.forEach((item, index) => {
+      const itemName = item.querySelector('h3 a')?.textContent || 'Unknown Item';
+      const itemImage = item.querySelector('img')?.src || '';
+      const itemDescription = item.querySelector('p')?.textContent || '';
+      const rarityBadge = item.querySelector('.rarity-badge');
+      const rarity = rarityBadge ? rarityBadge.textContent.toLowerCase() : 'unknown';
+
+      // Get sample stats (in a real app, this would come from a database)
+      const stats = getItemStats(itemName);
+
+      const comparisonItem = document.createElement('div');
+      comparisonItem.className = 'comparison-item';
+      comparisonItem.innerHTML = `
+        <div class="comparison-item-header">
+          <img src="${itemImage}" alt="${itemName}" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=${itemName}'">
+          <h4>${itemName}</h4>
+          <button class="remove-from-comparison" data-index="${index}">&times;</button>
+        </div>
+        <div class="comparison-stats">
+          <div class="stat-row">
+            <span class="stat-label">Rarity:</span>
+            <span class="rarity-badge ${rarity}">${rarity}</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Damage:</span>
+            <span class="stat-value">${stats.damage}</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Level Req:</span>
+            <span class="stat-value">${stats.level}</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Price:</span>
+            <span class="stat-value">${stats.price.toLocaleString()} $</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Type:</span>
+            <span class="stat-value">${stats.type}</span>
+          </div>
+        </div>
+        <div class="comparison-description">
+          <p>${itemDescription}</p>
+        </div>
+      `;
+      comparisonGrid.appendChild(comparisonItem);
+    });
+
+    // Show modal if items are selected
+    if (selectedItems.length > 0) {
+      comparisonModal.style.display = 'flex';
+    }
+  }
+
+  function getItemStats(itemName) {
+    // Sample stats - in a real app, this would come from a database
+    const statsMap = {
+      'Dragon': { damage: 95, level: 1000, price: 3500000, type: 'Zoan' },
+      'Kitsune': { damage: 90, level: 1000, price: 3200000, type: 'Zoan' },
+      'Leopard': { damage: 88, level: 1000, price: 3000000, type: 'Zoan' },
+      'Phoenix': { damage: 85, level: 1000, price: 2800000, type: 'Zoan' },
+      'Venom': { damage: 82, level: 1000, price: 2500000, type: 'Paramecia' },
+      'Dough': { damage: 80, level: 1000, price: 2400000, type: 'Paramecia' },
+      'Shadow': { damage: 78, level: 1000, price: 2300000, type: 'Paramecia' },
+      'Spirit': { damage: 75, level: 1000, price: 2200000, type: 'Paramecia' },
+      'Control': { damage: 72, level: 1000, price: 2100000, type: 'Paramecia' },
+      'Gravity': { damage: 70, level: 1000, price: 2000000, type: 'Paramecia' },
+      'Pain': { damage: 68, level: 1000, price: 1900000, type: 'Paramecia' },
+      'Love': { damage: 65, level: 1000, price: 1800000, type: 'Paramecia' },
+      'Buddha': { damage: 62, level: 1000, price: 1700000, type: 'Zoan' },
+      'Lightning': { damage: 85, level: 700, price: 1500000, type: 'Logia' },
+      'Light': { damage: 82, level: 700, price: 1400000, type: 'Logia' },
+      'Dark': { damage: 80, level: 700, price: 1300000, type: 'Logia' },
+      'Flame': { damage: 78, level: 700, price: 1200000, type: 'Logia' },
+      'Ice': { damage: 75, level: 700, price: 1100000, type: 'Logia' },
+      'Magma': { damage: 72, level: 700, price: 1000000, type: 'Logia' },
+      'Sand': { damage: 70, level: 700, price: 900000, type: 'Logia' },
+      'Smoke': { damage: 68, level: 700, price: 800000, type: 'Logia' },
+      'Gas': { damage: 65, level: 700, price: 700000, type: 'Logia' },
+      'Quake': { damage: 88, level: 700, price: 1600000, type: 'Paramecia' },
+      'String': { damage: 75, level: 700, price: 1000000, type: 'Paramecia' },
+      'Rumble': { damage: 72, level: 700, price: 900000, type: 'Paramecia' },
+      'Diamond': { damage: 70, level: 700, price: 800000, type: 'Paramecia' },
+      'Door': { damage: 68, level: 700, price: 700000, type: 'Paramecia' },
+      'Rubber': { damage: 65, level: 700, price: 600000, type: 'Paramecia' },
+      'Barrier': { damage: 62, level: 700, price: 500000, type: 'Paramecia' }
+    };
+
+    return statsMap[itemName] || { damage: 50, level: 100, price: 1000, type: 'Unknown' };
+  }
+
+  function showNotification(message) {
+    // Create a simple notification
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: var(--card-shadow);
+      z-index: 10000;
+      animation: slideIn 0.3s ease;
+    `;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+      notification.remove();
+    }, 3000);
+  }
+
+  // Event listeners
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('close-comparison') || e.target === comparisonModal) {
+      comparisonModal.style.display = 'none';
+    }
+
+    if (e.target.classList.contains('remove-from-comparison')) {
+      const index = parseInt(e.target.dataset.index);
+      const item = selectedItems[index];
+      if (item) {
+        toggleItemSelection(item);
+      }
+    }
+
+    if (e.target.id === 'clear-comparison') {
+      selectedItems.forEach(item => {
+        item.classList.remove('selected');
+        item.querySelector('.compare-btn').textContent = '⚖️';
+      });
+      selectedItems.length = 0;
+      updateComparisonDisplay();
+    }
+
+    if (e.target.id === 'export-comparison') {
+      exportComparison();
+    }
+  });
+
+  function exportComparison() {
+    const comparisonData = selectedItems.map(item => {
+      const itemName = item.querySelector('h3 a')?.textContent || 'Unknown Item';
+      const stats = getItemStats(itemName);
+      return {
+        name: itemName,
+        ...stats
+      };
+    });
+
+    const dataStr = JSON.stringify(comparisonData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'blox-fruits-comparison.json';
+    link.click();
+    
+    URL.revokeObjectURL(url);
+    showNotification('Comparison exported successfully!');
+  }
+}
+
+// Global function for comparison (called from table)
+function compareFruit(fruitName) {
+  const fruitCard = document.querySelector(`.category-card:has(h3 a:contains("${fruitName}"))`);
+  if (fruitCard) {
+    const comparisonBtn = fruitCard.querySelector('.compare-btn');
+    if (comparisonBtn) {
+      comparisonBtn.click();
+    }
   }
 }
 
 // ================= RATING SYSTEM =================
 function initializeRatingSystem() {
+  // Add rating systems to category cards
+  document.querySelectorAll('.category-card').forEach(card => {
+    addRatingSystemToCard(card);
+  });
+
+  // Initialize existing rating systems
   document.querySelectorAll('.rating-system').forEach(ratingContainer => {
-    const stars = ratingContainer.querySelectorAll('.star');
-    let currentRating = 0;
+    initializeRatingContainer(ratingContainer);
+  });
+}
 
-    stars.forEach((star, index) => {
-      star.addEventListener('click', () => {
-        currentRating = index + 1;
-        updateStars();
-        saveRating(ratingContainer, currentRating);
-      });
+function addRatingSystemToCard(card) {
+  const itemName = card.querySelector('h3 a')?.textContent || 'Unknown Item';
+  const itemId = itemName.toLowerCase().replace(/\s+/g, '-');
+  
+  // Check if rating system already exists
+  if (card.querySelector('.rating-system')) return;
 
-      star.addEventListener('mouseenter', () => {
-        highlightStars(index + 1);
-      });
-    });
+  // Create rating system
+  const ratingSystem = document.createElement('div');
+  ratingSystem.className = 'rating-system';
+  ratingSystem.dataset.itemId = itemId;
+  ratingSystem.innerHTML = `
+    <div class="rating-stars">
+      <span class="star" data-rating="1">★</span>
+      <span class="star" data-rating="2">★</span>
+      <span class="star" data-rating="3">★</span>
+      <span class="star" data-rating="4">★</span>
+      <span class="star" data-rating="5">★</span>
+    </div>
+    <div class="rating-info">
+      <span class="rating-average">0.0</span>
+      <span class="rating-count">(0 votes)</span>
+    </div>
+  `;
 
-    ratingContainer.addEventListener('mouseleave', () => {
+  // Insert after the description
+  const description = card.querySelector('p');
+  if (description) {
+    description.parentNode.insertBefore(ratingSystem, description.nextSibling);
+  } else {
+    card.appendChild(ratingSystem);
+  }
+
+  initializeRatingContainer(ratingSystem);
+  loadRatingData(ratingSystem);
+}
+
+function initializeRatingContainer(ratingContainer) {
+  const stars = ratingContainer.querySelectorAll('.star');
+  const itemId = ratingContainer.dataset.itemId;
+  let currentRating = 0;
+  let isHovering = false;
+
+  // Load saved rating
+  const savedRating = localStorage.getItem(`user_rating_${itemId}`);
+  if (savedRating) {
+    currentRating = parseInt(savedRating);
+  }
+
+  stars.forEach((star, index) => {
+    star.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const rating = parseInt(star.dataset.rating);
+      currentRating = rating;
       updateStars();
+      saveUserRating(itemId, rating);
+      updateRatingData(ratingContainer);
+      showRatingFeedback(rating);
     });
 
-    function updateStars() {
-      stars.forEach((star, index) => {
-        star.classList.toggle('active', index < currentRating);
-      });
-    }
+    star.addEventListener('mouseenter', () => {
+      isHovering = true;
+      const rating = parseInt(star.dataset.rating);
+      highlightStars(rating);
+    });
+  });
 
-    function highlightStars(rating) {
+  ratingContainer.addEventListener('mouseleave', () => {
+    isHovering = false;
+    updateStars();
+  });
+
+  function updateStars() {
+    stars.forEach((star, index) => {
+      star.classList.toggle('active', index < currentRating);
+    });
+  }
+
+  function highlightStars(rating) {
+    if (isHovering) {
       stars.forEach((star, index) => {
         star.classList.toggle('active', index < rating);
       });
     }
+  }
 
-    function saveRating(container, rating) {
-      // In a real app, this would save to a backend
-      localStorage.setItem(`rating_${container.dataset.itemId}`, rating);
-    }
-  });
+  // Initial update
+  updateStars();
 }
+
+function saveUserRating(itemId, rating) {
+  localStorage.setItem(`user_rating_${itemId}`, rating);
+  
+  // Update global rating data
+  const ratingData = getRatingData();
+  if (!ratingData[itemId]) {
+    ratingData[itemId] = { total: 0, count: 0, ratings: [] };
+  }
+  
+  // Check if user already rated this item
+  const existingRating = localStorage.getItem(`user_rating_${itemId}`);
+  if (existingRating) {
+    // Update existing rating
+    const oldRating = parseInt(existingRating);
+    ratingData[itemId].total = ratingData[itemId].total - oldRating + rating;
+  } else {
+    // Add new rating
+    ratingData[itemId].total += rating;
+    ratingData[itemId].count += 1;
+    ratingData[itemId].ratings.push(rating);
+  }
+  
+  localStorage.setItem('rating_data', JSON.stringify(ratingData));
+}
+
+function getRatingData() {
+  const data = localStorage.getItem('rating_data');
+  return data ? JSON.parse(data) : {};
+}
+
+function loadRatingData(ratingContainer) {
+  const itemId = ratingContainer.dataset.itemId;
+  const ratingData = getRatingData();
+  
+  if (ratingData[itemId]) {
+    const average = ratingData[itemId].count > 0 ? 
+      (ratingData[itemId].total / ratingData[itemId].count).toFixed(1) : '0.0';
+    const count = ratingData[itemId].count;
+    
+    const averageElement = ratingContainer.querySelector('.rating-average');
+    const countElement = ratingContainer.querySelector('.rating-count');
+    
+    if (averageElement) averageElement.textContent = average;
+    if (countElement) countElement.textContent = `(${count} vote${count !== 1 ? 's' : ''})`;
+  }
+}
+
+function updateRatingData(ratingContainer) {
+  const itemId = ratingContainer.dataset.itemId;
+  const ratingData = getRatingData();
+  
+  if (ratingData[itemId]) {
+    const average = ratingData[itemId].count > 0 ? 
+      (ratingData[itemId].total / ratingData[itemId].count).toFixed(1) : '0.0';
+    const count = ratingData[itemId].count;
+    
+    const averageElement = ratingContainer.querySelector('.rating-average');
+    const countElement = ratingContainer.querySelector('.rating-count');
+    
+    if (averageElement) averageElement.textContent = average;
+    if (countElement) countElement.textContent = `(${count} vote${count !== 1 ? 's' : ''})`;
+  }
+}
+
+function showRatingFeedback(rating) {
+  const messages = [
+    'Terrible!',
+    'Poor',
+    'Average',
+    'Good!',
+    'Excellent!'
+  ];
+  
+  const message = messages[rating - 1] || 'Thanks for rating!';
+  
+  // Create feedback notification
+  const feedback = document.createElement('div');
+  feedback.className = 'rating-feedback';
+  feedback.textContent = message;
+  feedback.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow-hover);
+    z-index: 10000;
+    font-weight: var(--font-semibold);
+    animation: ratingFeedback 2s ease forwards;
+  `;
+  
+  document.body.appendChild(feedback);
+  
+  setTimeout(() => {
+    feedback.remove();
+  }, 2000);
+}
+
+// Add rating feedback animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes ratingFeedback {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+    20% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    80% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+  }
+`;
+document.head.appendChild(style);
 
 // ================= ANIMATED STATS =================
 function initializeAnimatedStats() {
+  // Animate hero stats
+  animateHeroStats();
+  
+  // Animate stat bars
+  animateStatBars();
+  
+  // Animate counter numbers
+  animateCounters();
+}
+
+function animateHeroStats() {
+  const heroStats = document.querySelectorAll('.hero-stats .stat-number');
+  if (heroStats.length === 0) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const statNumber = entry.target;
+        const finalValue = statNumber.textContent;
+        const isPlus = finalValue.includes('+');
+        const numericValue = parseInt(finalValue.replace(/\D/g, ''));
+        
+        if (numericValue > 0) {
+          animateNumber(statNumber, 0, numericValue, 2000, isPlus);
+          observer.unobserve(statNumber);
+        }
+      }
+    });
+  }, { threshold: 0.5 });
+
+  heroStats.forEach(stat => observer.observe(stat));
+}
+
+function animateStatBars() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -939,9 +1608,298 @@ function initializeAnimatedStats() {
         }
       }
     });
-  });
+  }, { threshold: 0.5 });
 
   document.querySelectorAll('.animated-stat').forEach(stat => {
     observer.observe(stat);
   });
+}
+
+function animateCounters() {
+  const counters = document.querySelectorAll('.counter');
+  if (counters.length === 0) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const counter = entry.target;
+        const finalValue = parseInt(counter.dataset.count || counter.textContent);
+        const suffix = counter.dataset.suffix || '';
+        
+        animateNumber(counter, 0, finalValue, 2000, false, suffix);
+        observer.unobserve(counter);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(counter => observer.observe(counter));
+}
+
+function animateNumber(element, start, end, duration, isPlus = false, suffix = '') {
+  const startTime = performance.now();
+  
+  function updateNumber(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // Easing function for smooth animation
+    const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+    const currentValue = Math.floor(start + (end - start) * easeOutQuart);
+    
+    let displayValue = currentValue.toString();
+    if (isPlus && currentValue === end) {
+      displayValue += '+';
+    }
+    if (suffix) {
+      displayValue += suffix;
+    }
+    
+    element.textContent = displayValue;
+    
+    if (progress < 1) {
+      requestAnimationFrame(updateNumber);
+    }
+  }
+  
+  requestAnimationFrame(updateNumber);
+}
+
+// Add animated stats to featured section
+function addAnimatedStatsToFeatured() {
+  const featuredItems = document.querySelectorAll('.featured-item');
+  
+  featuredItems.forEach(item => {
+    const statsContainer = document.createElement('div');
+    statsContainer.className = 'featured-stats';
+    statsContainer.innerHTML = `
+      <div class="stat-item">
+        <div class="stat-label">Damage</div>
+        <div class="stat-bar">
+          <div class="stat-fill" data-width="85%" style="--target-width: 0%;"></div>
+        </div>
+        <div class="stat-value">85</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Speed</div>
+        <div class="stat-bar">
+          <div class="stat-fill" data-width="72%" style="--target-width: 0%;"></div>
+        </div>
+        <div class="stat-value">72</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Range</div>
+        <div class="stat-bar">
+          <div class="stat-fill" data-width="68%" style="--target-width: 0%;"></div>
+        </div>
+        <div class="stat-value">68</div>
+      </div>
+    `;
+    
+    item.appendChild(statsContainer);
+  });
+}
+
+// Initialize animated stats when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  addAnimatedStatsToFeatured();
+});
+
+// ================= BACK TO TOP BUTTON =================
+function initializeBackToTop() {
+  // Create back to top button if it doesn't exist
+  let backToTopBtn = document.getElementById('back-to-top');
+  
+  if (!backToTopBtn) {
+    backToTopBtn = document.createElement('button');
+    backToTopBtn.id = 'back-to-top';
+    backToTopBtn.className = 'back-to-top';
+    backToTopBtn.innerHTML = '↑';
+    backToTopBtn.setAttribute('aria-label', 'Back to top');
+    backToTopBtn.setAttribute('title', 'Back to top');
+    document.body.appendChild(backToTopBtn);
+  }
+  
+  // Show/hide button based on scroll position
+  function toggleBackToTop() {
+    if (window.pageYOffset > 300) {
+      backToTopBtn.classList.add('show');
+    } else {
+      backToTopBtn.classList.remove('show');
+    }
+  }
+  
+  // Smooth scroll to top
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+  
+  // Add event listeners
+  window.addEventListener('scroll', toggleBackToTop);
+  backToTopBtn.addEventListener('click', scrollToTop);
+  
+  // Initial check
+  toggleBackToTop();
+}
+
+// ================= SORTABLE TABLES =================
+function initializeSortableTables() {
+  const table = document.getElementById('fruits-table');
+  if (!table) return;
+
+  // Sample fruit data
+  const fruitsData = [
+    { name: 'Dragon', rarity: 'mythical', type: 'zoan', damage: 95, level: 1000, price: 3500000, link: 'fruits_pages/dragon.html' },
+    { name: 'Kitsune', rarity: 'mythical', type: 'zoan', damage: 90, level: 1000, price: 3200000, link: 'fruits_pages/kitsune.html' },
+    { name: 'Leopard', rarity: 'mythical', type: 'zoan', damage: 88, level: 1000, price: 3000000, link: 'fruits_pages/leopard.html' },
+    { name: 'Phoenix', rarity: 'mythical', type: 'zoan', damage: 85, level: 1000, price: 2800000, link: 'fruits_pages/phoenix.html' },
+    { name: 'Venom', rarity: 'mythical', type: 'paramecia', damage: 82, level: 1000, price: 2500000, link: 'fruits_pages/venom.html' },
+    { name: 'Dough', rarity: 'mythical', type: 'paramecia', damage: 80, level: 1000, price: 2400000, link: 'fruits_pages/dough.html' },
+    { name: 'Shadow', rarity: 'mythical', type: 'paramecia', damage: 78, level: 1000, price: 2300000, link: 'fruits_pages/shadow.html' },
+    { name: 'Spirit', rarity: 'mythical', type: 'paramecia', damage: 75, level: 1000, price: 2200000, link: 'fruits_pages/spirit.html' },
+    { name: 'Control', rarity: 'mythical', type: 'paramecia', damage: 72, level: 1000, price: 2100000, link: 'fruits_pages/control.html' },
+    { name: 'Gravity', rarity: 'mythical', type: 'paramecia', damage: 70, level: 1000, price: 2000000, link: 'fruits_pages/gravity.html' },
+    { name: 'Pain', rarity: 'mythical', type: 'paramecia', damage: 68, level: 1000, price: 1900000, link: 'fruits_pages/pain.html' },
+    { name: 'Love', rarity: 'mythical', type: 'paramecia', damage: 65, level: 1000, price: 1800000, link: 'fruits_pages/love.html' },
+    { name: 'Buddha', rarity: 'mythical', type: 'zoan', damage: 62, level: 1000, price: 1700000, link: 'fruits_pages/buddha.html' },
+    { name: 'Lightning', rarity: 'legendary', type: 'logia', damage: 85, level: 700, price: 1500000, link: 'fruits_pages/lightning.html' },
+    { name: 'Light', rarity: 'legendary', type: 'logia', damage: 82, level: 700, price: 1400000, link: 'fruits_pages/light.html' },
+    { name: 'Dark', rarity: 'legendary', type: 'logia', damage: 80, level: 700, price: 1300000, link: 'fruits_pages/dark.html' },
+    { name: 'Flame', rarity: 'legendary', type: 'logia', damage: 78, level: 700, price: 1200000, link: 'fruits_pages/flame.html' },
+    { name: 'Ice', rarity: 'legendary', type: 'logia', damage: 75, level: 700, price: 1100000, link: 'fruits_pages/ice.html' },
+    { name: 'Magma', rarity: 'legendary', type: 'logia', damage: 72, level: 700, price: 1000000, link: 'fruits_pages/magma.html' },
+    { name: 'Sand', rarity: 'legendary', type: 'logia', damage: 70, level: 700, price: 900000, link: 'fruits_pages/sand.html' },
+    { name: 'Smoke', rarity: 'legendary', type: 'logia', damage: 68, level: 700, price: 800000, link: 'fruits_pages/smoke.html' },
+    { name: 'Gas', rarity: 'legendary', type: 'logia', damage: 65, level: 700, price: 700000, link: 'fruits_pages/gas.html' },
+    { name: 'Quake', rarity: 'legendary', type: 'paramecia', damage: 88, level: 700, price: 1600000, link: 'fruits_pages/quake.html' },
+    { name: 'String', rarity: 'legendary', type: 'paramecia', damage: 75, level: 700, price: 1000000, link: 'fruits_pages/string.html' },
+    { name: 'Rumble', rarity: 'legendary', type: 'paramecia', damage: 72, level: 700, price: 900000, link: 'fruits_pages/rumble.html' },
+    { name: 'Diamond', rarity: 'legendary', type: 'paramecia', damage: 70, level: 700, price: 800000, link: 'fruits_pages/diamond.html' },
+    { name: 'Door', rarity: 'legendary', type: 'paramecia', damage: 68, level: 700, price: 700000, link: 'fruits_pages/door.html' },
+    { name: 'Rubber', rarity: 'legendary', type: 'paramecia', damage: 65, level: 700, price: 600000, link: 'fruits_pages/rubber.html' },
+    { name: 'Barrier', rarity: 'legendary', type: 'paramecia', damage: 62, level: 700, price: 500000, link: 'fruits_pages/barrier.html' },
+    { name: 'Bomb', rarity: 'rare', type: 'paramecia', damage: 60, level: 400, price: 300000, link: 'fruits_pages/bomb.html' },
+    { name: 'Spike', rarity: 'rare', type: 'paramecia', damage: 58, level: 400, price: 280000, link: 'fruits_pages/spike.html' },
+    { name: 'Chop', rarity: 'rare', type: 'paramecia', damage: 55, level: 400, price: 250000, link: 'fruits_pages/chop.html' },
+    { name: 'Spring', rarity: 'rare', type: 'paramecia', damage: 52, level: 400, price: 220000, link: 'fruits_pages/spring.html' },
+    { name: 'Kilogram', rarity: 'rare', type: 'paramecia', damage: 50, level: 400, price: 200000, link: 'fruits_pages/kilogram.html' },
+    { name: 'Spin', rarity: 'rare', type: 'paramecia', damage: 48, level: 400, price: 180000, link: 'fruits_pages/spin.html' },
+    { name: 'Bird: Falcon', rarity: 'rare', type: 'zoan', damage: 45, level: 400, price: 150000, link: 'fruits_pages/falcon.html' },
+    { name: 'Smoke', rarity: 'rare', type: 'logia', damage: 42, level: 400, price: 120000, link: 'fruits_pages/smoke.html' },
+    { name: 'Spike', rarity: 'rare', type: 'paramecia', damage: 40, level: 400, price: 100000, link: 'fruits_pages/spike.html' },
+    { name: 'Flame', rarity: 'rare', type: 'logia', damage: 38, level: 400, price: 80000, link: 'fruits_pages/flame.html' },
+    { name: 'Ice', rarity: 'rare', type: 'logia', damage: 35, level: 400, price: 60000, link: 'fruits_pages/ice.html' },
+    { name: 'Sand', rarity: 'rare', type: 'logia', damage: 32, level: 400, price: 40000, link: 'fruits_pages/sand.html' },
+    { name: 'Dark', rarity: 'rare', type: 'logia', damage: 30, level: 400, price: 20000, link: 'fruits_pages/dark.html' },
+    { name: 'Light', rarity: 'rare', type: 'logia', damage: 28, level: 400, price: 10000, link: 'fruits_pages/light.html' },
+    { name: 'Rocket', rarity: 'common', type: 'paramecia', damage: 25, level: 100, price: 5000, link: 'fruits_pages/rocket.html' },
+    { name: 'Spin', rarity: 'common', type: 'paramecia', damage: 22, level: 100, price: 4000, link: 'fruits_pages/spin.html' },
+    { name: 'Chop', rarity: 'common', type: 'paramecia', damage: 20, level: 100, price: 3000, link: 'fruits_pages/chop.html' },
+    { name: 'Spring', rarity: 'common', type: 'paramecia', damage: 18, level: 100, price: 2000, link: 'fruits_pages/spring.html' },
+    { name: 'Bomb', rarity: 'common', type: 'paramecia', damage: 15, level: 100, price: 1000, link: 'fruits_pages/bomb.html' },
+    { name: 'Smoke', rarity: 'common', type: 'logia', damage: 12, level: 100, price: 500, link: 'fruits_pages/smoke.html' },
+    { name: 'Spike', rarity: 'common', type: 'paramecia', damage: 10, level: 100, price: 250, link: 'fruits_pages/spike.html' }
+  ];
+
+  let currentData = [...fruitsData];
+  let currentSort = { column: null, direction: 'asc' };
+
+  // Populate table
+  function populateTable(data) {
+    const tbody = document.getElementById('fruits-table-body');
+    tbody.innerHTML = '';
+
+    data.forEach(fruit => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><a href="${fruit.link}" style="color: var(--primary-color); text-decoration: none;">${fruit.name}</a></td>
+        <td><span class="rarity-badge ${fruit.rarity}">${fruit.rarity}</span></td>
+        <td>${fruit.type}</td>
+        <td>${fruit.damage}</td>
+        <td>${fruit.level}</td>
+        <td>${fruit.price.toLocaleString()} $</td>
+        <td>
+          <div class="table-actions">
+            <button onclick="window.open('${fruit.link}', '_blank')">View</button>
+            <button onclick="compareFruit('${fruit.name}')">Compare</button>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
+
+  // Sort table
+  function sortTable(column, direction) {
+    currentData.sort((a, b) => {
+      let aVal = a[column];
+      let bVal = b[column];
+
+      if (column === 'name') {
+        aVal = aVal.toLowerCase();
+        bVal = bVal.toLowerCase();
+      }
+
+      if (direction === 'asc') {
+        return aVal > bVal ? 1 : -1;
+      } else {
+        return aVal < bVal ? 1 : -1;
+      }
+    });
+
+    populateTable(currentData);
+  }
+
+  // Filter table
+  function filterTable() {
+    const rarityFilter = document.getElementById('rarity-filter').value;
+    const typeFilter = document.getElementById('type-filter').value;
+    const searchFilter = document.getElementById('table-search').value.toLowerCase();
+
+    currentData = fruitsData.filter(fruit => {
+      const matchesRarity = !rarityFilter || fruit.rarity === rarityFilter;
+      const matchesType = !typeFilter || fruit.type === typeFilter;
+      const matchesSearch = !searchFilter || fruit.name.toLowerCase().includes(searchFilter);
+
+      return matchesRarity && matchesType && matchesSearch;
+    });
+
+    populateTable(currentData);
+  }
+
+  // Add event listeners
+  document.querySelectorAll('.sortable').forEach(header => {
+    header.addEventListener('click', () => {
+      const column = header.dataset.sort;
+      let direction = 'asc';
+
+      if (currentSort.column === column) {
+        direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+      }
+
+      // Update sort indicators
+      document.querySelectorAll('.sortable').forEach(h => {
+        h.classList.remove('sort-asc', 'sort-desc');
+      });
+      header.classList.add(`sort-${direction}`);
+
+      currentSort = { column, direction };
+      sortTable(column, direction);
+    });
+  });
+
+  document.getElementById('rarity-filter').addEventListener('change', filterTable);
+  document.getElementById('type-filter').addEventListener('change', filterTable);
+  document.getElementById('table-search').addEventListener('input', filterTable);
+
+  // Initial population
+  populateTable(currentData);
+}
+
+// Global function for comparison
+function compareFruit(fruitName) {
+  console.log(`Comparing fruit: ${fruitName}`);
+  // This would integrate with the comparison tool
 }

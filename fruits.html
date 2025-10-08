@@ -119,6 +119,60 @@
         </div>
       </section>
 
+      <!-- Sortable Stats Table -->
+      <section class="stats-table-container">
+        <h3>Fruit Statistics Table</h3>
+        <div class="table-controls">
+          <select id="rarity-filter" class="table-filter">
+            <option value="">All Rarities</option>
+            <option value="common">Common</option>
+            <option value="uncommon">Uncommon</option>
+            <option value="rare">Rare</option>
+            <option value="epic">Epic</option>
+            <option value="legendary">Legendary</option>
+            <option value="mythical">Mythical</option>
+          </select>
+          <select id="type-filter" class="table-filter">
+            <option value="">All Types</option>
+            <option value="natural">Natural</option>
+            <option value="logia">Logia</option>
+            <option value="paramecia">Paramecia</option>
+            <option value="zoan">Zoan</option>
+          </select>
+          <input type="text" id="table-search" class="table-search" placeholder="Search in table...">
+        </div>
+        <div class="table-wrapper">
+          <table class="stats-table" id="fruits-table">
+            <thead>
+              <tr>
+                <th class="sortable" data-sort="name">
+                  Name <span class="sort-indicator">↕</span>
+                </th>
+                <th class="sortable" data-sort="rarity">
+                  Rarity <span class="sort-indicator">↕</span>
+                </th>
+                <th class="sortable" data-sort="type">
+                  Type <span class="sort-indicator">↕</span>
+                </th>
+                <th class="sortable" data-sort="damage">
+                  Damage <span class="sort-indicator">↕</span>
+                </th>
+                <th class="sortable" data-sort="level">
+                  Level Req. <span class="sort-indicator">↕</span>
+                </th>
+                <th class="sortable" data-sort="price">
+                  Price <span class="sort-indicator">↕</span>
+                </th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="fruits-table-body">
+              <!-- Table rows will be populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <section class="category-grid item-grid" id="fruits-list" aria-label="Fruit list">
   <div class="category-card">
     <img src="images/categories/rocket.png" alt="Rocket Fruit" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Rocket';">
