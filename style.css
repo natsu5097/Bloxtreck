@@ -470,18 +470,10 @@ main {
 }
 
 .category-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.category-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: var(--mb-1-5);
-  margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
 .category-card {
