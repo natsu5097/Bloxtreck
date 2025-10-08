@@ -36,8 +36,32 @@
 
   <!-- ================= MAIN CONTENT ================= -->
   <main>
-    <section class="items-grid" id="npcs-container">
-      <!-- NPCs will be dynamically inserted here -->
+    <section class="description-section">
+      <h2>NPCs Overview</h2>
+      <p>Non-Player Characters (NPCs) populate the world of Blox Fruits. They provide quests, sell items, teach abilities, or offer other services to players.</p>
+    </section>
+
+    <!-- Toolbar for filtering -->
+    <section class="item-filter-toolbar">
+      <h2 class="section-title">NPCs Directory</h2>
+      <div class="filter-controls">
+        <input class="item-filter-input" type="search" placeholder="Filter NPCs by name..." aria-label="Filter NPCs" />
+        <div class="item-count">
+          Showing <span class="item-count-display">--</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-grid item-grid" id="npcs-list" aria-label="NPCs list">
+      <div class="category-card">
+        <img src="https://via.placeholder.com/100?text=Blox+Fruit+Dealer" alt="Blox Fruit Dealer">
+        <h3><a href="#">Blox Fruit Dealer</a></h3>
+      </div>
+      <div class="category-card">
+        <img src="https://via.placeholder.com/100?text=Blacksmith" alt="Blacksmith">
+        <h3><a href="#">Blacksmith</a></h3>
+      </div>
+      <!-- Add more NPCs here -->
     </section>
   </main>
 

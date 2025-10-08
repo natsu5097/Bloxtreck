@@ -36,8 +36,32 @@
 
   <!-- ================= MAIN CONTENT ================= -->
   <main>
-    <section class="items-grid" id="bosses-container">
-      <!-- Bosses will be dynamically inserted here -->
+    <section class="description-section">
+      <h2>Bosses Overview</h2>
+      <p>Bosses are powerful enemies in Blox Fruits that provide significant rewards upon defeat, including rare items, large amounts of experience, and money. They are crucial for player progression.</p>
+    </section>
+
+    <!-- Toolbar for filtering -->
+    <section class="item-filter-toolbar">
+      <h2 class="section-title">Bosses Directory</h2>
+      <div class="filter-controls">
+        <input class="item-filter-input" type="search" placeholder="Filter bosses by name..." aria-label="Filter bosses" />
+        <div class="item-count">
+          Showing <span class="item-count-display">--</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-grid item-grid" id="bosses-list" aria-label="Bosses list">
+      <div class="category-card">
+        <img src="https://via.placeholder.com/100?text=Dough+King" alt="Dough King">
+        <h3><a href="#">Dough King</a></h3>
+      </div>
+      <div class="category-card">
+        <img src="https://via.placeholder.com/100?text=Rip+Indra" alt="Rip Indra">
+        <h3><a href="#">Rip Indra</a></h3>
+      </div>
+      <!-- Add more bosses here -->
     </section>
   </main>
 

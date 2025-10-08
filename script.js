@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeSearch();
   initializeScrollTop();
   initializeCollapsibles();
+  initializeCategoryFilter(); // New function for list filtering
   loadPageContent();
   
   // Add smooth scrolling for better UX
@@ -205,6 +206,36 @@ function initializeDarkMode() {
       if (icon) icon.textContent = "🌙";
     }
   });
+}
+
+// ================= CATEGORY PAGE FILTERING =================
+function initializeCategoryFilter() {
+  // Generic filter for any category page (fruits, swords, guns, etc.)
+  const filterInput = document.querySelector('.item-filter-input');
+  const itemsGrid = document.querySelector('.item-grid');
+  const countElement = document.querySelector('.item-count-display');
+
+  if (!filterInput || !itemsGrid || !countElement) {
+    return; // Don't run if the necessary elements aren't on the page
+  }
+
+  const cards = Array.from(itemsGrid.querySelectorAll('.category-card'));
+  const total = cards.length;
+
+  const applyFilter = () => {
+    const query = filterInput.value.trim().toLowerCase();
+    let shown = 0;
+    cards.forEach(card => {
+      const name = (card.textContent || '').trim().toLowerCase();
+      const isVisible = !query || name.includes(query);
+      card.style.display = isVisible ? '' : 'block'; // Use block as it's a div
+      if (isVisible) shown++;
+    });
+    countElement.textContent = `${shown} / ${total}`;
+  };
+
+  filterInput.addEventListener('input', applyFilter);
+  applyFilter(); // Initial call to set the count
 }
 
 // ================= SEARCH FUNCTIONALITY =================
@@ -532,9 +563,9 @@ function loadPageContent() {
   // Load content based on page
   if (page === "index.html" || page === "" || page === "/") {
     loadHomePage();
-  } else {
-    loadCategoryPage(page);
-  }
+  } 
+  // Removed loadCategoryPage as we are now using static HTML with client-side filtering.
+  // The logic is now handled by initializeCategoryFilter().
 }
 
 function setActiveNavLink(currentPage) {
@@ -554,71 +585,6 @@ function setActiveNavLink(currentPage) {
 function loadHomePage() {
   // Home page specific initialization
   // console.log("Loading home page content");
-}
-
-function loadCategoryPage(page) {
-  const containerMap = {
-    "fruits.html": "fruits-sections",
-    "swords.html": "swords-container", 
-    "guns.html": "guns-container",
-    "styles.html": "styles-container",
-    "accessories.html": "accessories-container",
-    "islands.html": "islands-container",
-    "bosses.html": "bosses-container",
-    "npcs.html": "npcs-container"
-  };
-  
-  const containerId = containerMap[page];
-  if (!containerId) return;
-  
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  
-  // In a real app, you would fetch data from an API or JSON file
-  // For now, we'll use mock data
-  const mockData = generateMockDataForPage(page);
-  renderItemsGrid(mockData, container);
-}
-
-function generateMockDataForPage(page) {
-  // Filter the allItems array by category
-  const categoryMap = {
-    "fruits.html": "Fruits",
-    "swords.html": "Swords", 
-    "guns.html": "Guns",
-    "styles.html": "FightingStyles",
-    "accessories.html": "Accessories",
-    "islands.html": "Islands",
-    "bosses.html": "Bosses",
-    "npcs.html": "NPCs"
-  };
-  
-  const category = categoryMap[page];
-  if (!category) {
-    return [
-      { name: "Sample Item", type: "Type", image_url: "", price_money: 1000, description: "Sample description" }
-    ];
-  }
-  return allItems.filter(item => item.category === category);
-}
-
-function renderItemsGrid(items, container) {
-  container.innerHTML = "";
-  
-  items.forEach(item => {
-    const card = document.createElement("div");
-    card.className = "item-card";
-    card.innerHTML = `
-      <img src="${safeText(item.image_url) || getPlaceholderImage()}" 
-           alt="${safeText(item.name)}"
-           onerror="this.onerror=null;this.src='${getPlaceholderImage()}'">
-      <h3>${safeText(item.name)}</h3>
-      <p>Type: ${safeText(item.type)}</p>
-      ${item.price_money ? `<p>Price: $${Number(item.price_money).toLocaleString()}</p>` : ''}
-      <p>${safeText(item.description)}</p>
-    `;
-    container.appendChild(card);
-  });
 }
 
 // ================= UTILITY FUNCTIONS =================

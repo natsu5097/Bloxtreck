@@ -37,13 +37,32 @@
   <!-- ================= MAIN CONTENT ================= -->
   <main>
     <section class="description-section">
-      <h2>Islands Overview</h2>
+      <h2>Islands & Seas Overview</h2>
       <p>Islands are the main locations in the Blox Fruits world where players can explore, complete quests, and find valuable resources.</p>
-      <p>Each island has unique NPCs, enemies, and treasures to discover as you progress through the game.</p>
+      <p>The world is divided into three "Seas", each with progressively harder islands and challenges.</p>
     </section>
     
-    <section class="items-grid" id="islands-container">
-      <!-- Islands will be dynamically inserted here -->
+    <!-- Toolbar for filtering -->
+    <section class="item-filter-toolbar">
+      <h2 class="section-title">Islands Directory</h2>
+      <div class="filter-controls">
+        <input class="item-filter-input" type="search" placeholder="Filter islands by name..." aria-label="Filter islands" />
+        <div class="item-count">
+          Showing <span class="item-count-display">--</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-grid item-grid" id="islands-list" aria-label="Islands list">
+        <div class="category-card">
+          <img src="https://via.placeholder.com/100?text=Starter+Island" alt="Starter Island">
+          <h3><a href="#">Starter Island</a></h3>
+        </div>
+        <div class="category-card">
+          <img src="https://via.placeholder.com/100?text=Middle+Town" alt="Middle Town">
+          <h3><a href="#">Middle Town</a></h3>
+        </div>
+        <!-- Add more islands here -->
     </section>
   </main>
 

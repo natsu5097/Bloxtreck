@@ -42,8 +42,19 @@
             </ul>
         </section>
 
-        <h2 class="section-title" id="list">List of Swords</h2>
-        <section class="category-grid" id="swords-list" aria-label="Sword list">
+        <!-- Toolbar for filtering -->
+        <section class="item-filter-toolbar">
+          <h2 class="section-title">Swords Directory</h2>
+          <div class="filter-controls">
+            <input class="item-filter-input" type="search" placeholder="Filter swords by name..." aria-label="Filter swords" />
+            <div class="item-count">
+              Showing <span class="item-count-display">--</span>
+            </div>
+          </div>
+        </section>
+
+        <h2 class="section-title" id="list" style="display: none;">List of Swords</h2>
+        <section class="category-grid item-grid" id="swords-list" aria-label="Sword list">
             <div class="category-card">
                 <img src="images/categories/cutlass.png" alt="Cutlass" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Cutlass';">
                 <h3><a href="swords_pages/cutlass.html">Cutlass</a></h3>

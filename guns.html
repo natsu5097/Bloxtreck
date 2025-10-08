@@ -83,20 +83,19 @@
     </div>
 
     <!-- Toolbar for filtering -->
-    <section class="quick-links" id="gun-tools">
-      <h2 style="text-align:center; margin-bottom:0.75rem">Guns Directory</h2>
-      <div class="links-grid" style="grid-template-columns: 1fr 200px; align-items:center;">
-        <div>
-          <input id="gun-filter" type="search" placeholder="Filter guns by name..." aria-label="Filter guns" style="width:100%; padding:0.6rem 0.8rem; border:1px solid var(--border-color); border-radius:6px; background:var(--bg-color-alt); color:var(--text-color);" />
+    <section class="item-filter-toolbar">
+      <h2 class="section-title">Guns Directory</h2>
+      <div class="filter-controls">
+        <input class="item-filter-input" type="search" placeholder="Filter guns by name..." aria-label="Filter guns" />
+        <div class="item-count">
+          Showing <span class="item-count-display">--</span>
         </div>
-        <div style="text-align:right; color:var(--text-color-muted); font-size:0.9rem">Showing <span id="gun-count">--</span></div>
       </div>
     </section>
 
     <!-- Guns grid with images -->
-    <section class="categories" aria-label="Guns list" id="guns-list">
-      <div class="categories" id="guns-grid">
-        <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Slingshot"><h3><a href="guns_pages/slingshot.html">Slingshot</a></h3></div>
+    <section class="category-grid item-grid" id="guns-list" aria-label="Guns list">
+      <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Slingshot"><h3><a href="guns_pages/slingshot.html">Slingshot</a></h3></div>
         <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Flintlock"><h3><a href="guns_pages/flintlock.html">Flintlock</a></h3></div>
         <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Musket"><h3><a href="guns_pages/musket.html">Musket</a></h3></div>
         <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Acidum Rifle"><h3><a href="guns_pages/acidum-rifle.html">Acidum Rifle</a></h3></div>
@@ -110,7 +109,6 @@
         <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Kabucha"><h3><a href="guns_pages/kabucha.html">Kabucha</a></h3></div>
         <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Venom Bow"><h3><a href="guns_pages/venom-bow.html">Venom Bow</a></h3></div>
         <div class="category-card"><img src="fruits_pages/images/placeholder.svg" alt="Skull Guitar"><h3><a href="guns_pages/skull-guitar.html">Skull Guitar</a></h3></div>
-      </div>
     </section>
 
     <div class="collapsible-section" id="explosive">
@@ -176,31 +174,6 @@
   <footer>
     <p>Fan-made Blox Fruits Wiki &copy; Natsu</p>
   </footer>
-
-  <!-- Filter script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function(){
-      const input = document.getElementById('gun-filter');
-      const grid = document.getElementById('guns-grid');
-      const cards = Array.from(grid ? grid.querySelectorAll('.category-card') : []);
-      const countEl = document.getElementById('gun-count');
-      function apply(){
-        const q = (input && input.value || '').trim().toLowerCase();
-        let shown = 0;
-        cards.forEach(c => {
-          const name = (c.textContent || '').toLowerCase();
-          const visible = !q || name.includes(q);
-          c.style.display = visible ? '' : 'none';
-          if (visible) shown++;
-        });
-        if (countEl) countEl.textContent = shown + ' / ' + cards.length;
-      }
-      if (input) {
-        input.addEventListener('input', apply);
-        apply();
-      }
-    });
-  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.basic.min.js"></script>
   <script src="script.js"></script>

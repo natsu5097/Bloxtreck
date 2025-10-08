@@ -83,8 +83,18 @@
         </ul>
       </section>
       
-      <h2 class="section-title" id="list">All Blox Fruits</h2>
-      <section class="category-grid" id="fruits-list" aria-label="Fruit list">
+      <!-- Toolbar for filtering -->
+      <section class="item-filter-toolbar">
+        <h2 class="section-title">Fruits Directory</h2>
+        <div class="filter-controls">
+          <input class="item-filter-input" type="search" placeholder="Filter fruits by name..." aria-label="Filter fruits" />
+          <div class="item-count">
+            Showing <span class="item-count-display">--</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="category-grid item-grid" id="fruits-list" aria-label="Fruit list">
   <div class="category-card">
     <img src="images/categories/rocket.png" alt="Rocket Fruit" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Rocket';">
     <h3><a href="fruits_pages/rocket.html">Rocket</a></h3>
@@ -96,7 +106,6 @@
     <h3><a href="fruits_pages/spin.html">Spin</a></h3>
     <span class="rarity-badge common">Common</span>
       <p>Creates spinning attacks that hit multiple targets</p>
-    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Blade" alt="Blade Fruit">
