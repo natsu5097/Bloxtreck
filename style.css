@@ -442,10 +442,17 @@ main {
 
 /* ================= CATEGORY CARDS ================= */
 .categories {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: var(--mb-1-5);
   margin-bottom: var(--mb-2);
+}
+
+.category-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--mb-1-5);
+  flex-wrap: wrap;
 }
 
 .category-card {
@@ -460,6 +467,10 @@ main {
   flex-direction: column;
   justify-content: flex-start; /* Align items to the top */
   align-items: center;
+  flex: 1;
+  min-width: 200px;
+  max-width: 250px;
+  margin: 0 auto;
 }
 
 .category-card:hover {
@@ -468,13 +479,14 @@ main {
 }
 
 .category-card img {
-  width: 60px;
-  height: 60px; /* Fixed height */
+  width: 80px;
+  height: 80px;
   margin: 0 auto var(--mb-1);
-  object-fit: contain; /* Use contain to prevent squishing */
-  border-radius: 8px; /* Match card radius */
-  background-color: var(--bg-color); /* Add a subtle background for images */
-  padding: 4px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary-color);
+  padding: 3px;
+  background-color: var(--bg-color);
 }
 
 .category-card h3 {
