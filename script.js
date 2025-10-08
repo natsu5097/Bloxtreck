@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function getBasePrefix() {
   const path = window.location.pathname.replace(/\\\\/g, "/");
   // If inside a subfolder like fruits_pages/, swords_pages/, or accessories_pages/ use ../ links
-  return /(fruits_pages|swords_pages|accessories_pages|guns_pages)\//.test(path) ? "../" : "";
+  return /(fruits_pages|swords_pages|accessories_pages|guns_pages|styles_pages)\//.test(path) ? "../" : "";
 }
 
 function renderGlobalChrome() {
