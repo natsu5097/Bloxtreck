@@ -11,6 +11,7 @@
   --text-color: #212529;
   --text-color-muted: #6c757d;
   --primary-color: #4361ee;
+  --primary-color-rgb: 67, 97, 238;
   --primary-color-alt: #3a0ca3;
   --secondary-color: #f72585;
   --accent-color: #4cc9f0;
@@ -88,6 +89,26 @@ body.dark {
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Description Section Styling */
+.description-section {
+  background-color: var(--bg-color-alt);
+  border-radius: var(--border-radius);
+  padding: var(--mb-2);
+  margin-bottom: var(--mb-3);
+  box-shadow: var(--card-shadow);
+}
+
+.description-section h2 {
+  color: var(--primary-color);
+  margin-bottom: var(--mb-1);
+  font-family: var(--heading-font);
+}
+
+.description-section p {
+  margin-bottom: var(--mb-1);
+  line-height: 1.6;
 }
 
 body {
@@ -448,11 +469,19 @@ main {
   margin-bottom: var(--mb-2);
 }
 
+.category-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
 .category-row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: var(--mb-1-5);
-  flex-wrap: wrap;
+  margin-bottom: 2rem;
 }
 
 .category-card {
@@ -479,14 +508,14 @@ main {
 }
 
 .category-card img {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   margin: 0 auto var(--mb-1);
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--primary-color);
-  padding: 3px;
-  background-color: var(--bg-color);
+  border: 2px solid var(--primary-color);
+  padding: 10px;
+  background-color: rgba(var(--primary-color-rgb, 67, 97, 238), 0.1);
 }
 
 .category-card h3 {
