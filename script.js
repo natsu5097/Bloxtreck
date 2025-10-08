@@ -76,24 +76,24 @@ function renderGlobalChrome() {
 </footer>`;
 
   // Replace or insert header
-  const existingHeader = document.querySelector('header.site-header');
+  const existingHeader = document.querySelector('header');
   if (existingHeader) {
     existingHeader.outerHTML = headerHtml;
   } else if (document.body.firstElementChild) {
     document.body.insertAdjacentHTML('afterbegin', headerHtml);
   } else {
-    document.body.innerHTML = headerHtml + document.body.innerHTML;
+    document.body.innerHTML = headerHtml + (document.body.innerHTML || '');
   }
 
   // Replace or insert nav
   const existingNav = document.querySelector('nav');
   const headerEl = document.querySelector('header.site-header');
   if (existingNav) {
-    existingNav.outerHTML = navHtml;
+    // If nav exists, replace it. This handles all cases.
+    existingNav.outerHTML = navHtml; 
   } else if (headerEl) {
+    // If no nav exists, insert it after the header.
     headerEl.insertAdjacentHTML('afterend', navHtml);
-  } else {
-    document.body.insertAdjacentHTML('afterbegin', navHtml);
   }
 
   // Replace or insert footer
