@@ -3,14 +3,32 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Fruits — Bloxtreck</title>
+    <meta name="description" content="Comprehensive guide to all Blox Fruits - powers, abilities, and where to find them">
+    <title>Blox Fruits Guide | BloxTreck Wiki</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/sitelogo/favicon_io/favicon.ico" type="image/x-icon">
   </head>
   <body>
     <header>
-    <h1>Fruits -- Blox Fruits Fan Wiki</h1>
-</header>
+      <div class="logo">
+        <a href="index.html">
+          <img src="images/sitelogo/favicon_io/favicon-32x32.png" alt="BloxTreck Logo">
+          <span>BloxTreck</span>
+        </a>
+      </div>
+      <h1>Blox Fruits Guide</h1>
+      <div class="header-controls">
+        <button id="theme-toggle" aria-label="Toggle dark mode">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <div class="search-container">
+          <input type="text" id="search-box" placeholder="Search for fruits, abilities..." aria-label="Search">
+          <div id="search-results"></div>
+        </div>
+      </div>
+    </header>
 
     <nav>
       <a href="index.html">Home</a>
@@ -18,86 +36,160 @@
       <a href="swords.html">Swords</a>
       <a href="guns.html">Guns</a>
       <a href="styles.html">Fighting Styles</a>
+      <a href="accessories.html">Accessories</a>
+      <a href="bosses.html">Bosses</a>
+      <a href="islands.html">Islands</a>
+      <a href="tierlist.html">Tier Lists</a>
     </nav>
 
     <main>
-      <section class="blox-fruits-info">
-  <h2>Blox Fruits Overview</h2>
-  <p>
-    Blox Fruits are mysterious fruits that can grant their user supernatural abilities when eaten.
-    They are the main, core mechanism of the game, as well as being represented as the game title.
-    Each Blox Fruit has its own unique power. However, in exchange for power, the user will continuously
-    take damage if they stay in water for too long. Some Blox Fruits have special abilities that can
-    grant the user certain immunities, buffed movement, defensive perks, etc.
-  </p>
-</section>
+      <section class="hero">
+        <h2>Blox Fruits Collection</h2>
+        <p>Discover all the mysterious fruits that grant supernatural powers and abilities</p>
+      </section>
+      
+      <section class="blox-fruits-info intro-section">
+        <h2>Blox Fruits Overview</h2>
+        <p>
+          Blox Fruits are mysterious fruits that grant their users supernatural abilities when consumed.
+          As the core mechanic of the game, each fruit provides unique powers and combat advantages.
+          However, these powers come with a price - fruit users will take continuous damage when submerged in water.
+          Some fruits offer special abilities like elemental immunities, enhanced movement, or defensive capabilities.
+        </p>
+        
+        <h3>Fruit Categories</h3>
+        <ul class="feature-list">
+          <li><strong>Natural:</strong> Elemental fruits like Flame, Ice, and Sand</li>
+          <li><strong>Beast:</strong> Animal-based fruits like Eagle, Phoenix, and T-Rex</li>
+          <li><strong>Mythical:</strong> Legendary fruits with extraordinary powers</li>
+          <li><strong>Awakened:</strong> Enhanced versions with unlocked potential</li>
+        </ul>
+      </section>
 
-<!-- ================= CONTENTS ================= -->
-<section class="blox-contents">
-    <h3>Contents</h3>
-    <ul>
-      <li><a href="#obtainment">Obtainment</a></li>
-      <li><a href="#list">List of Blox Fruits</a></li>
-      <li><a href="#notes">Notes</a></li>
-      <li><a href="#trivia">Trivia</a></li>
-    </ul>
-</section>
-      <section class="categories" id="fruits-list" aria-label="Fruit list">
+      <!-- ================= CONTENTS ================= -->
+      <section class="blox-contents">
+        <h3>Quick Navigation</h3>
+        <ul>
+          <li><a href="#obtainment">How to Obtain Fruits</a></li>
+          <li><a href="#fruits-list">Complete Fruit List</a></li>
+          <li><a href="#notes">Important Notes</a></li>
+          <li><a href="#trivia">Trivia & Facts</a></li>
+        </ul>
+      </section>
+      
+      <h2 class="section-title" id="list">All Blox Fruits</h2>
+      <section class="category-grid" id="fruits-list" aria-label="Fruit list">
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Rocket" alt="Rocket Fruit">
-    <h3><a href="fruits_pages/rocket.html">Rocket</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/rocket.html">Rocket</a></h3>
+      <span class="rarity-badge common">Common</span>
+      <p>Launches explosive projectiles at enemies</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Spin" alt="Spin Fruit">
-    <h3><a href="fruits_pages/spin.html">Spin</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/spin.html">Spin</a></h3>
+      <span class="rarity-badge common">Common</span>
+      <p>Creates spinning attacks that hit multiple targets</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Blade" alt="Blade Fruit">
-    <h3><a href="fruits_pages/blade.html">Blade</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/blade.html">Blade</a></h3>
+      <span class="rarity-badge uncommon">Uncommon</span>
+      <p>Summons sharp blades for close combat</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Spring" alt="Spring Fruit">
-    <h3><a href="fruits_pages/spring.html">Spring</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/spring.html">Spring</a></h3>
+      <span class="rarity-badge common">Common</span>
+      <p>Grants enhanced mobility and jumping power</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Bomb" alt="Bomb Fruit">
-    <h3><a href="fruits_pages/bomb.html">Bomb</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/bomb.html">Bomb</a></h3>
+      <span class="rarity-badge uncommon">Uncommon</span>
+      <p>Creates powerful explosions in battle</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Smoke" alt="Smoke Fruit">
-    <h3><a href="fruits_pages/smoke.html">Smoke</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/smoke.html">Smoke</a></h3>
+      <span class="rarity-badge uncommon">Uncommon</span>
+      <p>Transforms into smoke for evasion and attacks</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Spike" alt="Spike Fruit">
-    <h3><a href="fruits_pages/spike.html">Spike</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/spike.html">Spike</a></h3>
+      <span class="rarity-badge uncommon">Uncommon</span>
+      <p>Grows deadly spikes for offense and defense</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Flame" alt="Flame Fruit">
-    <h3><a href="fruits_pages/flame.html">Flame</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/flame.html">Flame</a></h3>
+      <span class="rarity-badge rare">Rare</span>
+      <p>Controls fire for devastating attacks</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Ice" alt="Ice Fruit">
-    <h3><a href="fruits_pages/ice.html">Ice</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/ice.html">Ice</a></h3>
+      <span class="rarity-badge rare">Rare</span>
+      <p>Freezes enemies and creates ice structures</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Sand" alt="Sand Fruit">
-    <h3><a href="fruits_pages/sand.html">Sand</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/sand.html">Sand</a></h3>
+      <span class="rarity-badge rare">Rare</span>
+      <p>Controls sand for offense and mobility</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Dark" alt="Dark Fruit">
-    <h3><a href="fruits_pages/dark.html">Dark</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/dark.html">Dark</a></h3>
+      <span class="rarity-badge rare">Rare</span>
+      <p>Manipulates darkness for powerful attacks</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Eagle" alt="Eagle Fruit">
-    <h3><a href="fruits_pages/eagle.html">Eagle</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/eagle.html">Eagle</a></h3>
+      <span class="rarity-badge epic">Epic</span>
+      <p>Transforms into an eagle for aerial combat</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Diamond" alt="Diamond Fruit">
-    <h3><a href="fruits_pages/diamond.html">Diamond</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/diamond.html">Diamond</a></h3>
+      <span class="rarity-badge epic">Epic</span>
+      <p>Hardens body into diamond for defense</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Light" alt="Light Fruit">
-    <h3><a href="fruits_pages/light.html">Light</a></h3>
+    <div class="card-content">
+      <h3><a href="fruits_pages/light.html">Light</a></h3>
+      <span class="rarity-badge legendary">Legendary</span>
+      <p>Controls light for speed and powerful beams</p>
+    </div>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Rubber" alt="Rubber Fruit">

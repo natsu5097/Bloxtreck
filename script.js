@@ -1,14 +1,31 @@
 // ------------------ GLOBAL MOCK DATA ------------------
-// Move sample/mock data to top-level so it can be reused by other functions
+// Comprehensive mock data for search and display functionality
 const allItems = [
-  { id: 1, name: "Dragon", category: "Fruits", type: "Mythical", image_url: "", price_money: 5000, price_robux: 50, description: "Legendary fruit" },
-  { id: 2, name: "Blade", category: "Swords", type: "Weapon", image_url: "", price_money: 3000, price_robux: 30, description: "Sharp sword" },
-  { id: 3, name: "Pistol", category: "Guns", type: "Ranged", image_url: "", price_money: 2500, price_robux: 25, description: "Basic gun" },
-  { id: 4, name: "Karate", category: "FightingStyles", type: "Melee", image_url: "", description: "Martial art" },
-  { id: 5, name: "Ring", category: "Accessories", type: "Accessory", image_url: "", description: "Increases strength" },
-  { id: 6, name: "Marine Captain", category: "Bosses", type: "Boss", image_url: "", description: "Sea-based boss" },
-  { id: 7, name: "Starter Island", category: "Islands", type: "Island", image_url: "", description: "Beginning area" },
-  { id: 8, name: "Black Leg", category: "FightingStyles", type: "Melee", image_url: "", description: "Powerful kicking style" }
+  // Fruits
+  { id: 1, name: "Dragon", category: "Fruits", type: "Mythical", image_url: "https://via.placeholder.com/100?text=Dragon", price_money: 5000000, price_robux: 2500, description: "Legendary mythical zoan fruit with devastating fire abilities", rarity: "Legendary" },
+  { id: 2, name: "Venom", category: "Fruits", type: "Natural", image_url: "https://via.placeholder.com/100?text=Venom", price_money: 4500000, price_robux: 2300, description: "Deadly poison-based fruit with area damage effects", rarity: "Legendary" },
+  { id: 3, name: "Control", category: "Fruits", type: "Natural", image_url: "https://via.placeholder.com/100?text=Control", price_money: 4200000, price_robux: 2100, description: "Manipulate objects and enemies with telekinetic powers", rarity: "Legendary" },
+  
+  // Swords
+  { id: 4, name: "Yama", category: "Swords", type: "Weapon", image_url: "https://via.placeholder.com/100?text=Yama", price_money: 3000000, price_robux: 0, description: "Legendary sword with exceptional range and damage", rarity: "Mythical" },
+  { id: 5, name: "Tushita", category: "Swords", type: "Weapon", image_url: "https://via.placeholder.com/100?text=Tushita", price_money: 2800000, price_robux: 0, description: "Ancient blade with powerful aerial combos", rarity: "Mythical" },
+  { id: 6, name: "Rengoku", category: "Swords", type: "Weapon", image_url: "https://via.placeholder.com/100?text=Rengoku", price_money: 1500000, price_robux: 0, description: "Flame-imbued sword with burning damage", rarity: "Legendary" },
+  
+  // Guns
+  { id: 7, name: "Kabucha", category: "Guns", type: "Ranged", image_url: "https://via.placeholder.com/100?text=Kabucha", price_money: 1800000, price_robux: 0, description: "Powerful cannon with explosive projectiles", rarity: "Legendary" },
+  { id: 8, name: "Acidum Rifle", category: "Guns", type: "Ranged", image_url: "https://via.placeholder.com/100?text=Acidum", price_money: 1500000, price_robux: 0, description: "Rifle that fires corrosive acid bullets", rarity: "Legendary" },
+  
+  // Fighting Styles
+  { id: 9, name: "Godhuman", category: "FightingStyles", type: "Melee", image_url: "https://via.placeholder.com/100?text=Godhuman", description: "Ultimate fighting style combining multiple techniques", rarity: "Mythical" },
+  { id: 10, name: "Electric Claw", category: "FightingStyles", type: "Melee", image_url: "https://via.placeholder.com/100?text=Electric", description: "Lightning-fast attacks with electric damage", rarity: "Legendary" },
+  
+  // Accessories
+  { id: 11, name: "Dark Coat", category: "Accessories", type: "Accessory", image_url: "https://via.placeholder.com/100?text=DarkCoat", description: "Increases defense and provides style", rarity: "Rare" },
+  { id: 12, name: "Ghoul Mask", category: "Accessories", type: "Accessory", image_url: "https://via.placeholder.com/100?text=GhoulMask", description: "Intimidating mask that boosts attack power", rarity: "Epic" },
+  
+  // Bosses & NPCs
+  { id: 13, name: "Dough King", category: "Bosses", type: "Boss", image_url: "https://via.placeholder.com/100?text=DoughKing", description: "Powerful raid boss with dough-based abilities", rarity: "Raid Boss" },
+  { id: 14, name: "Blox Fruit Dealer", category: "NPCs", type: "Vendor", image_url: "https://via.placeholder.com/100?text=Dealer", description: "Sells random fruits on rotation", location: "First Sea" }
 ];
 
 
@@ -193,23 +210,45 @@ function initializeSearch() {
   let fuse = null;
   if (typeof Fuse === 'function') {
     fuse = new Fuse(allItems, {
-      keys: ["name", "description", "category", "type"],
-      threshold: 0.35,
-      includeScore: true
+      keys: ["name", "description", "category", "type", "rarity"],
+      threshold: 0.3, // Slightly more strict matching
+      includeScore: true,
+      shouldSort: true,
+      minMatchCharLength: 2
     });
   } else {
-    // fallback - simple substring matcher wrapped to emulate Fuse result shape
+    // Enhanced fallback with weighted scoring
     fuse = {
       search: (q, opts) => {
         const s = String(q || '').trim().toLowerCase();
         if (!s) return [];
-        const matches = allItems.filter(item => (
-          (item.name || '').toLowerCase().includes(s) ||
-          (item.description || '').toLowerCase().includes(s) ||
-          (item.category || '').toLowerCase().includes(s) ||
-          (item.type || '').toLowerCase().includes(s)
-        ));
-        return matches.map(item => ({ item }));
+        
+        // Calculate relevance score for better sorting
+        const matches = allItems
+          .map(item => {
+            let score = 0;
+            // Name match (highest priority)
+            if ((item.name || '').toLowerCase().includes(s)) {
+              score += 10;
+              // Exact match or starts with gets higher score
+              if ((item.name || '').toLowerCase() === s) score += 5;
+              if ((item.name || '').toLowerCase().startsWith(s)) score += 3;
+            }
+            // Category match
+            if ((item.category || '').toLowerCase().includes(s)) score += 5;
+            // Type match
+            if ((item.type || '').toLowerCase().includes(s)) score += 4;
+            // Description match (lowest priority)
+            if ((item.description || '').toLowerCase().includes(s)) score += 2;
+            // Rarity match
+            if ((item.rarity || '').toLowerCase().includes(s)) score += 3;
+            
+            return { item, score };
+          })
+          .filter(result => result.score > 0)
+          .sort((a, b) => b.score - a.score);
+          
+        return matches.map(match => ({ item: match.item, score: match.score }));
       }
     };
   }
@@ -225,31 +264,76 @@ function initializeSearch() {
       return;
     }
     
+    // Add header with result count and close button
+    const header = document.createElement("div");
+    header.className = "search-header";
+    header.innerHTML = `
+      <span>${results.length} result${results.length > 1 ? 's' : ''} found</span>
+      <button class="close-search" aria-label="Close search results">×</button>
+    `;
+    searchResults.appendChild(header);
+    
+    // Add results container
+    const resultsContainer = document.createElement("div");
+    resultsContainer.className = "search-results-content";
+    searchResults.appendChild(resultsContainer);
+    
     results.forEach((r, i) => {
       const item = r.item || r;
       const card = document.createElement("div");
       card.className = "result-card";
       card.dataset.index = i;
+      card.setAttribute("tabindex", "0"); // Make focusable for keyboard navigation
+      
+      // Format price if available
+      const priceDisplay = item.price_money ? 
+        `<span class="result-price">${Number(item.price_money).toLocaleString()} $</span>` : '';
+      
+      // Show rarity badge if available
+      const rarityBadge = item.rarity ? 
+        `<span class="rarity-badge ${(item.rarity || '').toLowerCase()}">${item.rarity}</span>` : '';
+      
       card.innerHTML = `
         <img src="${safeText(item.image_url) || getPlaceholderImage(item.category)}" 
              alt="${safeText(item.name)}" 
              loading="lazy" 
              onerror="this.onerror=null;this.src='${getPlaceholderImage(item.category)}'"/>
         <div class="meta">
-          <h3>${safeText(item.name)}</h3>
+          <div class="result-header">
+            <h3>${safeText(item.name)}</h3>
+            ${rarityBadge}
+          </div>
           <p>${safeText(item.category)} • ${safeText(item.type)}</p>
-          <p>${safeText(item.description || "")}</p>
+          <p>${safeText(item.description || "").substring(0, 70)}${(item.description || "").length > 70 ? '...' : ''}</p>
+          ${priceDisplay}
         </div>
       `;
+      
       card.addEventListener("click", () => {
-        // Navigate to the appropriate page based on category
         navigateToItem(item);
       });
-      searchResults.appendChild(card);
+      
+      // Add keyboard accessibility
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          navigateToItem(item);
+        }
+      });
+      
+      resultsContainer.appendChild(card);
     });
     
     searchResults.classList.add("active");
     selectedIndex = -1;
+    
+    // Add click event to close button
+    const closeButton = searchResults.querySelector('.close-search');
+    if (closeButton) {
+      closeButton.addEventListener('click', () => {
+        searchResults.classList.remove("active");
+      });
+    }
     
     if (clearSearchBtn) {
       clearSearchBtn.style.display = "block";
@@ -265,11 +349,35 @@ function initializeSearch() {
     }
     
     const results = fuse.search(query, { limit: 20 });
+    
+    if (results.length === 0) {
+      searchResults.innerHTML = `
+        <div class="search-header">
+          <span>No results found</span>
+          <button class="close-search" aria-label="Close search results">×</button>
+        </div>
+        <div class="no-results">
+          <p>No items match your search for "${query}"</p>
+          <p>Try using different keywords or check for typos</p>
+        </div>
+      `;
+      searchResults.classList.add("active");
+      
+      // Add click event to close button
+      const closeButton = searchResults.querySelector('.close-search');
+      if (closeButton) {
+        closeButton.addEventListener('click', () => {
+          searchResults.classList.remove("active");
+        });
+      }
+      return;
+    }
+    
     renderSearchResults(results);
   }
 
   function navigateToItem(item) {
-    // Simple navigation - in a real app, you'd have proper routing
+    // Enhanced navigation with better URL handling
     const pageMap = {
       "Fruits": "fruits.html",
       "Swords": "swords.html",
@@ -277,12 +385,36 @@ function initializeSearch() {
       "FightingStyles": "styles.html",
       "Accessories": "accessories.html",
       "Bosses": "bosses.html",
-      "Islands": "islands.html"
+      "Islands": "islands.html",
+      "NPCs": "npcs.html"
     };
     
-    const page = pageMap[item.category] || "index.html";
-    const base = getBasePrefix();
-    window.location.href = base + page;
+    // Create URL-safe slug from item name
+    const itemNameSlug = item.name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+    
+    // Determine if we should navigate to detail page or category page
+    let targetPage = '';
+    switch(item.category) {
+      case "Fruits":
+        targetPage = `${getBasePrefix()}fruits_pages/${itemNameSlug}.html`;
+        break;
+      case "Swords":
+        targetPage = `${getBasePrefix()}swords_pages/${itemNameSlug}.html`;
+        break;
+      case "Guns":
+        targetPage = `${getBasePrefix()}guns_pages/${itemNameSlug}.html`;
+        break;
+      case "FightingStyles":
+        targetPage = `${getBasePrefix()}styles_pages/${itemNameSlug}.html`;
+        break;
+      case "Accessories":
+        targetPage = `${getBasePrefix()}accessories_pages/${itemNameSlug}.html`;
+        break;
+      default:
+        targetPage = `${getBasePrefix()}${pageMap[item.category] || "index.html"}`;
+    }
+    
+    window.location.href = targetPage;
   }
 
   // Add event listeners to all search inputs
