@@ -42,6 +42,16 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeScrollTop();
   initializeCollapsibles();
   loadPageContent();
+  
+  // Add smooth scrolling for better UX
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
 });
 
 // ================= GLOBAL CHROME (Header/Nav/Footer) =================
