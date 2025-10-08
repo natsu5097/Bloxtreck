@@ -43,10 +43,35 @@
     </nav>
 
     <main>
-      <section class="hero description-section">
-        <h2>Blox Fruits Collection</h2>
-        <p>Discover all the mysterious fruits that grant supernatural powers and abilities. Each fruit provides unique abilities and transformations that can dramatically change your gameplay experience.</p>
-      </section>
+      <div class="main-layout">
+        <!-- Sticky Sidebar -->
+        <aside class="sidebar">
+          <h3>Quick Navigation</h3>
+          <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#fruits-list">All Fruits</a></li>
+            <li><a href="#obtainment">How to Get</a></li>
+            <li><a href="#list">Fruit List</a></li>
+            <li><a href="#notes">Notes</a></li>
+            <li><a href="#trivia">Trivia</a></li>
+          </ul>
+          
+          <h3>Filter by Rarity</h3>
+          <ul>
+            <li><a href="#" data-filter="common">Common (7)</a></li>
+            <li><a href="#" data-filter="uncommon">Uncommon (6)</a></li>
+            <li><a href="#" data-filter="rare">Rare (4)</a></li>
+            <li><a href="#" data-filter="legendary">Legendary (11)</a></li>
+            <li><a href="#" data-filter="mythical">Mythical (13)</a></li>
+          </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+          <section class="hero description-section">
+            <h2>Blox Fruits Collection</h2>
+            <p>Discover all the mysterious fruits that grant supernatural powers and abilities. Each fruit provides unique abilities and transformations that can dramatically change your gameplay experience.</p>
+          </section>
       
       <section class="description-section">
         <h2>Fruits Overview</h2>
@@ -104,208 +129,237 @@
   <div class="category-card">
     <img src="images/categories/spin.png" alt="Spin Fruit" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Spin';">
     <h3><a href="fruits_pages/spin.html">Spin</a></h3>
+    <p>Creates spinning attacks that hit multiple targets</p>
     <span class="rarity-badge common">Common</span>
-      <p>Creates spinning attacks that hit multiple targets</p>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Blade" alt="Blade Fruit">
-    <div class="card-content">
-      <h3><a href="fruits_pages/blade.html">Blade</a></h3>
-      <span class="rarity-badge uncommon">Uncommon</span>
-      <p>Summons sharp blades for close combat</p>
-    </div>
+    <h3><a href="fruits_pages/blade.html">Blade</a></h3>
+    <p>Summons sharp blades for close combat</p>
+    <span class="rarity-badge uncommon">Uncommon</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Spring" alt="Spring Fruit">
-    <div class="card-content">
-      <h3><a href="fruits_pages/spring.html">Spring</a></h3>
-      <span class="rarity-badge common">Common</span>
-      <p>Grants enhanced mobility and jumping power</p>
-    </div>
+    <h3><a href="fruits_pages/spring.html">Spring</a></h3>
+    <p>Grants enhanced mobility and jumping power</p>
+    <span class="rarity-badge common">Common</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Bomb" alt="Bomb Fruit">
-    <div class="card-content">
-      <h3><a href="fruits_pages/bomb.html">Bomb</a></h3>
-      <span class="rarity-badge uncommon">Uncommon</span>
-      <p>Creates powerful explosions in battle</p>
-    </div>
+    <h3><a href="fruits_pages/bomb.html">Bomb</a></h3>
+    <p>Creates powerful explosions in battle</p>
+    <span class="rarity-badge uncommon">Uncommon</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Smoke" alt="Smoke Fruit">
-    <div class="card-content">
-      <h3><a href="fruits_pages/smoke.html">Smoke</a></h3>
-      <span class="rarity-badge uncommon">Uncommon</span>
-      <p>Transforms into smoke for evasion and attacks</p>
-    </div>
+    <h3><a href="fruits_pages/smoke.html">Smoke</a></h3>
+    <p>Transforms into smoke for evasion and attacks</p>
+    <span class="rarity-badge uncommon">Uncommon</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Spike" alt="Spike Fruit">
-    <div class="card-content">
-      <h3><a href="fruits_pages/spike.html">Spike</a></h3>
-      <span class="rarity-badge uncommon">Uncommon</span>
-      <p>Grows deadly spikes for offense and defense</p>
-    </div>
+    <h3><a href="fruits_pages/spike.html">Spike</a></h3>
+    <p>Grows deadly spikes for offense and defense</p>
+    <span class="rarity-badge uncommon">Uncommon</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Flame" alt="Flame Fruit">
-    <div class="card-content">
-      <h3><a href="fruits_pages/flame.html">Flame</a></h3>
-      <span class="rarity-badge rare">Rare</span>
-      <p>Controls fire for devastating attacks</p>
-    </div>
+    <h3><a href="fruits_pages/flame.html">Flame</a></h3>
+    <p>Controls fire for devastating attacks</p>
+    <span class="rarity-badge rare">Rare</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Ice" alt="Ice Fruit">
-    <div class="card-content">
-      <h3><a href="fruits_pages/ice.html">Ice</a></h3>
-      <span class="rarity-badge rare">Rare</span>
-      <p>Freezes enemies and creates ice structures</p>
-    </div>
+    <h3><a href="fruits_pages/ice.html">Ice</a></h3>
+    <p>Freezes enemies and creates ice structures</p>
+    <span class="rarity-badge rare">Rare</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Sand" alt="Sand Fruit">
-    <div class="card-content">
-      <h3><a href="fruits_pages/sand.html">Sand</a></h3>
-      <span class="rarity-badge rare">Rare</span>
-      <p>Controls sand for offense and mobility</p>
-    </div>
+    <h3><a href="fruits_pages/sand.html">Sand</a></h3>
+    <p>Controls sand for offense and mobility</p>
+    <span class="rarity-badge rare">Rare</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Dark" alt="Dark Fruit">
-    <div class="card-content">
-      <h3><a href="fruits_pages/dark.html">Dark</a></h3>
-      <span class="rarity-badge rare">Rare</span>
-      <p>Manipulates darkness for powerful attacks</p>
-    </div>
+    <h3><a href="fruits_pages/dark.html">Dark</a></h3>
+    <p>Manipulates darkness for powerful attacks</p>
+    <span class="rarity-badge rare">Rare</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Eagle" alt="Eagle Fruit">
-    <div class="card-content">
-      <h3><a href="fruits_pages/eagle.html">Eagle</a></h3>
-      <span class="rarity-badge epic">Epic</span>
-      <p>Transforms into an eagle for aerial combat</p>
-    </div>
+    <h3><a href="fruits_pages/eagle.html">Eagle</a></h3>
+    <p>Transforms into an eagle for aerial combat</p>
+    <span class="rarity-badge epic">Epic</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Diamond" alt="Diamond Fruit">
-    <div class="card-content">
-      <h3><a href="fruits_pages/diamond.html">Diamond</a></h3>
-      <span class="rarity-badge epic">Epic</span>
-      <p>Hardens body into diamond for defense</p>
-    </div>
+    <h3><a href="fruits_pages/diamond.html">Diamond</a></h3>
+    <p>Hardens body into diamond for defense</p>
+    <span class="rarity-badge epic">Epic</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Light" alt="Light Fruit">
-    <div class="card-content">
-      <h3><a href="fruits_pages/light.html">Light</a></h3>
-      <span class="rarity-badge legendary">Legendary</span>
-      <p>Controls light for speed and powerful beams</p>
-    </div>
+    <h3><a href="fruits_pages/light.html">Light</a></h3>
+    <p>Controls light for speed and powerful beams</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Rubber" alt="Rubber Fruit">
     <h3><a href="fruits_pages/rubber.html">Rubber</a></h3>
+    <p>Elastic body with stretching abilities</p>
+    <span class="rarity-badge uncommon">Uncommon</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Ghost" alt="Ghost Fruit">
     <h3><a href="fruits_pages/ghost.html">Ghost</a></h3>
+    <p>Intangible form with spectral attacks</p>
+    <span class="rarity-badge rare">Rare</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Magma" alt="Magma Fruit">
     <h3><a href="fruits_pages/magma.html">Magma</a></h3>
+    <p>Controls molten lava for devastating damage</p>
+    <span class="rarity-badge rare">Rare</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Quake" alt="Quake Fruit">
     <h3><a href="fruits_pages/quake.html">Quake</a></h3>
+    <p>Creates powerful seismic vibrations</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Buddha" alt="Buddha Fruit">
     <h3><a href="fruits_pages/buddha.html">Buddha</a></h3>
+    <p>Transforms into a giant golden Buddha</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Love" alt="Love Fruit">
     <h3><a href="fruits_pages/love.html">Love</a></h3>
+    <p>Charm and heart-based attacks</p>
+    <span class="rarity-badge rare">Rare</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Creation" alt="Creation Fruit">
     <h3><a href="fruits_pages/creation.html">Creation</a></h3>
+    <p>Manipulates and creates matter</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Spider" alt="Spider Fruit">
     <h3><a href="fruits_pages/spider.html">Spider</a></h3>
+    <p>Web-based attacks and mobility</p>
+    <span class="rarity-badge rare">Rare</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Sound" alt="Sound Fruit">
     <h3><a href="fruits_pages/sound.html">Sound</a></h3>
+    <p>Sound wave attacks and sonic abilities</p>
+    <span class="rarity-badge rare">Rare</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Phoenix" alt="Phoenix Fruit">
     <h3><a href="fruits_pages/phoenix.html">Phoenix</a></h3>
+    <p>Fire-based transformation with rebirth</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Portal" alt="Portal Fruit">
     <h3><a href="fruits_pages/portal.html">Portal</a></h3>
+    <p>Creates portals for instant travel</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Lightning" alt="Lightning Fruit">
     <h3><a href="fruits_pages/lightning.html">Lightning</a></h3>
+    <p>Electric attacks with speed boost</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Pain" alt="Pain Fruit">
     <h3><a href="fruits_pages/pain.html">Pain</a></h3>
+    <p>Pain-based attacks and abilities</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Blizzard" alt="Blizzard Fruit">
     <h3><a href="fruits_pages/blizzard.html">Blizzard</a></h3>
+    <p>Ice storm attacks and freezing</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Gravity" alt="Gravity Fruit">
     <h3><a href="fruits_pages/gravity.html">Gravity</a></h3>
+    <p>Manipulates gravity for powerful attacks</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=T-Rex" alt="T-Rex Fruit">
     <h3><a href="fruits_pages/t-rex.html">T-Rex</a></h3>
+    <p>Transforms into a powerful T-Rex</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Dough" alt="Dough Fruit">
     <h3><a href="fruits_pages/dough.html">Dough</a></h3>
+    <p>Dough-based attacks and transformations</p>
+    <span class="rarity-badge mythical">Mythical</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Shadow" alt="Shadow Fruit">
     <h3><a href="fruits_pages/shadow.html">Shadow</a></h3>
+    <p>Shadow manipulation and stealth</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Venom" alt="Venom Fruit">
     <h3><a href="fruits_pages/venom.html">Venom</a></h3>
+    <p>Poisonous attacks and toxic abilities</p>
+    <span class="rarity-badge mythical">Mythical</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Control" alt="Control Fruit">
     <h3><a href="fruits_pages/control.html">Control</a></h3>
+    <p>Telekinetic control over objects</p>
+    <span class="rarity-badge mythical">Mythical</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Gas" alt="Gas Fruit">
     <h3><a href="fruits_pages/gas.html">Gas</a></h3>
+    <p>Gas-based attacks and transformations</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Spirit" alt="Spirit Fruit">
     <h3><a href="fruits_pages/spirit.html">Spirit</a></h3>
+    <p>Spiritual attacks and ghostly abilities</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Leopard" alt="Leopard Fruit">
     <h3><a href="fruits_pages/leopard.html">Leopard</a></h3>
+    <p>Transforms into a fast leopard</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Yeti" alt="Yeti Fruit">
     <h3><a href="fruits_pages/yeti.html">Yeti</a></h3>
+    <p>Ice-based yeti transformation</p>
+    <span class="rarity-badge legendary">Legendary</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Kitsune" alt="Kitsune Fruit">
     <h3><a href="fruits_pages/kitsune.html">Kitsune</a></h3>
+    <p>Fox spirit with fire and illusion powers</p>
+    <span class="rarity-badge mythical">Mythical</span>
+    <span class="new-badge">New</span>
   </div>
   <div class="category-card">
     <img src="https://via.placeholder.com/100?text=Dragon" alt="Dragon Fruit">
     <h3><a href="fruits_pages/dragon.html">Dragon</a></h3>
+    <p>Ultimate mythical dragon transformation</p>
+    <span class="rarity-badge mythical">Mythical</span>
   </div>
 </section>
     </main>
@@ -390,7 +444,10 @@
         <li>Many Blox Fruit moves have destructible physics like other attacks.</li>
       </ul>
     </div>
-  </div>
+        </div>
+      </div>
+    </main>
+
     <footer>
       <small>© Bloxtreck — community wiki</small>
     </footer>

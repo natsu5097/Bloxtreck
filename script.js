@@ -41,16 +41,26 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeSearch();
   initializeScrollTop();
   initializeCollapsibles();
-  initializeCategoryFilter(); // New function for list filtering
+  initializeCategoryFilter();
+  initializePagination();
+  initializeBreadcrumbs();
+  initializeLightbox();
+  initializeTooltips();
+  initializeComparisonTool();
+  initializeRatingSystem();
+  initializeAnimatedStats();
   loadPageContent();
   
   // Add smooth scrolling for better UX
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
-      document.querySelector(this.getAttribute('href')).scrollIntoView({
-        behavior: 'smooth'
-      });
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
     });
   });
 });
@@ -221,20 +231,43 @@ function initializeCategoryFilter() {
 
   const cards = Array.from(itemsGrid.querySelectorAll('.category-card'));
   const total = cards.length;
+  let currentRarityFilter = '';
 
   const applyFilter = () => {
     const query = filterInput.value.trim().toLowerCase();
     let shown = 0;
     cards.forEach(card => {
       const name = (card.textContent || '').trim().toLowerCase();
-      const isVisible = !query || name.includes(query);
-      card.style.display = isVisible ? '' : 'block'; // Use block as it's a div
+      const rarityBadge = card.querySelector('.rarity-badge');
+      const rarity = rarityBadge ? rarityBadge.textContent.toLowerCase() : '';
+      
+      const matchesText = !query || name.includes(query);
+      const matchesRarity = !currentRarityFilter || rarity.includes(currentRarityFilter);
+      
+      const isVisible = matchesText && matchesRarity;
+      card.style.display = isVisible ? '' : 'none';
       if (isVisible) shown++;
     });
     countElement.textContent = `${shown} / ${total}`;
   };
 
   filterInput.addEventListener('input', applyFilter);
+  
+  // Sidebar rarity filtering
+  const sidebarLinks = document.querySelectorAll('.sidebar a[data-filter]');
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      currentRarityFilter = e.target.dataset.filter;
+      
+      // Update active state
+      sidebarLinks.forEach(l => l.classList.remove('active'));
+      e.target.classList.add('active');
+      
+      applyFilter();
+    });
+  });
+  
   applyFilter(); // Initial call to set the count
 }
 
@@ -595,4 +628,320 @@ function safeText(value) {
 function getPlaceholderImage(category = "") {
   // In a real app, you would have actual placeholder images
   return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZDNlM2ZmIi8+CjxwYXRoIGQ9Ik01MCAzMEM1My44MTM3IDMwIDU3IDMzLjE4NjMgNTcgMzdDNTcgNDAuODEzNyA1My44MTM3IDQ0IDUwIDQ0QzQ2LjE4NjMgNDQgNDMgNDAuODEzNyA0MyAzN0M0MyAzMy4xODYzIDQ2LjE4NjMgMzAgNTAgMzBaIiBmaWxsPSIjNzE5MWZmIi8+CjxwYXRoIGQ9Ik0zNSA2NUMzNSA2NSAzNSA2MCAzNSA1NUMzNSA1MCA0MCA0MCA1MCA0MEM2MCA0MCA2NSA1MCA2NSA1NUM2NSA2MCA2NSA2NSAzNSA2NVoiIGZpbGw9IiM3MTkxZmYiLz4KPC9zdmc+Cg==";
+}
+
+// ================= PAGINATION =================
+function initializePagination() {
+  const itemsPerPage = 12;
+  const itemGrid = document.querySelector('.item-grid');
+  if (!itemGrid) return;
+
+  const allItems = Array.from(itemGrid.querySelectorAll('.category-card'));
+  const totalItems = allItems.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  
+  if (totalPages <= 1) return;
+
+  let currentPage = 1;
+
+  function showPage(page) {
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    
+    allItems.forEach((item, index) => {
+      if (index >= startIndex && index < endIndex) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+    
+    updatePaginationControls(page);
+  }
+
+  function updatePaginationControls(page) {
+    let paginationContainer = document.querySelector('.pagination');
+    if (!paginationContainer) {
+      paginationContainer = document.createElement('div');
+      paginationContainer.className = 'pagination';
+      itemGrid.parentNode.insertBefore(paginationContainer, itemGrid.nextSibling);
+    }
+
+    paginationContainer.innerHTML = '';
+    
+    // Previous button
+    const prevBtn = document.createElement('button');
+    prevBtn.textContent = '←';
+    prevBtn.disabled = page === 1;
+    prevBtn.addEventListener('click', () => {
+      if (page > 1) showPage(page - 1);
+    });
+    paginationContainer.appendChild(prevBtn);
+
+    // Page numbers
+    const startPage = Math.max(1, page - 2);
+    const endPage = Math.min(totalPages, page + 2);
+
+    if (startPage > 1) {
+      const firstBtn = document.createElement('button');
+      firstBtn.textContent = '1';
+      firstBtn.addEventListener('click', () => showPage(1));
+      paginationContainer.appendChild(firstBtn);
+      
+      if (startPage > 2) {
+        const ellipsis = document.createElement('span');
+        ellipsis.textContent = '...';
+        ellipsis.className = 'page-info';
+        paginationContainer.appendChild(ellipsis);
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      const pageBtn = document.createElement('button');
+      pageBtn.textContent = i;
+      pageBtn.className = i === page ? 'active' : '';
+      pageBtn.addEventListener('click', () => showPage(i));
+      paginationContainer.appendChild(pageBtn);
+    }
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        const ellipsis = document.createElement('span');
+        ellipsis.textContent = '...';
+        ellipsis.className = 'page-info';
+        paginationContainer.appendChild(ellipsis);
+      }
+      
+      const lastBtn = document.createElement('button');
+      lastBtn.textContent = totalPages;
+      lastBtn.addEventListener('click', () => showPage(totalPages));
+      paginationContainer.appendChild(lastBtn);
+    }
+
+    // Next button
+    const nextBtn = document.createElement('button');
+    nextBtn.textContent = '→';
+    nextBtn.disabled = page === totalPages;
+    nextBtn.addEventListener('click', () => {
+      if (page < totalPages) showPage(page + 1);
+    });
+    paginationContainer.appendChild(nextBtn);
+
+    // Page info
+    const pageInfo = document.createElement('span');
+    pageInfo.className = 'page-info';
+    pageInfo.textContent = `Page ${page} of ${totalPages}`;
+    paginationContainer.appendChild(pageInfo);
+  }
+
+  showPage(1);
+}
+
+// ================= BREADCRUMBS =================
+function initializeBreadcrumbs() {
+  const path = window.location.pathname;
+  const pathParts = path.split('/').filter(part => part && part !== 'main');
+  
+  if (pathParts.length <= 1) return;
+
+  const breadcrumb = document.createElement('nav');
+  breadcrumb.className = 'breadcrumb';
+  breadcrumb.setAttribute('aria-label', 'Breadcrumb');
+
+  // Home link
+  const homeLink = document.createElement('a');
+  homeLink.href = getBasePrefix() + 'index.html';
+  homeLink.textContent = 'Home';
+  breadcrumb.appendChild(homeLink);
+
+  // Build breadcrumb trail
+  let currentPath = getBasePrefix();
+  for (let i = 0; i < pathParts.length; i++) {
+    const separator = document.createElement('span');
+    separator.className = 'separator';
+    separator.textContent = '›';
+    breadcrumb.appendChild(separator);
+
+    currentPath += pathParts[i];
+    
+    if (i === pathParts.length - 1) {
+      // Current page
+      const current = document.createElement('span');
+      current.className = 'current';
+      current.textContent = pathParts[i].replace('.html', '').replace(/_/g, ' ');
+      breadcrumb.appendChild(current);
+    } else {
+      // Link to parent page
+      const link = document.createElement('a');
+      link.href = currentPath + '/';
+      link.textContent = pathParts[i].replace(/_/g, ' ');
+      breadcrumb.appendChild(link);
+    }
+  }
+
+  // Insert breadcrumb after nav
+  const nav = document.querySelector('nav');
+  if (nav) {
+    nav.parentNode.insertBefore(breadcrumb, nav.nextSibling);
+  }
+}
+
+// ================= LIGHTBOX =================
+function initializeLightbox() {
+  // Create lightbox element
+  const lightbox = document.createElement('div');
+  lightbox.className = 'lightbox';
+  lightbox.innerHTML = `
+    <span class="close">&times;</span>
+    <img src="" alt="">
+  `;
+  document.body.appendChild(lightbox);
+
+  // Add click handlers to images
+  document.addEventListener('click', (e) => {
+    if (e.target.tagName === 'IMG' && e.target.closest('.category-card')) {
+      e.preventDefault();
+      const img = lightbox.querySelector('img');
+      img.src = e.target.src;
+      img.alt = e.target.alt;
+      lightbox.classList.add('active');
+    }
+  });
+
+  // Close lightbox
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target.classList.contains('close')) {
+      lightbox.classList.remove('active');
+    }
+  });
+
+  // Close with escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      lightbox.classList.remove('active');
+    }
+  });
+}
+
+// ================= TOOLTIPS =================
+function initializeTooltips() {
+  // Add tooltips to category cards
+  document.querySelectorAll('.category-card').forEach(card => {
+    const title = card.querySelector('h3 a');
+    if (title) {
+      const tooltip = document.createElement('div');
+      tooltip.className = 'tooltip';
+      
+      const tooltipText = document.createElement('span');
+      tooltipText.className = 'tooltiptext';
+      tooltipText.textContent = `Click to view details about ${title.textContent}`;
+      
+      tooltip.appendChild(title.cloneNode(true));
+      tooltip.appendChild(tooltipText);
+      
+      title.parentNode.replaceChild(tooltip, title);
+    }
+  });
+}
+
+// ================= COMPARISON TOOL =================
+function initializeComparisonTool() {
+  const comparisonContainer = document.querySelector('.comparison-tool');
+  if (!comparisonContainer) return;
+
+  const items = Array.from(document.querySelectorAll('.category-card'));
+  const selectedItems = [];
+
+  items.forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      if (selectedItems.length < 2) {
+        if (!selectedItems.includes(item)) {
+          selectedItems.push(item);
+          item.classList.add('selected');
+          
+          if (selectedItems.length === 2) {
+            showComparison();
+          }
+        }
+      } else {
+        // Reset selection
+        selectedItems.forEach(selected => selected.classList.remove('selected'));
+        selectedItems.length = 0;
+        hideComparison();
+      }
+    });
+  });
+
+  function showComparison() {
+    // Implementation for showing comparison
+    console.log('Showing comparison between:', selectedItems.map(item => item.querySelector('h3 a').textContent));
+  }
+
+  function hideComparison() {
+    // Implementation for hiding comparison
+    console.log('Hiding comparison');
+  }
+}
+
+// ================= RATING SYSTEM =================
+function initializeRatingSystem() {
+  document.querySelectorAll('.rating-system').forEach(ratingContainer => {
+    const stars = ratingContainer.querySelectorAll('.star');
+    let currentRating = 0;
+
+    stars.forEach((star, index) => {
+      star.addEventListener('click', () => {
+        currentRating = index + 1;
+        updateStars();
+        saveRating(ratingContainer, currentRating);
+      });
+
+      star.addEventListener('mouseenter', () => {
+        highlightStars(index + 1);
+      });
+    });
+
+    ratingContainer.addEventListener('mouseleave', () => {
+      updateStars();
+    });
+
+    function updateStars() {
+      stars.forEach((star, index) => {
+        star.classList.toggle('active', index < currentRating);
+      });
+    }
+
+    function highlightStars(rating) {
+      stars.forEach((star, index) => {
+        star.classList.toggle('active', index < rating);
+      });
+    }
+
+    function saveRating(container, rating) {
+      // In a real app, this would save to a backend
+      localStorage.setItem(`rating_${container.dataset.itemId}`, rating);
+    }
+  });
+}
+
+// ================= ANIMATED STATS =================
+function initializeAnimatedStats() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const statFill = entry.target.querySelector('.stat-fill');
+        if (statFill && !statFill.classList.contains('animate')) {
+          const targetWidth = statFill.dataset.width || '0%';
+          statFill.style.setProperty('--target-width', targetWidth);
+          statFill.classList.add('animate');
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll('.animated-stat').forEach(stat => {
+    observer.observe(stat);
+  });
 }
