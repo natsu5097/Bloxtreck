@@ -983,7 +983,7 @@ function initializeBreadcrumbs() {
   
   if (pathParts.length <= 1) return;
 
-  const breadcrumb = document.createElement('nav');
+  const breadcrumb = document.createElement('div');
   breadcrumb.className = 'breadcrumb';
   breadcrumb.setAttribute('aria-label', 'Breadcrumb');
 
@@ -1018,10 +1018,10 @@ function initializeBreadcrumbs() {
     }
   }
 
-  // Insert breadcrumb after nav
+  // Insert breadcrumb inside the sticky nav so they are combined
   const nav = document.querySelector('nav');
   if (nav) {
-    nav.parentNode.insertBefore(breadcrumb, nav.nextSibling);
+    nav.appendChild(breadcrumb);
   }
 }
 
