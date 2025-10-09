@@ -180,6 +180,18 @@ function ensureHeadMeta() {
   }
   iconLink.setAttribute('href', desiredIconHref);
 
+  // Bust CSS cache for style.css once after deploy
+  try {
+    const links = Array.from(head.querySelectorAll('link[rel="stylesheet"]'));
+    links.forEach(l => {
+      const href = l.getAttribute('href') || '';
+      if (/\bstyle\.css(\?.*)?$/i.test(href) && !/[?&]v=/.test(href)) {
+        const sep = href.includes('?') ? '&' : '?';
+        l.setAttribute('href', href + sep + 'v=2');
+      }
+    });
+  } catch (_) {}
+
   // Title: ensure there is a meaningful title and brand suffix
   const brand = 'Blox Fruits Fan Wiki';
   const title = document.title || '';
@@ -1107,10 +1119,8 @@ function initializePagination() {
 
 // ================= BREADCRUMBS =================
 function initializeBreadcrumbs() {
-  const path = window.location.pathname;
-  const pathParts = path.split('/').filter(part => part && part !== 'main');
-  
-  if (pathParts.length <= 1) return;
+  const path = window.location.pathname.replace(/\\/g, '/');
+  const parts = path.split('/').filter(p => p && p !== 'main');
 
   const breadcrumb = document.createElement('div');
   breadcrumb.className = 'breadcrumb';
@@ -1122,30 +1132,33 @@ function initializeBreadcrumbs() {
   homeLink.textContent = 'Home';
   breadcrumb.appendChild(homeLink);
 
-  // Build breadcrumb trail
+  // If there are intermediate folders, add them as links
   let currentPath = getBasePrefix();
-  for (let i = 0; i < pathParts.length; i++) {
+  for (let i = 0; i < parts.length - 1; i++) {
+    const seg = parts[i];
     const separator = document.createElement('span');
     separator.className = 'separator';
     separator.textContent = '›';
     breadcrumb.appendChild(separator);
 
-    currentPath += pathParts[i];
-    
-    if (i === pathParts.length - 1) {
-      // Current page
-      const current = document.createElement('span');
-      current.className = 'current';
-      current.textContent = pathParts[i].replace('.html', '').replace(/_/g, ' ');
-      breadcrumb.appendChild(current);
-    } else {
-      // Link to parent page
-      const link = document.createElement('a');
-      link.href = currentPath + '/';
-      link.textContent = pathParts[i].replace(/_/g, ' ');
-      breadcrumb.appendChild(link);
-    }
+    currentPath += seg + '/';
+    const link = document.createElement('a');
+    link.href = currentPath;
+    link.textContent = seg.replace(/_/g, ' ');
+    breadcrumb.appendChild(link);
   }
+
+  // Always show current page chip
+  const currentSeparator = document.createElement('span');
+  currentSeparator.className = 'separator';
+  currentSeparator.textContent = '›';
+  breadcrumb.appendChild(currentSeparator);
+
+  const current = document.createElement('span');
+  current.className = 'current';
+  const file = parts[parts.length - 1] || 'index.html';
+  current.textContent = file.replace('.html', '').replace(/[-_]/g, ' ') || 'Home';
+  breadcrumb.appendChild(current);
 
   // Insert breadcrumb inside the sticky nav so they are combined
   const nav = document.querySelector('nav');
