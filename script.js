@@ -109,6 +109,7 @@ function renderGlobalChrome() {
   <a href="${base}islands.html">Islands</a>
   <a href="${base}bosses.html">Bosses</a>
   <a href="${base}npcs.html">NPCs</a>
+  <a href="${base}bloxtreck.html">About</a>
   <a href="${base}tierlist.html">Tier Lists</a>
   <a href="${base}tools/tools.html">🛠️ Tools</a>
   <a href="${base}community/quiz.html">🎮 Quiz</a>
