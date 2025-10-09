@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeAnimatedStats();
   initializeBackToTop();
   initializeSortableTables();
+  upgradeLegacyItemPages();
   loadPageContent();
   
   // Add smooth scrolling for better UX
@@ -109,7 +110,7 @@ function renderGlobalChrome() {
   <a href="${base}bosses.html">Bosses</a>
   <a href="${base}npcs.html">NPCs</a>
   <a href="${base}tierlist.html">Tier Lists</a>
-  <a href="${base}tools/index.html">🛠️ Tools</a>
+  <a href="${base}tools/tools.html">🛠️ Tools</a>
   <a href="${base}community/quiz.html">🎮 Quiz</a>
 </nav>`;
 
@@ -860,6 +861,130 @@ function setActiveNavLink(currentPage) {
 function loadHomePage() {
   // Home page specific initialization
   // console.log("Loading home page content");
+}
+
+// ================= LEGACY ITEM PAGE UPGRADE =================
+function upgradeLegacyItemPages() {
+  const path = window.location.pathname.replace(/\\/g, '/');
+  const isItemDetail = /(fruits_pages|swords_pages)\/.+\.html$/i.test(path);
+  if (!isItemDetail) return;
+
+  const hasNewLayout = document.querySelector('.collapsible-section');
+  if (hasNewLayout) return; // already upgraded or using new layout
+
+  const mainEl = document.querySelector('main');
+  if (!mainEl) return;
+
+  // Extract legacy sections if present
+  const title = (mainEl.querySelector('h2') || mainEl.querySelector('h1'))?.textContent || document.title.replace(/\s*—.*$/, '');
+  const descriptionEl = mainEl.querySelector('.description');
+  const movesEl = mainEl.querySelector('.moves');
+  const statsEl = mainEl.querySelector('.stats, .small-info ul');
+  const prosConsEl = mainEl.querySelector('.pros-cons');
+
+  // Gather stats as pairs if possible
+  function buildStatsRows() {
+    const rows = [];
+    // Prefer explicit .stats list
+    const statsList = mainEl.querySelector('.stats ul');
+    const smallInfoList = mainEl.querySelector('.small-info ul');
+    const list = statsList || smallInfoList;
+    if (list) {
+      list.querySelectorAll('li').forEach(li => {
+        const html = li.innerHTML || '';
+        const match = html.match(/<strong>([^<:]+):<\/strong>\s*(.*)/i);
+        if (match) {
+          rows.push(`<tr><td>${match[1].trim()}</td><td>${match[2].trim()}</td></tr>`);
+        } else {
+          rows.push(`<tr><td>Info</td><td>${li.textContent.trim()}</td></tr>`);
+        }
+      });
+    }
+    return rows.join('');
+  }
+
+  function buildMovesRows() {
+    const list = movesEl ? movesEl.querySelector('ul') : null;
+    const rows = [];
+    if (list) {
+      list.querySelectorAll('li').forEach(li => {
+        const text = li.textContent || '';
+        const keyMatch = text.match(/^(?:\s*[A-Z]\s*[:\-]\s*)?([A-Z])\b/i);
+        const key = keyMatch ? keyMatch[1].toUpperCase() : '';
+        const nameMatch = text.replace(/^[^:]*:\s*/,'');
+        rows.push(`<tr><td>${nameMatch}</td><td>${key}</td><td></td></tr>`);
+      });
+    }
+    return rows.join('');
+  }
+
+  function buildProsConsTable() {
+    const pros = [];
+    const cons = [];
+    if (prosConsEl) {
+      const headings = prosConsEl.querySelectorAll('h3');
+      headings.forEach(h => {
+        const ul = h.nextElementSibling && h.nextElementSibling.tagName === 'UL' ? h.nextElementSibling : null;
+        if (!ul) return;
+        const items = Array.from(ul.querySelectorAll('li')).map(li => `<li>${li.innerHTML}</li>`).join('');
+        if (/pros/i.test(h.textContent)) pros.push(items);
+        if (/cons/i.test(h.textContent)) cons.push(items);
+      });
+    }
+    const prosHtml = pros.join('') || '<li>N/A</li>';
+    const consHtml = cons.join('') || '<li>N/A</li>';
+    return `<table class="dataTable"><tr><th>Pros</th><th>Cons</th></tr><tr><td><ul>${prosHtml}</ul></td><td><ul>${consHtml}</ul></td></tr></table>`;
+  }
+
+  const categoryLabel = /fruits_pages\//i.test(path) ? 'Fruit' : 'Sword';
+  const descriptionHtml = descriptionEl ? descriptionEl.innerHTML.replace(/^[\s\S]*?<p>/,'<p>') : '<p></p>';
+  const newHtml = `
+    <section class="style-overview">
+      <h2>${title} — ${categoryLabel}</h2>
+      ${descriptionHtml}
+    </section>
+    <section class="blox-contents">
+      <h3>Contents</h3>
+      <ul>
+        <li><a href="#stats">Stats</a></li>
+        <li><a href="#moves">Moveset</a></li>
+        <li><a href="#obtainment">Obtainment</a></li>
+        <li><a href="#proscons">Pros & Cons</a></li>
+        <li><a href="#notes">Notes</a></li>
+      </ul>
+    </section>
+    <div class="collapsible-section" id="stats">
+      <h3 class="collapsible-header">Stats</h3>
+      <div class="collapsible-content">
+        <table class="dataTable"><tr><th>Attribute</th><th>Value</th></tr>${buildStatsRows()}</table>
+      </div>
+    </div>
+    <div class="collapsible-section" id="moves">
+      <h3 class="collapsible-header">Moveset</h3>
+      <div class="collapsible-content">
+        <table class="dataTable"><tr><th>Move</th><th>Key</th><th>Description</th></tr>${buildMovesRows()}</table>
+      </div>
+    </div>
+    <div class="collapsible-section" id="obtainment">
+      <h3 class="collapsible-header">Obtainment</h3>
+      <div class="collapsible-content">
+        <p></p>
+      </div>
+    </div>
+    <div class="collapsible-section" id="proscons">
+      <h3 class="collapsible-header">Pros & Cons</h3>
+      <div class="collapsible-content">${buildProsConsTable()}</div>
+    </div>
+    <div class="collapsible-section" id="notes">
+      <h3 class="collapsible-header">Notes</h3>
+      <div class="collapsible-content"><ul></ul></div>
+    </div>`;
+
+  // Replace legacy content under <main>
+  mainEl.innerHTML = newHtml;
+
+  // Re-init collapsibles for the new content
+  initializeCollapsibles();
 }
 
 // ================= UTILITY FUNCTIONS =================

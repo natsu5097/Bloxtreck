@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="images/sitelogo/bloxtrex.png" type="image/png">
   <style>
+    /* Enhanced 404 visuals */
     .error-container {
       min-height: 80vh;
       display: flex;
@@ -15,6 +16,9 @@
       justify-content: center;
       text-align: center;
       padding: 2rem;
+      background: radial-gradient(ellipse at top, rgba(var(--primary-color-rgb),0.06), transparent 60%),
+                  radial-gradient(ellipse at bottom, rgba(114,9,183,0.08), transparent 60%);
+      border-radius: 16px;
     }
     .error-code {
       font-size: 10rem;
@@ -74,9 +78,24 @@
       font-size: 8rem;
       animation: bounce 2s infinite;
     }
+    .error-illustration:after {
+      content: '';
+      display: block;
+      width: 140px;
+      height: 14px;
+      margin: 6px auto 0;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.06);
+      filter: blur(4px);
+      animation: shadowPulse 2s infinite;
+    }
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-20px); }
+    }
+    @keyframes shadowPulse {
+      0%,100% { transform: scaleX(1); opacity: 0.5; }
+      50% { transform: scaleX(1.2); opacity: 0.25; }
     }
     @keyframes bounce {
       0%, 100% { transform: scale(1); }
@@ -88,6 +107,7 @@
       background: var(--bg-color-alt);
       border-radius: 12px;
       max-width: 800px;
+      box-shadow: var(--card-shadow);
     }
     .quick-links h3 {
       color: var(--primary-color);
@@ -113,6 +133,11 @@
       border-color: var(--primary-color);
       transform: translateY(-2px);
     }
+    @media (max-width: 600px) {
+      .error-code { font-size: 6rem; }
+      .error-title { font-size: 1.75rem; }
+      .error-illustration { font-size: 5rem; }
+    }
   </style>
 </head>
 <body>
@@ -132,7 +157,7 @@
         <a href="javascript:history.back()" class="error-btn secondary">
           <span>←</span> Go Back
         </a>
-        <a href="tools/index.html" class="error-btn secondary">
+        <a href="tools/tools.html" class="error-btn secondary">
           <span>🛠️</span> Browse Tools
         </a>
       </div>
