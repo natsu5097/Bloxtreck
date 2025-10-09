@@ -70,8 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // ================= GLOBAL CHROME (Header/Nav/Footer) =================
 function getBasePrefix() {
   const path = window.location.pathname.replace(/\\\\/g, "/");
-  // If inside a subfolder like fruits_pages/, swords_pages/, or accessories_pages/ use ../ links
-  return /(fruits_pages|swords_pages|accessories_pages|guns_pages|styles_pages)\//.test(path) ? "../" : "";
+  // If inside a subfolder like fruits_pages/, tools/, etc., use ../ links
+  return /(fruits_pages|swords_pages|accessories_pages|guns_pages|styles_pages|tools|community|maps|guides)\//.test(path) ? "../" : "";
 }
 
 function renderGlobalChrome() {
@@ -108,6 +108,9 @@ function renderGlobalChrome() {
   <a href="${base}islands.html">Islands</a>
   <a href="${base}bosses.html">Bosses</a>
   <a href="${base}npcs.html">NPCs</a>
+  <a href="${base}tierlist.html">Tier Lists</a>
+  <a href="${base}tools/index.html">🛠️ Tools</a>
+  <a href="${base}community/quiz.html">🎮 Quiz</a>
 </nav>`;
 
   const footerHtml = `
