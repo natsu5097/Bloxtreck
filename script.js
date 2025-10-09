@@ -136,6 +136,45 @@ function renderGlobalChrome() {
     headerEl.insertAdjacentHTML('afterend', navHtml);
   }
 
+  // Mark the active navigation link based on current page or section
+  try {
+    const navEl = document.querySelector('nav');
+    if (navEl) {
+      const links = Array.from(navEl.querySelectorAll('a'));
+      const path = window.location.pathname.replace(/\\/g, '/');
+      let file = path.split('/').pop() || 'index.html';
+
+      // If we are inside a section subfolder, map to the parent category page
+      const sectionMap = {
+        'fruits_pages': 'fruits.html',
+        'swords_pages': 'swords.html',
+        'guns_pages': 'guns.html',
+        'styles_pages': 'styles.html',
+        'accessories_pages': 'accessories.html',
+        'islands_pages': 'islands.html',
+        'bosses_pages': 'bosses.html',
+        'npcs_pages': 'npcs.html'
+      };
+      Object.keys(sectionMap).forEach(k => {
+        if (path.includes(`/${k}/`)) file = sectionMap[k];
+      });
+
+      links.forEach(a => {
+        const linkFile = new URL(a.href, window.location.href).pathname.replace(/\\/g, '/').split('/').pop();
+        if (linkFile === file) a.classList.add('active');
+        else a.classList.remove('active');
+      });
+
+      // Keep active state in sync when user clicks a tab
+      links.forEach(a => {
+        a.addEventListener('click', () => {
+          links.forEach(l => l.classList.remove('active'));
+          a.classList.add('active');
+        });
+      });
+    }
+  } catch (_) { /* no-op */ }
+
   // Replace or insert footer
   const existingFooter = document.querySelector('footer');
   if (existingFooter) {
