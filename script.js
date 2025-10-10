@@ -36,6 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Ensure head has title and favicon
   ensureHeadMeta();
 
+  // Fix legacy/broken links and images before initializing UI
+  normalizeLinksAndImages();
+  initializeImageFallback();
+
   // Initialize all components
   initializeDarkMode();
   initializeSearch();
@@ -72,8 +76,16 @@ document.addEventListener("DOMContentLoaded", () => {
 // ================= GLOBAL CHROME (Header/Nav/Footer) =================
 function getBasePrefix() {
   const path = window.location.pathname.replace(/\\\\/g, "/");
-  // If inside a subfolder like game-content/, tools-utilities/, content/, etc., use ../ links
-  return /(game-content|tools-utilities|content|community|assets|documentation)\//.test(path) ? "../" : "";
+  // Compute depth from site root for robust asset/link resolution
+  const parts = path.split('/').filter(Boolean);
+  const repoIdx = parts.indexOf('Bloxtreck');
+  let after = repoIdx >= 0 ? parts.slice(repoIdx + 1) : parts.slice();
+  // If last segment looks like a file (has a dot), drop it
+  if (after.length && /\./.test(after[after.length - 1])) {
+    after = after.slice(0, -1);
+  }
+  const depth = after.length;
+  return depth ? '../'.repeat(depth) : '';
 }
 
 function renderGlobalChrome() {
@@ -198,7 +210,8 @@ function ensureHeadMeta() {
   if (!head) return;
 
   const base = getBasePrefix();
-  const desiredIconHref = `${base}images/sitelogo/bloxtrex.png`;
+  // Ensure favicon points to repo assets regardless of depth
+  const desiredIconHref = `${base}assets/images/sitelogo/bloxtrex.png`;
 
   // Favicon: add or enforce
   let iconLink = head.querySelector('link[rel="icon"]');
@@ -238,6 +251,60 @@ function ensureHeadMeta() {
   } else if (!hasBrand) {
     document.title = `${title} — ${brand}`;
   }
+}
+
+// ================= LINK & IMAGE NORMALIZATION =================
+function normalizeLinksAndImages() {
+  const base = getBasePrefix();
+  const path = window.location.pathname.replace(/\\\\/g, '/');
+  const inCategory = /game-content\/(fruits|swords|guns|accessories)\//.test(path);
+
+  // 1) Fix legacy *_pages links
+  document.querySelectorAll('a[href*="_pages/"]').forEach(a => {
+    const href = a.getAttribute('href') || '';
+    const m = href.match(/^(fruits|swords|guns|accessories)_pages\/(.+)$/);
+    if (m) {
+      const category = m[1];
+      const file = m[2];
+      const newHref = inCategory ? `pages/${file}` : `${base}game-content/${category}/pages/${file}`;
+      a.setAttribute('href', newHref);
+    }
+  });
+
+  // 2) Fix Back to Tools links inside tool subfolders
+  document.querySelectorAll('a').forEach(a => {
+    const txt = (a.textContent || '').trim().toLowerCase();
+    const href = a.getAttribute('href') || '';
+    if (txt.includes('back to tools') && (href === 'tools.html' || /\.\.\/tools\/tools\.html$/.test(href))) {
+      a.setAttribute('href', `${base}tools-utilities/tools.html`);
+    }
+  });
+
+  // 3) Normalize image src paths for assets and repo images
+  document.querySelectorAll('img').forEach(img => {
+    const src = img.getAttribute('src') || '';
+    // images/... at root should be assets/images/...
+    if (/^images\//.test(src)) {
+      img.setAttribute('src', `${base}assets/${src}`.replace('/images/images/', '/images/'));
+      return;
+    }
+    // ../assets/images/... inside nested pages should be corrected to the proper base
+    const m2 = src.match(/^\.\.\/assets\/(.+)$/);
+    if (m2) {
+      img.setAttribute('src', `${base}assets/${m2[1]}`);
+      return;
+    }
+  });
+}
+
+function initializeImageFallback() {
+  const PLACEHOLDER = 'https://via.placeholder.com/150?text=Image+Missing';
+  document.querySelectorAll('img').forEach(img => {
+    if (!img.getAttribute('onerror')) {
+      const handler = () => { img.onerror = null; img.src = PLACEHOLDER; };
+      img.addEventListener('error', handler, { once: true });
+    }
+  });
 }
 
 // ================= DROPDOWN NAVIGATION =================
