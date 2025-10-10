@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeAnimatedStats();
   initializeBackToTop();
   initializeSortableTables();
+  initializeDropdownNavigation();
   upgradeLegacyItemPages();
   loadPageContent();
   
@@ -71,8 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // ================= GLOBAL CHROME (Header/Nav/Footer) =================
 function getBasePrefix() {
   const path = window.location.pathname.replace(/\\\\/g, "/");
-  // If inside a subfolder like fruits_pages/, tools/, etc., use ../ links
-  return /(fruits_pages|swords_pages|accessories_pages|guns_pages|styles_pages|tools|community|maps|guides)\//.test(path) ? "../" : "";
+  // If inside a subfolder like game-content/, tools-utilities/, content/, etc., use ../ links
+  return /(game-content|tools-utilities|content|community|assets|documentation)\//.test(path) ? "../" : "";
 }
 
 function renderGlobalChrome() {
@@ -85,7 +86,7 @@ function renderGlobalChrome() {
 <header class="site-header">
   <div class="logo-title">
     <a href="${base}index.html">
-      <img src="${base}images/sitelogo/bloxtrex.png" alt="Blox Fruits Wiki Logo" class="site-logo">
+      <img src="${base}assets/images/sitelogo/bloxtrex.png" alt="Blox Fruits Wiki Logo" class="site-logo">
     </a>
     <h1><a href="${base}index.html" style="color:inherit; text-decoration:none;">Blox Fruits Fan Wiki</a></h1>
   </div>
@@ -101,18 +102,47 @@ function renderGlobalChrome() {
   const navHtml = `
 <nav>
   <a href="${base}index.html">Home</a>
-  <a href="${base}fruits.html">Fruits</a>
-  <a href="${base}swords.html">Swords</a>
-  <a href="${base}guns.html">Guns</a>
-  <a href="${base}styles.html">Fighting Styles</a>
-  <a href="${base}accessories.html">Accessories</a>
-  <a href="${base}islands.html">Islands</a>
-  <a href="${base}bosses.html">Bosses</a>
-  <a href="${base}npcs.html">NPCs</a>
-  <a href="${base}bloxtreck.html">About</a>
-  <a href="${base}tierlist.html">Tier Lists</a>
-  <a href="${base}tools/tools.html">🛠️ Tools</a>
-  <a href="${base}community/quiz.html">🎮 Quiz</a>
+  
+  <!-- Game Content Dropdown -->
+  <div class="nav-dropdown">
+    <a href="#" class="dropdown-toggle">Game Content <span class="dropdown-arrow">▼</span></a>
+    <div class="dropdown-menu">
+      <a href="${base}game-content/fruits/index.html">🍎 Fruits</a>
+      <a href="${base}game-content/swords/index.html">⚔️ Swords</a>
+      <a href="${base}game-content/guns/index.html">🔫 Guns</a>
+      <a href="${base}game-content/fighting-styles/index.html">🥋 Fighting Styles</a>
+      <a href="${base}game-content/accessories/index.html">💎 Accessories</a>
+      <a href="${base}game-content/islands/index.html">🏝️ Islands</a>
+      <a href="${base}game-content/bosses/index.html">👹 Bosses</a>
+      <a href="${base}game-content/npcs/index.html">👤 NPCs</a>
+    </div>
+  </div>
+  
+  <!-- Community Dropdown -->
+  <div class="nav-dropdown">
+    <a href="#" class="dropdown-toggle">Community <span class="dropdown-arrow">▼</span></a>
+    <div class="dropdown-menu">
+      <a href="${base}content/about.html">📖 About</a>
+      <a href="${base}content/tierlist.html">📊 Tier Lists</a>
+      <a href="${base}community/quiz.html">🎮 Quiz</a>
+    </div>
+  </div>
+  
+  <!-- Tools Dropdown -->
+  <div class="nav-dropdown">
+    <a href="#" class="dropdown-toggle">🛠️ Tools <span class="dropdown-arrow">▼</span></a>
+    <div class="dropdown-menu">
+      <a href="${base}tools-utilities/calculators/bounty-calculator.html">💰 Bounty Calculator</a>
+      <a href="${base}tools-utilities/calculators/damage-calculator.html">⚡ Damage Calculator</a>
+      <a href="${base}tools-utilities/calculators/material-calculator.html">🔧 Material Calculator</a>
+      <a href="${base}tools-utilities/calculators/xp-calculator.html">📈 XP Calculator</a>
+      <a href="${base}tools-utilities/maps/interactive-map.html">🗺️ Interactive Map</a>
+      <a href="${base}tools-utilities/planners/build-planner.html">🏗️ Build Planner</a>
+      <a href="${base}tools-utilities/planners/combo-builder.html">🥊 Combo Builder</a>
+      <a href="${base}tools-utilities/simulators/drop-simulator.html">🎲 Drop Simulator</a>
+      <a href="${base}tools-utilities/trackers/trading-values.html">💱 Trading Values</a>
+    </div>
+  </div>
 </nav>`;
 
   const footerHtml = `
@@ -208,6 +238,61 @@ function ensureHeadMeta() {
   } else if (!hasBrand) {
     document.title = `${title} — ${brand}`;
   }
+}
+
+// ================= DROPDOWN NAVIGATION =================
+function initializeDropdownNavigation() {
+  // Handle dropdown toggle clicks
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('dropdown-toggle')) {
+      e.preventDefault();
+      const dropdown = e.target.closest('.nav-dropdown');
+      const menu = dropdown.querySelector('.dropdown-menu');
+      
+      // Close other dropdowns
+      document.querySelectorAll('.nav-dropdown').forEach(otherDropdown => {
+        if (otherDropdown !== dropdown) {
+          otherDropdown.classList.remove('active');
+        }
+      });
+      
+      // Toggle current dropdown
+      dropdown.classList.toggle('active');
+    }
+  });
+  
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-dropdown')) {
+      document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+        dropdown.classList.remove('active');
+      });
+    }
+  });
+  
+  // Handle keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+        dropdown.classList.remove('active');
+      });
+    }
+  });
+  
+  // Add CSS for active dropdown state
+  const style = document.createElement('style');
+  style.textContent = `
+    .nav-dropdown.active .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .nav-dropdown.active .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 // ================= DARK MODE =================
@@ -652,14 +737,14 @@ function initializeSearch() {
   function navigateToItem(item) {
     // Enhanced navigation with better URL handling
     const pageMap = {
-      "Fruits": "fruits.html",
-      "Swords": "swords.html",
-      "Guns": "guns.html",
-      "FightingStyles": "styles.html",
-      "Accessories": "accessories.html",
-      "Bosses": "bosses.html",
-      "Islands": "islands.html",
-      "NPCs": "npcs.html"
+      "Fruits": "game-content/fruits/index.html",
+      "Swords": "game-content/swords/index.html",
+      "Guns": "game-content/guns/index.html",
+      "FightingStyles": "game-content/fighting-styles/index.html",
+      "Accessories": "game-content/accessories/index.html",
+      "Bosses": "game-content/bosses/index.html",
+      "Islands": "game-content/islands/index.html",
+      "NPCs": "game-content/npcs/index.html"
     };
     
     // Create URL-safe slug from item name
@@ -669,19 +754,19 @@ function initializeSearch() {
     let targetPage = '';
     switch(item.category) {
       case "Fruits":
-        targetPage = `${getBasePrefix()}fruits_pages/${itemNameSlug}.html`;
+        targetPage = `${getBasePrefix()}game-content/fruits/pages/${itemNameSlug}.html`;
         break;
       case "Swords":
-        targetPage = `${getBasePrefix()}swords_pages/${itemNameSlug}.html`;
+        targetPage = `${getBasePrefix()}game-content/swords/pages/${itemNameSlug}.html`;
         break;
       case "Guns":
-        targetPage = `${getBasePrefix()}guns_pages/${itemNameSlug}.html`;
+        targetPage = `${getBasePrefix()}game-content/guns/pages/${itemNameSlug}.html`;
         break;
       case "FightingStyles":
-        targetPage = `${getBasePrefix()}styles_pages/${itemNameSlug}.html`;
+        targetPage = `${getBasePrefix()}game-content/fighting-styles/pages/${itemNameSlug}.html`;
         break;
       case "Accessories":
-        targetPage = `${getBasePrefix()}accessories_pages/${itemNameSlug}.html`;
+        targetPage = `${getBasePrefix()}game-content/accessories/pages/${itemNameSlug}.html`;
         break;
       default:
         targetPage = `${getBasePrefix()}${pageMap[item.category] || "index.html"}`;
@@ -869,6 +954,20 @@ function setActiveNavLink(currentPage) {
       link.classList.add("active");
     }
   });
+  
+  // Also check dropdown links and mark parent dropdown as active if needed
+  const dropdownLinks = document.querySelectorAll(".dropdown-menu a");
+  dropdownLinks.forEach(link => {
+    const linkPage = normalize(link.getAttribute("href"));
+    if (linkPage === current) {
+      link.classList.add("active");
+      // Mark parent dropdown as active
+      const dropdown = link.closest('.nav-dropdown');
+      if (dropdown) {
+        dropdown.classList.add('active');
+      }
+    }
+  });
 }
 
 function loadHomePage() {
@@ -879,7 +978,7 @@ function loadHomePage() {
 // ================= LEGACY ITEM PAGE UPGRADE =================
 function upgradeLegacyItemPages() {
   const path = window.location.pathname.replace(/\\/g, '/');
-  const isItemDetail = /(fruits_pages|swords_pages)\/.+\.html$/i.test(path);
+  const isItemDetail = /(game-content\/fruits\/pages|game-content\/swords\/pages)\/.+\.html$/i.test(path);
   if (!isItemDetail) return;
 
   const hasNewLayout = document.querySelector('.collapsible-section');
@@ -949,7 +1048,7 @@ function upgradeLegacyItemPages() {
     return `<table class="dataTable"><tr><th>Pros</th><th>Cons</th></tr><tr><td><ul>${prosHtml}</ul></td><td><ul>${consHtml}</ul></td></tr></table>`;
   }
 
-  const categoryLabel = /fruits_pages\//i.test(path) ? 'Fruit' : 'Sword';
+  const categoryLabel = /game-content\/fruits\/pages\//i.test(path) ? 'Fruit' : 'Sword';
   const descriptionHtml = descriptionEl ? descriptionEl.innerHTML.replace(/^[\s\S]*?<p>/,'<p>') : '<p></p>';
   const newHtml = `
     <section class="style-overview">
@@ -1894,56 +1993,56 @@ function initializeSortableTables() {
 
   // Sample fruit data
   const fruitsData = [
-    { name: 'Dragon', rarity: 'mythical', type: 'zoan', damage: 95, level: 1000, price: 3500000, link: 'fruits_pages/dragon.html' },
-    { name: 'Kitsune', rarity: 'mythical', type: 'zoan', damage: 90, level: 1000, price: 3200000, link: 'fruits_pages/kitsune.html' },
-    { name: 'Leopard', rarity: 'mythical', type: 'zoan', damage: 88, level: 1000, price: 3000000, link: 'fruits_pages/leopard.html' },
-    { name: 'Phoenix', rarity: 'mythical', type: 'zoan', damage: 85, level: 1000, price: 2800000, link: 'fruits_pages/phoenix.html' },
-    { name: 'Venom', rarity: 'mythical', type: 'paramecia', damage: 82, level: 1000, price: 2500000, link: 'fruits_pages/venom.html' },
-    { name: 'Dough', rarity: 'mythical', type: 'paramecia', damage: 80, level: 1000, price: 2400000, link: 'fruits_pages/dough.html' },
-    { name: 'Shadow', rarity: 'mythical', type: 'paramecia', damage: 78, level: 1000, price: 2300000, link: 'fruits_pages/shadow.html' },
-    { name: 'Spirit', rarity: 'mythical', type: 'paramecia', damage: 75, level: 1000, price: 2200000, link: 'fruits_pages/spirit.html' },
-    { name: 'Control', rarity: 'mythical', type: 'paramecia', damage: 72, level: 1000, price: 2100000, link: 'fruits_pages/control.html' },
-    { name: 'Gravity', rarity: 'mythical', type: 'paramecia', damage: 70, level: 1000, price: 2000000, link: 'fruits_pages/gravity.html' },
-    { name: 'Pain', rarity: 'mythical', type: 'paramecia', damage: 68, level: 1000, price: 1900000, link: 'fruits_pages/pain.html' },
-    { name: 'Love', rarity: 'mythical', type: 'paramecia', damage: 65, level: 1000, price: 1800000, link: 'fruits_pages/love.html' },
-    { name: 'Buddha', rarity: 'mythical', type: 'zoan', damage: 62, level: 1000, price: 1700000, link: 'fruits_pages/buddha.html' },
-    { name: 'Lightning', rarity: 'legendary', type: 'logia', damage: 85, level: 700, price: 1500000, link: 'fruits_pages/lightning.html' },
-    { name: 'Light', rarity: 'legendary', type: 'logia', damage: 82, level: 700, price: 1400000, link: 'fruits_pages/light.html' },
-    { name: 'Dark', rarity: 'legendary', type: 'logia', damage: 80, level: 700, price: 1300000, link: 'fruits_pages/dark.html' },
-    { name: 'Flame', rarity: 'legendary', type: 'logia', damage: 78, level: 700, price: 1200000, link: 'fruits_pages/flame.html' },
-    { name: 'Ice', rarity: 'legendary', type: 'logia', damage: 75, level: 700, price: 1100000, link: 'fruits_pages/ice.html' },
-    { name: 'Magma', rarity: 'legendary', type: 'logia', damage: 72, level: 700, price: 1000000, link: 'fruits_pages/magma.html' },
-    { name: 'Sand', rarity: 'legendary', type: 'logia', damage: 70, level: 700, price: 900000, link: 'fruits_pages/sand.html' },
-    { name: 'Smoke', rarity: 'legendary', type: 'logia', damage: 68, level: 700, price: 800000, link: 'fruits_pages/smoke.html' },
-    { name: 'Gas', rarity: 'legendary', type: 'logia', damage: 65, level: 700, price: 700000, link: 'fruits_pages/gas.html' },
-    { name: 'Quake', rarity: 'legendary', type: 'paramecia', damage: 88, level: 700, price: 1600000, link: 'fruits_pages/quake.html' },
-    { name: 'String', rarity: 'legendary', type: 'paramecia', damage: 75, level: 700, price: 1000000, link: 'fruits_pages/string.html' },
-    { name: 'Rumble', rarity: 'legendary', type: 'paramecia', damage: 72, level: 700, price: 900000, link: 'fruits_pages/rumble.html' },
-    { name: 'Diamond', rarity: 'legendary', type: 'paramecia', damage: 70, level: 700, price: 800000, link: 'fruits_pages/diamond.html' },
-    { name: 'Door', rarity: 'legendary', type: 'paramecia', damage: 68, level: 700, price: 700000, link: 'fruits_pages/door.html' },
-    { name: 'Rubber', rarity: 'legendary', type: 'paramecia', damage: 65, level: 700, price: 600000, link: 'fruits_pages/rubber.html' },
-    { name: 'Barrier', rarity: 'legendary', type: 'paramecia', damage: 62, level: 700, price: 500000, link: 'fruits_pages/barrier.html' },
-    { name: 'Bomb', rarity: 'rare', type: 'paramecia', damage: 60, level: 400, price: 300000, link: 'fruits_pages/bomb.html' },
-    { name: 'Spike', rarity: 'rare', type: 'paramecia', damage: 58, level: 400, price: 280000, link: 'fruits_pages/spike.html' },
-    { name: 'Chop', rarity: 'rare', type: 'paramecia', damage: 55, level: 400, price: 250000, link: 'fruits_pages/chop.html' },
-    { name: 'Spring', rarity: 'rare', type: 'paramecia', damage: 52, level: 400, price: 220000, link: 'fruits_pages/spring.html' },
-    { name: 'Kilogram', rarity: 'rare', type: 'paramecia', damage: 50, level: 400, price: 200000, link: 'fruits_pages/kilogram.html' },
-    { name: 'Spin', rarity: 'rare', type: 'paramecia', damage: 48, level: 400, price: 180000, link: 'fruits_pages/spin.html' },
-    { name: 'Bird: Falcon', rarity: 'rare', type: 'zoan', damage: 45, level: 400, price: 150000, link: 'fruits_pages/falcon.html' },
-    { name: 'Smoke', rarity: 'rare', type: 'logia', damage: 42, level: 400, price: 120000, link: 'fruits_pages/smoke.html' },
-    { name: 'Spike', rarity: 'rare', type: 'paramecia', damage: 40, level: 400, price: 100000, link: 'fruits_pages/spike.html' },
-    { name: 'Flame', rarity: 'rare', type: 'logia', damage: 38, level: 400, price: 80000, link: 'fruits_pages/flame.html' },
-    { name: 'Ice', rarity: 'rare', type: 'logia', damage: 35, level: 400, price: 60000, link: 'fruits_pages/ice.html' },
-    { name: 'Sand', rarity: 'rare', type: 'logia', damage: 32, level: 400, price: 40000, link: 'fruits_pages/sand.html' },
-    { name: 'Dark', rarity: 'rare', type: 'logia', damage: 30, level: 400, price: 20000, link: 'fruits_pages/dark.html' },
-    { name: 'Light', rarity: 'rare', type: 'logia', damage: 28, level: 400, price: 10000, link: 'fruits_pages/light.html' },
-    { name: 'Rocket', rarity: 'common', type: 'paramecia', damage: 25, level: 100, price: 5000, link: 'fruits_pages/rocket.html' },
-    { name: 'Spin', rarity: 'common', type: 'paramecia', damage: 22, level: 100, price: 4000, link: 'fruits_pages/spin.html' },
-    { name: 'Chop', rarity: 'common', type: 'paramecia', damage: 20, level: 100, price: 3000, link: 'fruits_pages/chop.html' },
-    { name: 'Spring', rarity: 'common', type: 'paramecia', damage: 18, level: 100, price: 2000, link: 'fruits_pages/spring.html' },
-    { name: 'Bomb', rarity: 'common', type: 'paramecia', damage: 15, level: 100, price: 1000, link: 'fruits_pages/bomb.html' },
-    { name: 'Smoke', rarity: 'common', type: 'logia', damage: 12, level: 100, price: 500, link: 'fruits_pages/smoke.html' },
-    { name: 'Spike', rarity: 'common', type: 'paramecia', damage: 10, level: 100, price: 250, link: 'fruits_pages/spike.html' }
+    { name: 'Dragon', rarity: 'mythical', type: 'zoan', damage: 95, level: 1000, price: 3500000, link: 'game-content/fruits/pages/dragon.html' },
+    { name: 'Kitsune', rarity: 'mythical', type: 'zoan', damage: 90, level: 1000, price: 3200000, link: 'game-content/fruits/pages/kitsune.html' },
+    { name: 'Leopard', rarity: 'mythical', type: 'zoan', damage: 88, level: 1000, price: 3000000, link: 'game-content/fruits/pages/leopard.html' },
+    { name: 'Phoenix', rarity: 'mythical', type: 'zoan', damage: 85, level: 1000, price: 2800000, link: 'game-content/fruits/pages/phoenix.html' },
+    { name: 'Venom', rarity: 'mythical', type: 'paramecia', damage: 82, level: 1000, price: 2500000, link: 'game-content/fruits/pages/venom.html' },
+    { name: 'Dough', rarity: 'mythical', type: 'paramecia', damage: 80, level: 1000, price: 2400000, link: 'game-content/fruits/pages/dough.html' },
+    { name: 'Shadow', rarity: 'mythical', type: 'paramecia', damage: 78, level: 1000, price: 2300000, link: 'game-content/fruits/pages/shadow.html' },
+    { name: 'Spirit', rarity: 'mythical', type: 'paramecia', damage: 75, level: 1000, price: 2200000, link: 'game-content/fruits/pages/spirit.html' },
+    { name: 'Control', rarity: 'mythical', type: 'paramecia', damage: 72, level: 1000, price: 2100000, link: 'game-content/fruits/pages/control.html' },
+    { name: 'Gravity', rarity: 'mythical', type: 'paramecia', damage: 70, level: 1000, price: 2000000, link: 'game-content/fruits/pages/gravity.html' },
+    { name: 'Pain', rarity: 'mythical', type: 'paramecia', damage: 68, level: 1000, price: 1900000, link: 'game-content/fruits/pages/pain.html' },
+    { name: 'Love', rarity: 'mythical', type: 'paramecia', damage: 65, level: 1000, price: 1800000, link: 'game-content/fruits/pages/love.html' },
+    { name: 'Buddha', rarity: 'mythical', type: 'zoan', damage: 62, level: 1000, price: 1700000, link: 'game-content/fruits/pages/buddha.html' },
+    { name: 'Lightning', rarity: 'legendary', type: 'logia', damage: 85, level: 700, price: 1500000, link: 'game-content/fruits/pages/lightning.html' },
+    { name: 'Light', rarity: 'legendary', type: 'logia', damage: 82, level: 700, price: 1400000, link: 'game-content/fruits/pages/light.html' },
+    { name: 'Dark', rarity: 'legendary', type: 'logia', damage: 80, level: 700, price: 1300000, link: 'game-content/fruits/pages/dark.html' },
+    { name: 'Flame', rarity: 'legendary', type: 'logia', damage: 78, level: 700, price: 1200000, link: 'game-content/fruits/pages/flame.html' },
+    { name: 'Ice', rarity: 'legendary', type: 'logia', damage: 75, level: 700, price: 1100000, link: 'game-content/fruits/pages/ice.html' },
+    { name: 'Magma', rarity: 'legendary', type: 'logia', damage: 72, level: 700, price: 1000000, link: 'game-content/fruits/pages/magma.html' },
+    { name: 'Sand', rarity: 'legendary', type: 'logia', damage: 70, level: 700, price: 900000, link: 'game-content/fruits/pages/sand.html' },
+    { name: 'Smoke', rarity: 'legendary', type: 'logia', damage: 68, level: 700, price: 800000, link: 'game-content/fruits/pages/smoke.html' },
+    { name: 'Gas', rarity: 'legendary', type: 'logia', damage: 65, level: 700, price: 700000, link: 'game-content/fruits/pages/gas.html' },
+    { name: 'Quake', rarity: 'legendary', type: 'paramecia', damage: 88, level: 700, price: 1600000, link: 'game-content/fruits/pages/quake.html' },
+    { name: 'String', rarity: 'legendary', type: 'paramecia', damage: 75, level: 700, price: 1000000, link: 'game-content/fruits/pages/string.html' },
+    { name: 'Rumble', rarity: 'legendary', type: 'paramecia', damage: 72, level: 700, price: 900000, link: 'game-content/fruits/pages/rumble.html' },
+    { name: 'Diamond', rarity: 'legendary', type: 'paramecia', damage: 70, level: 700, price: 800000, link: 'game-content/fruits/pages/diamond.html' },
+    { name: 'Door', rarity: 'legendary', type: 'paramecia', damage: 68, level: 700, price: 700000, link: 'game-content/fruits/pages/door.html' },
+    { name: 'Rubber', rarity: 'legendary', type: 'paramecia', damage: 65, level: 700, price: 600000, link: 'game-content/fruits/pages/rubber.html' },
+    { name: 'Barrier', rarity: 'legendary', type: 'paramecia', damage: 62, level: 700, price: 500000, link: 'game-content/fruits/pages/barrier.html' },
+    { name: 'Bomb', rarity: 'rare', type: 'paramecia', damage: 60, level: 400, price: 300000, link: 'game-content/fruits/pages/bomb.html' },
+    { name: 'Spike', rarity: 'rare', type: 'paramecia', damage: 58, level: 400, price: 280000, link: 'game-content/fruits/pages/spike.html' },
+    { name: 'Chop', rarity: 'rare', type: 'paramecia', damage: 55, level: 400, price: 250000, link: 'game-content/fruits/pages/chop.html' },
+    { name: 'Spring', rarity: 'rare', type: 'paramecia', damage: 52, level: 400, price: 220000, link: 'game-content/fruits/pages/spring.html' },
+    { name: 'Kilogram', rarity: 'rare', type: 'paramecia', damage: 50, level: 400, price: 200000, link: 'game-content/fruits/pages/kilogram.html' },
+    { name: 'Spin', rarity: 'rare', type: 'paramecia', damage: 48, level: 400, price: 180000, link: 'game-content/fruits/pages/spin.html' },
+    { name: 'Bird: Falcon', rarity: 'rare', type: 'zoan', damage: 45, level: 400, price: 150000, link: 'game-content/fruits/pages/falcon.html' },
+    { name: 'Smoke', rarity: 'rare', type: 'logia', damage: 42, level: 400, price: 120000, link: 'game-content/fruits/pages/smoke.html' },
+    { name: 'Spike', rarity: 'rare', type: 'paramecia', damage: 40, level: 400, price: 100000, link: 'game-content/fruits/pages/spike.html' },
+    { name: 'Flame', rarity: 'rare', type: 'logia', damage: 38, level: 400, price: 80000, link: 'game-content/fruits/pages/flame.html' },
+    { name: 'Ice', rarity: 'rare', type: 'logia', damage: 35, level: 400, price: 60000, link: 'game-content/fruits/pages/ice.html' },
+    { name: 'Sand', rarity: 'rare', type: 'logia', damage: 32, level: 400, price: 40000, link: 'game-content/fruits/pages/sand.html' },
+    { name: 'Dark', rarity: 'rare', type: 'logia', damage: 30, level: 400, price: 20000, link: 'game-content/fruits/pages/dark.html' },
+    { name: 'Light', rarity: 'rare', type: 'logia', damage: 28, level: 400, price: 10000, link: 'game-content/fruits/pages/light.html' },
+    { name: 'Rocket', rarity: 'common', type: 'paramecia', damage: 25, level: 100, price: 5000, link: 'game-content/fruits/pages/rocket.html' },
+    { name: 'Spin', rarity: 'common', type: 'paramecia', damage: 22, level: 100, price: 4000, link: 'game-content/fruits/pages/spin.html' },
+    { name: 'Chop', rarity: 'common', type: 'paramecia', damage: 20, level: 100, price: 3000, link: 'game-content/fruits/pages/chop.html' },
+    { name: 'Spring', rarity: 'common', type: 'paramecia', damage: 18, level: 100, price: 2000, link: 'game-content/fruits/pages/spring.html' },
+    { name: 'Bomb', rarity: 'common', type: 'paramecia', damage: 15, level: 100, price: 1000, link: 'game-content/fruits/pages/bomb.html' },
+    { name: 'Smoke', rarity: 'common', type: 'logia', damage: 12, level: 100, price: 500, link: 'game-content/fruits/pages/smoke.html' },
+    { name: 'Spike', rarity: 'common', type: 'paramecia', damage: 10, level: 100, price: 250, link: 'game-content/fruits/pages/spike.html' }
   ];
 
   let currentData = [...fruitsData];

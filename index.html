@@ -7,14 +7,14 @@
   <title>BloxTreck | Ultimate Blox Fruits Wiki</title>
   <!-- Removed base tag as it was breaking subpage navigation -->
   <link rel="stylesheet" href="style.css?v=2">
-  <link rel="icon" href="images/sitelogo/favicon_io/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="assets/images/sitelogo/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
   <!-- ================= HEADER ================= -->
   <header class="site-header">
     <div class="logo-title">
       <a href="index.html" aria-label="Home">
-        <img src="./images/sitelogo/bloxtrex.png" alt="BloxTreck Logo" class="site-logo">
+        <img src="./assets/images/sitelogo/bloxtrex.png" alt="BloxTreck Logo" class="site-logo">
       </a>
       <h1><a href="index.html" style="color:inherit; text-decoration:none;">BloxTreck Wiki</a></h1>
     </div>
@@ -27,19 +27,48 @@
   <!-- ================= NAVIGATION ================= -->
   <nav aria-label="Main navigation">
     <a href="index.html" class="active">Home</a>
-    <a href="fruits.html">Fruits</a>
-    <a href="swords.html">Swords</a>
-    <a href="guns.html">Guns</a>
-    <a href="styles.html">Fighting Styles</a>
-    <a href="accessories.html">Accessories</a>
-    <a href="islands.html">Islands</a>
-    <a href="bosses.html">Bosses</a>
-  <a href="npcs.html">NPCs</a>
-  <a href="bloxtreck.html">About</a>
-  <a href="tierlist.html">Tier Lists</a>
-  <a href="tools/tools.html">🛠️ Tools</a>
-  <a href="community/quiz.html">🎮 Quiz</a>
-</nav>
+    
+    <!-- Game Content Dropdown -->
+    <div class="nav-dropdown">
+      <a href="#" class="dropdown-toggle">Game Content <span class="dropdown-arrow">▼</span></a>
+      <div class="dropdown-menu">
+        <a href="game-content/fruits/index.html">🍎 Fruits</a>
+        <a href="game-content/swords/index.html">⚔️ Swords</a>
+        <a href="game-content/guns/index.html">🔫 Guns</a>
+        <a href="game-content/fighting-styles/index.html">🥋 Fighting Styles</a>
+        <a href="game-content/accessories/index.html">💎 Accessories</a>
+        <a href="game-content/islands/index.html">🏝️ Islands</a>
+        <a href="game-content/bosses/index.html">👹 Bosses</a>
+        <a href="game-content/npcs/index.html">👤 NPCs</a>
+      </div>
+    </div>
+    
+    <!-- Community Dropdown -->
+    <div class="nav-dropdown">
+      <a href="#" class="dropdown-toggle">Community <span class="dropdown-arrow">▼</span></a>
+      <div class="dropdown-menu">
+        <a href="content/about.html">📖 About</a>
+        <a href="content/tierlist.html">📊 Tier Lists</a>
+        <a href="community/quiz.html">🎮 Quiz</a>
+      </div>
+    </div>
+    
+    <!-- Tools Dropdown -->
+    <div class="nav-dropdown">
+      <a href="#" class="dropdown-toggle">🛠️ Tools <span class="dropdown-arrow">▼</span></a>
+      <div class="dropdown-menu">
+        <a href="tools-utilities/calculators/bounty-calculator.html">💰 Bounty Calculator</a>
+        <a href="tools-utilities/calculators/damage-calculator.html">⚡ Damage Calculator</a>
+        <a href="tools-utilities/calculators/material-calculator.html">🔧 Material Calculator</a>
+        <a href="tools-utilities/calculators/xp-calculator.html">📈 XP Calculator</a>
+        <a href="tools-utilities/maps/interactive-map.html">🗺️ Interactive Map</a>
+        <a href="tools-utilities/planners/build-planner.html">🏗️ Build Planner</a>
+        <a href="tools-utilities/planners/combo-builder.html">🥊 Combo Builder</a>
+        <a href="tools-utilities/simulators/drop-simulator.html">🎲 Drop Simulator</a>
+        <a href="tools-utilities/trackers/trading-values.html">💱 Trading Values</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- ================= SEARCH RESULTS ================= -->
   <div id="search-results" class="search-results" aria-live="polite"></div>
@@ -103,43 +132,43 @@
       <h2 class="section-title">Explore Categories</h2>
       <div class="category-grid">
         <div class="category-card">
-          <img src="images/fruits_images/Dragon_Fruit.png" alt="Fruits icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Fruits';">
-          <h3><a href="fruits.html">Fruits</a></h3>
+          <img src="assets/images/fruits_images/Dragon_Fruit.png" alt="Fruits icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Fruits';">
+          <h3><a href="game-content/fruits/index.html">Fruits</a></h3>
           <p>Devil fruit powers and abilities</p>
         </div>
         <div class="category-card">
-          <img src="images/swords_images/True_Triple_Katana.webp" alt="Swords icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Swords';">
-          <h3><a href="swords.html">Swords</a></h3>
+          <img src="assets/images/swords_images/True_Triple_Katana.webp" alt="Swords icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Swords';">
+          <h3><a href="game-content/swords/index.html">Swords</a></h3>
           <p>Melee weapons and combat techniques</p>
         </div>
         <div class="category-card">
-          <img src="images/guns_images/Skull_Guitar.webp" alt="Guns icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Guns';">
-          <h3><a href="guns.html">Guns</a></h3>
+          <img src="assets/images/guns_images/Skull_Guitar.webp" alt="Guns icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Guns';">
+          <h3><a href="game-content/guns/index.html">Guns</a></h3>
           <p>Ranged weapons and ammunition</p>
         </div>
         <div class="category-card">
-          <img src="images/styles_images/Sanguine_Art.webp" alt="Fighting Styles icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Fighting+Styles';">
-          <h3><a href="styles.html">Fighting Styles</a></h3>
+          <img src="assets/images/styles_images/Sanguine_Art.webp" alt="Fighting Styles icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Fighting+Styles';">
+          <h3><a href="game-content/fighting-styles/index.html">Fighting Styles</a></h3>
           <p>Combat techniques and martial arts</p>
         </div>
         <div class="category-card">
-          <img src="./images/sitelogo/download.png" alt="Accessories icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Accessories';">
-          <h3><a href="accessories.html">Accessories</a></h3>
+          <img src="https://via.placeholder.com/100?text=Accessories" alt="Accessories icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Accessories';">
+          <h3><a href="game-content/accessories/index.html">Accessories</a></h3>
           <p>Enhance your character's abilities</p>
         </div>
         <div class="category-card">
-          <img src="./images/sitelogo/download.png" alt="Islands icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Islands';">
-          <h3><a href="islands.html">Islands</a></h3>
+          <img src="https://via.placeholder.com/100?text=Islands" alt="Islands icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Islands';">
+          <h3><a href="game-content/islands/index.html">Islands</a></h3>
           <p>Locations, quests, and treasures</p>
         </div>
         <div class="category-card">
-          <img src="./images/sitelogo/download.png" alt="Bosses icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Bosses';">
-          <h3><a href="bosses.html">Bosses</a></h3>
+          <img src="https://via.placeholder.com/100?text=Bosses" alt="Bosses icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=Bosses';">
+          <h3><a href="game-content/bosses/index.html">Bosses</a></h3>
           <p>Powerful enemies and raid battles</p>
         </div>
         <div class="category-card">
-          <img src="./images/sitelogo/download.png" alt="NPCs icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=NPCs';">
-          <h3><a href="npcs.html">NPCs</a></h3>
+          <img src="https://via.placeholder.com/100?text=NPCs" alt="NPCs icon" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=NPCs';">
+          <h3><a href="game-content/npcs/index.html">NPCs</a></h3>
           <p>Characters, vendors, and trainers</p>
         </div>
         </div>
