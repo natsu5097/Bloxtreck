@@ -107,14 +107,14 @@ function renderGlobalChrome() {
   <div class="nav-dropdown">
     <a href="#" class="dropdown-toggle">Game Content <span class="dropdown-arrow">▼</span></a>
     <div class="dropdown-menu">
-      <a href="${base}game-content/fruits/index.html">🍎 Fruits</a>
-      <a href="${base}game-content/swords/index.html">⚔️ Swords</a>
-      <a href="${base}game-content/guns/index.html">🔫 Guns</a>
-      <a href="${base}game-content/fighting-styles/index.html">🥋 Fighting Styles</a>
-      <a href="${base}game-content/accessories/index.html">💎 Accessories</a>
-      <a href="${base}game-content/islands/index.html">🏝️ Islands</a>
-      <a href="${base}game-content/bosses/index.html">👹 Bosses</a>
-      <a href="${base}game-content/npcs/index.html">👤 NPCs</a>
+      <a href="${base}game-content/fruits/fruits.html">🍎 Fruits</a>
+      <a href="${base}game-content/swords/swords.html">⚔️ Swords</a>
+      <a href="${base}game-content/guns/guns.html">🔫 Guns</a>
+      <a href="${base}game-content/fighting-styles/fighting-styles.html">🥋 Fighting Styles</a>
+      <a href="${base}game-content/accessories/accessories.html">💎 Accessories</a>
+      <a href="${base}game-content/islands/islands.html">🏝️ Islands</a>
+      <a href="${base}game-content/bosses/bosses.html">👹 Bosses</a>
+      <a href="${base}game-content/npcs/npcs.html">👤 NPCs</a>
     </div>
   </div>
   
@@ -737,14 +737,14 @@ function initializeSearch() {
   function navigateToItem(item) {
     // Enhanced navigation with better URL handling
     const pageMap = {
-      "Fruits": "game-content/fruits/index.html",
-      "Swords": "game-content/swords/index.html",
-      "Guns": "game-content/guns/index.html",
-      "FightingStyles": "game-content/fighting-styles/index.html",
-      "Accessories": "game-content/accessories/index.html",
-      "Bosses": "game-content/bosses/index.html",
-      "Islands": "game-content/islands/index.html",
-      "NPCs": "game-content/npcs/index.html"
+      "Fruits": "game-content/fruits/fruits.html",
+      "Swords": "game-content/swords/swords.html",
+      "Guns": "game-content/guns/guns.html",
+      "FightingStyles": "game-content/fighting-styles/fighting-styles.html",
+      "Accessories": "game-content/accessories/accessories.html",
+      "Bosses": "game-content/bosses/bosses.html",
+      "Islands": "game-content/islands/islands.html",
+      "NPCs": "game-content/npcs/npcs.html"
     };
     
     // Create URL-safe slug from item name

@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NPCs - Blox Fruits Fan Wiki</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Islands - Blox Fruits Fan Wiki</title>
+  <link rel="stylesheet" href="../style.css">
   <link rel="icon" href="images/sitelogo/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
   <!-- ================= HEADER ================= -->
   <header>
-    <h1>🧍 NPCs</h1>
+    <h1>🏝️ Islands</h1>
     <div class="header-controls">
-      <input type="text" id="search-npcs" placeholder="Search NPCs...">
+      <input type="text" id="search-islands" placeholder="Search islands...">
       <button id="darkModeToggle"><span class="icon">🌙</span></button>
     </div>
   </header>
@@ -25,9 +25,9 @@
     <a href="guns.html">Guns</a>
     <a href="styles.html">Fighting Styles</a>
     <a href="accessories.html">Accessories</a>
-    <a href="islands.html">Islands</a>
+    <a href="islands.html" class="active">Islands</a>
     <a href="bosses.html">Bosses</a>
-    <a href="npcs.html" class="active">NPCs</a>
+    <a href="npcs.html">NPCs</a>
   </nav>
 
   <!-- ================= SEARCH RESULTS ================= -->
@@ -37,31 +37,32 @@
   <!-- ================= MAIN CONTENT ================= -->
   <main>
     <section class="description-section">
-      <h2>NPCs Overview</h2>
-      <p>Non-Player Characters (NPCs) populate the world of Blox Fruits. They provide quests, sell items, teach abilities, or offer other services to players.</p>
+      <h2>Islands & Seas Overview</h2>
+      <p>Islands are the main locations in the Blox Fruits world where players can explore, complete quests, and find valuable resources.</p>
+      <p>The world is divided into three "Seas", each with progressively harder islands and challenges.</p>
     </section>
-
+    
     <!-- Toolbar for filtering -->
     <section class="item-filter-toolbar">
-      <h2 class="section-title">NPCs Directory</h2>
+      <h2 class="section-title">Islands Directory</h2>
       <div class="filter-controls">
-        <input class="item-filter-input" type="search" placeholder="Filter NPCs by name..." aria-label="Filter NPCs" />
+        <input class="item-filter-input" type="search" placeholder="Filter islands by name..." aria-label="Filter islands" />
         <div class="item-count">
           Showing <span class="item-count-display">--</span>
         </div>
       </div>
     </section>
 
-    <section class="category-grid item-grid" id="npcs-list" aria-label="NPCs list">
-      <div class="category-card">
-        <img src="https://via.placeholder.com/100?text=Blox+Fruit+Dealer" alt="Blox Fruit Dealer">
-        <h3><a href="#">Blox Fruit Dealer</a></h3>
-      </div>
-      <div class="category-card">
-        <img src="https://via.placeholder.com/100?text=Blacksmith" alt="Blacksmith">
-        <h3><a href="#">Blacksmith</a></h3>
-      </div>
-      <!-- Add more NPCs here -->
+    <section class="category-grid item-grid" id="islands-list" aria-label="Islands list">
+        <div class="category-card">
+          <img src="https://via.placeholder.com/100?text=Starter+Island" alt="Starter Island">
+          <h3><a href="#">Starter Island</a></h3>
+        </div>
+        <div class="category-card">
+          <img src="https://via.placeholder.com/100?text=Middle+Town" alt="Middle Town">
+          <h3><a href="#">Middle Town</a></h3>
+        </div>
+        <!-- Add more islands here -->
     </section>
   </main>
 
