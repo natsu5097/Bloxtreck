@@ -1,173 +1,251 @@
-# 📁 Bloxtreck Website Organization Guide
+# BloxTreck Project Organization Guide
 
-## 🎯 **REORGANIZATION COMPLETE**
-
-The Bloxtreck website has been completely reorganized for better accessibility, maintainability, and user experience.
-
-## 📂 **New Directory Structure**
+## 📁 Project Structure
 
 ```
 Bloxtreck/
-├── 📄 Core Files (Root)
-│   ├── index.html (Homepage)
-│   ├── 404.html (Error page)
-│   ├── style.css (Global styles)
-│   └── script.js (Global functionality)
-│
-├── 📚 Content Pages
-│   ├── about.html (About the wiki)
-│   ├── tierlist.html (Tier lists)
-│   └── item-template.html (Template for items)
-│
-├── 🍎 Game Content
-│   ├── fruits/
-│   │   ├── index.html (Main fruits page)
-│   │   └── pages/ (Individual fruit pages)
-│   ├── swords/
-│   │   ├── index.html (Main swords page)
-│   │   └── pages/ (Individual sword pages)
-│   ├── guns/
-│   │   ├── index.html (Main guns page)
-│   │   └── pages/ (Individual gun pages)
-│   ├── fighting-styles/
-│   │   ├── index.html (Main fighting styles page)
-│   │   └── pages/ (Individual style pages)
-│   ├── accessories/
-│   │   ├── index.html (Main accessories page)
-│   │   └── pages/ (Individual accessory pages)
-│   ├── islands/
-│   │   └── index.html (Main islands page)
-│   ├── bosses/
-│   │   └── index.html (Main bosses page)
-│   └── npcs/
-│       └── index.html (Main NPCs page)
-│
-├── 🛠️ Tools & Utilities
-│   ├── index.html (Main tools page)
-│   ├── calculators/
-│   │   ├── damage-calculator.html
-│   │   ├── xp-calculator.html
-│   │   ├── bounty-calculator.html
-│   │   └── material-calculator.html
-│   ├── planners/
-│   │   ├── build-planner.html
-│   │   ├── combo-builder.html
-│   │   └── stat-allocator.html
-│   ├── simulators/
-│   │   ├── drop-simulator.html
-│   │   └── fruit-comparison.html
-│   ├── trackers/
-│   │   ├── boss-timers.html
-│   │   └── trading-values.html
-│   └── maps/
-│       ├── boss-timers.html
-│       └── interactive-map.html
-│
-├── 🎮 Community
-│   └── quiz.html
-│
-├── 🖼️ Assets
+├── assets/
 │   ├── images/
-│   │   ├── fruits_images/ (Fruit images)
-│   │   ├── swords_images/ (Sword images)
-│   │   ├── guns_images/ (Gun images)
-│   │   ├── styles_images/ (Fighting style images)
-│   │   └── sitelogo/ (Site logos and favicons)
+│   │   ├── sitelogo/
+│   │   ├── fruits_images/
+│   │   ├── swords_images/
+│   │   ├── guns_images/
+│   │   ├── styles_images/
+│   │   └── accessories_images/
 │   └── styles/
-│       └── tools.css (Tools-specific styles)
-│
-└── 📋 Documentation
-    └── ORGANIZATION_GUIDE.md (This file)
+│       └── tools.css
+├── content/
+│   ├── about.html
+│   ├── item-template.html
+│   └── tierlist.html
+├── community/
+│   └── quiz.html
+├── game-content/
+│   ├── accessories/
+│   │   ├── accessories.html
+│   │   └── pages/
+│   ├── fruits/
+│   │   ├── fruits.html
+│   │   └── pages/
+│   ├── swords/
+│   │   ├── swords.html
+│   │   └── pages/
+│   ├── guns/
+│   │   ├── guns.html
+│   │   └── pages/
+│   ├── fighting-styles/
+│   │   ├── fighting-styles.html
+│   │   └── pages/
+│   ├── islands/
+│   │   ├── islands.html
+│   │   └── pages/
+│   ├── bosses/
+│   │   ├── bosses.html
+│   │   └── pages/
+│   └── npcs/
+│       ├── npcs.html
+│       └── pages/
+├── tools-utilities/
+│   ├── calculators/
+│   ├── maps/
+│   ├── planners/
+│   ├── simulators/
+│   └── trackers/
+├── documentation/
+│   └── ORGANIZATION_GUIDE.md
+├── index.html
+├── 404.html
+├── style.css
+├── script.js
+├── robots.txt
+├── sitemap.xml
+├── package.json
+├── .eslintrc.json
+├── .stylelintrc.json
+├── .htmlhintrc
+├── .gitignore
+├── README.md
+├── IMPLEMENTATION_GUIDE.md
+└── OPTIMIZATION_SUMMARY.md
 ```
 
-## 🔗 **Updated Navigation Structure**
+## 🎯 File Organization Principles
 
-### **Main Navigation Links:**
-- **Home**: `index.html`
-- **Fruits**: `game-content/fruits/index.html`
-- **Swords**: `game-content/swords/index.html`
-- **Guns**: `game-content/guns/index.html`
-- **Fighting Styles**: `game-content/fighting-styles/index.html`
-- **Accessories**: `game-content/accessories/index.html`
-- **Islands**: `game-content/islands/index.html`
-- **Bosses**: `game-content/bosses/index.html`
-- **NPCs**: `game-content/npcs/index.html`
-- **About**: `content/about.html`
-- **Tier Lists**: `content/tierlist.html`
-- **Tools**: `tools-utilities/index.html`
-- **Quiz**: `community/quiz.html`
+### 1. **Content Hierarchy**
+- **Main Pages**: Root level (`index.html`, `404.html`)
+- **Content Pages**: `/content/` for general site content
+- **Game Content**: `/game-content/` organized by category
+- **Community**: `/community/` for user-generated content
+- **Tools**: `/tools-utilities/` for interactive features
 
-### **Individual Item Pages:**
-- **Fruits**: `game-content/fruits/pages/[fruit-name].html`
-- **Swords**: `game-content/swords/pages/[sword-name].html`
-- **Guns**: `game-content/guns/pages/[gun-name].html`
-- **Fighting Styles**: `game-content/fighting-styles/pages/[style-name].html`
-- **Accessories**: `game-content/accessories/pages/[accessory-name].html`
+### 2. **Asset Organization**
+- **Images**: Organized by content type in `/assets/images/`
+- **Styles**: Main `style.css` + component styles in `/assets/styles/`
+- **Scripts**: Main `script.js` with modular organization
 
-## 🛠️ **Technical Updates Made**
+### 3. **Page Structure Standards**
 
-### **1. File Organization:**
-- ✅ Moved all game content to `game-content/` directory
-- ✅ Organized tools into categorized subdirectories
-- ✅ Centralized all assets in `assets/` directory
-- ✅ Created dedicated `content/` directory for main pages
-- ✅ Maintained `community/` directory for community features
+#### Main Page Template:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Standard meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Title | BloxTreck Wiki</title>
+  <meta name="description" content="Page description">
+  
+  <!-- SEO meta tags -->
+  <link rel="canonical" href="page-url">
+  <meta property="og:title" content="Page Title">
+  
+  <!-- Resources -->
+  <link rel="stylesheet" href="path/to/style.css">
+  <link rel="icon" href="path/to/favicon.ico">
+</head>
+<body>
+  <!-- Skip link -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <!-- Main content -->
+  <main id="main-content" role="main">
+    <!-- Breadcrumbs for sub-pages -->
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <!-- breadcrumb items -->
+      </ol>
+    </nav>
+    
+    <!-- Page content -->
+  </main>
+  
+  <script src="path/to/script.js"></script>
+</body>
+</html>
+```
 
-### **2. Link Updates:**
-- ✅ Updated all navigation links in `index.html`
-- ✅ Updated all navigation links in `script.js`
-- ✅ Updated image paths to point to `assets/images/`
-- ✅ Updated search functionality to use new paths
-- ✅ Updated breadcrumb navigation
-- ✅ Updated category mappings
+#### Item Page Template (`content/item-template.html`):
+- Consistent structure for all game items
+- Collapsible sections for stats, moveset, obtainment
+- Responsive image galleries
+- Related items suggestions
 
-### **3. Script.js Updates:**
-- ✅ Updated `getBasePrefix()` function for new directory structure
-- ✅ Updated navigation HTML generation
-- ✅ Updated search category mappings
-- ✅ Updated individual item page paths
-- ✅ Updated path detection for legacy page upgrades
+### 4. **Naming Conventions**
 
-## 🎯 **Benefits of New Organization**
+#### Files:
+- **HTML**: lowercase with hyphens (`dark-blade.html`)
+- **Images**: descriptive names (`Dragon_Fruit.png`)
+- **Directories**: lowercase with hyphens where needed
 
-### **For Users:**
-- **Clearer Navigation**: Logical grouping of content by type
-- **Better Search**: Improved search results with proper categorization
-- **Faster Loading**: Organized assets for better caching
-- **Mobile Friendly**: Consistent responsive design across all pages
+#### CSS Classes:
+- **Components**: `.component-name` (`.nav-dropdown`)
+- **Modifiers**: `.component--modifier` (`.btn--primary`)
+- **States**: `.is-active`, `.is-loading`
 
-### **For Developers:**
-- **Easy Maintenance**: Clear separation of concerns
-- **Scalable Structure**: Easy to add new content categories
-- **Consistent Naming**: Standardized file and directory names
-- **Better Version Control**: Logical file organization for Git
+#### JavaScript:
+- **Functions**: camelCase (`initializeSearch`)
+- **Variables**: camelCase (`searchResults`)
+- **Constants**: UPPER_SNAKE_CASE (`API_BASE_URL`)
 
-### **For Content Creators:**
-- **Template System**: Consistent item page templates
-- **Asset Management**: Centralized image and style management
-- **Easy Updates**: Clear structure for adding new items
-- **Documentation**: Comprehensive guides for contributors
+### 5. **Development Workflow**
 
-## 🚀 **Next Steps**
+#### Adding New Content:
+1. **Create HTML file** in appropriate category folder
+2. **Add images** to corresponding assets folder
+3. **Update navigation** if needed in `script.js`
+4. **Add to sitemap.xml** for SEO
+5. **Test accessibility** with provided tools
 
-1. **Test All Links**: Verify all navigation works correctly
-2. **Update External References**: Update any external links pointing to old structure
-3. **SEO Optimization**: Update sitemap and meta tags
-4. **Performance Testing**: Verify page load times
-5. **User Testing**: Get feedback on new navigation structure
+#### Code Quality Checks:
+```bash
+# Run before committing
+npm run audit
 
-## 📝 **Migration Notes**
+# Individual checks
+npm run lint:html
+npm run lint:css
+npm run lint:js
+```
 
-- **Old Structure**: All files were previously in root or scattered subdirectories
-- **New Structure**: Organized by content type and functionality
-- **Backward Compatibility**: All old URLs redirect to new structure
-- **Search Functionality**: Updated to work with new paths
-- **Image References**: All updated to use `assets/images/` path
+### 6. **Performance Guidelines**
 
----
+#### Images:
+- **Format**: WebP with PNG/JPG fallback
+- **Size**: Optimize all images > 100KB
+- **Loading**: Use `loading="lazy"` for below-fold images
+- **Dimensions**: Always include `width` and `height` attributes
 
-**Organization completed on**: $(Get-Date)
-**Total files reorganized**: 200+ files
-**New directory structure**: 8 main categories with 15+ subdirectories
-**All links updated**: ✅ Complete
-**Navigation tested**: ✅ Working
+#### CSS:
+- **Organization**: Component-based structure
+- **Variables**: Use CSS custom properties
+- **Performance**: Minimize unused styles
+
+#### JavaScript:
+- **Modularity**: Split large functions into smaller ones
+- **Performance**: Use `content-visibility` for large lists
+- **Accessibility**: Ensure keyboard navigation works
+
+### 7. **SEO & Accessibility Standards**
+
+#### Every Page Must Have:
+- [ ] Unique, descriptive title
+- [ ] Meta description (150-160 characters)
+- [ ] Canonical URL
+- [ ] Proper heading hierarchy (H1 → H2 → H3)
+- [ ] Alt text for all images
+- [ ] Skip navigation link
+- [ ] ARIA labels for interactive elements
+
+#### Game Content Pages Must Have:
+- [ ] Breadcrumb navigation
+- [ ] Structured data markup
+- [ ] Related items section
+- [ ] Mobile-optimized layout
+- [ ] Search-friendly content
+
+### 8. **Content Update Process**
+
+#### Regular Maintenance:
+1. **Weekly**: Check for broken links
+2. **Monthly**: Update tier lists and meta
+3. **Quarterly**: Review and optimize images
+4. **Game Updates**: Add new content within 48 hours
+
+#### Quality Assurance:
+- Test on multiple devices and screen sizes
+- Validate HTML/CSS/accessibility
+- Check loading performance
+- Verify all links work correctly
+
+### 9. **Backup & Version Control**
+
+#### Git Workflow:
+- **Main branch**: Production-ready code
+- **Feature branches**: For new content/features
+- **Commit messages**: Descriptive and concise
+- **Regular pushes**: Don't let changes pile up
+
+#### Backup Strategy:
+- **Daily**: Git commits for any changes
+- **Weekly**: Full backup of assets folder
+- **Monthly**: Export of complete project
+
+## 🔄 Future Expansion Plans
+
+### Phase 1: Content Growth
+- Complete all fruit pages with detailed guides
+- Add comprehensive sword and gun databases
+- Create interactive tier list tools
+
+### Phase 2: Feature Enhancement
+- User accounts and favorites system
+- Advanced search with filters
+- Community contribution system
+
+### Phase 3: Performance & Scale
+- Service Worker for offline access
+- CDN implementation for images
+- Progressive Web App features
+
+This organization ensures maintainable, scalable, and high-quality content that serves both users and search engines effectively.
