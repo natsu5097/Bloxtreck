@@ -1298,23 +1298,7 @@ function initializeBreadcrumbs() {
   homeLink.textContent = 'Home';
   breadcrumb.appendChild(homeLink);
 
-  // If there are intermediate folders, add them as links
-  let currentPath = getBasePrefix();
-  for (let i = 0; i < parts.length - 1; i++) {
-    const seg = parts[i];
-    const separator = document.createElement('span');
-    separator.className = 'separator';
-    separator.textContent = '›';
-    breadcrumb.appendChild(separator);
-
-    currentPath += seg + '/';
-    const link = document.createElement('a');
-    link.href = currentPath;
-    link.textContent = seg.replace(/_/g, ' ');
-    breadcrumb.appendChild(link);
-  }
-
-  // Always show current page chip
+  // Always show current page chip without intermediate folders
   const currentSeparator = document.createElement('span');
   currentSeparator.className = 'separator';
   currentSeparator.textContent = '›';
