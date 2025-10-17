@@ -58,6 +58,25 @@
           <p class="hero-subtitle">
             Your ultimate companion for navigating the seas of Blox Fruits. Discover comprehensive guides, tier lists, calculators, and everything you need to become a legendary pirate.
           </p>
+          <div class="hero-stats">
+            <div class="hero-stat-item">
+              <span class="hero-stat-number">40+</span>
+              <span class="hero-stat-label">Devil Fruits</span>
+            </div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-number">30+</span>
+              <span class="hero-stat-label">Weapons</span>
+            </div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-number">50+</span>
+              <span class="hero-stat-label">Accessories</span>
+            </div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-number">15+</span>
+              <span class="hero-stat-label">Tools</span>
+            </div>
+          </div>
+          
           <div class="hero-actions">
             <a href="game-content/fruits/fruits.html" class="hero-btn primary">
               <span class="btn-icon">🍎</span>
@@ -292,6 +311,56 @@
       </div>
     </section>
 
+    <!-- Featured Content Section -->
+    <section class="featured-content-section">
+      <div class="container">
+        <h2 class="section-title">Featured Content</h2>
+        <p class="section-subtitle">Discover what makes BloxTreck your ultimate Blox Fruits companion</p>
+        
+        <div class="featured-content-grid">
+          <div class="featured-content-card highlight">
+            <div class="featured-icon">🦊</div>
+            <div class="featured-badge">NEW</div>
+            <div class="featured-content">
+              <h3 class="featured-title">Kitsune Fruit Guide</h3>
+              <p class="featured-description">Master the mystical Kitsune fruit with our comprehensive guide including all abilities and awakening tips</p>
+              <a href="game-content/fruits/pages/kitsune.html" class="featured-btn">View Guide</a>
+            </div>
+          </div>
+
+          <div class="featured-content-card">
+            <div class="featured-icon">🛠️</div>
+            <div class="featured-badge">TOOLS</div>
+            <div class="featured-content">
+              <h3 class="featured-title">Damage Calculator</h3>
+              <p class="featured-description">Calculate optimal damage output with our advanced calculator for all fruit and weapon combinations</p>
+              <a href="tools-utilities/calculators/damage-calculator.html" class="featured-btn">Calculate</a>
+            </div>
+          </div>
+
+          <div class="featured-content-card">
+            <div class="featured-icon">⚖️</div>
+            <div class="featured-badge">COMPARE</div>
+            <div class="featured-content">
+              <h3 class="featured-title">Fruit Comparison</h3>
+              <p class="featured-description">Side-by-side fruit comparisons with stats, abilities, and ratings to help you choose</p>
+              <a href="tools-utilities/simulators/fruit-comparison.html" class="featured-btn">Compare</a>
+            </div>
+          </div>
+
+          <div class="featured-content-card">
+            <div class="featured-icon">📋</div>
+            <div class="featured-badge">TIER</div>
+            <div class="featured-content">
+              <h3 class="featured-title">Ultimate Tier List</h3>
+              <p class="featured-description">Updated rankings for all fruits, swords, and accessories based on community feedback</p>
+              <a href="content/tierlist.html" class="featured-btn">View Tiers</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Latest Updates Section -->
     <section class="updates-section">
       <div class="container">
@@ -413,8 +482,44 @@
       font-size: 1.25rem;
       color: var(--text-color-muted);
       line-height: 1.6;
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
       margin-bottom: 2.5rem;
       max-width: 500px;
+    }
+
+    .hero-stat-item {
+      text-align: center;
+      padding: 1rem 0.5rem;
+      background: rgba(var(--primary-color-rgb), 0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(var(--primary-color-rgb), 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .hero-stat-item:hover {
+      background: rgba(var(--primary-color-rgb), 0.1);
+      border-color: rgba(var(--primary-color-rgb), 0.2);
+    }
+
+    .hero-stat-number {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: var(--font-bold);
+      color: var(--primary-color);
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-stat-label {
+      font-size: 0.875rem;
+      color: var(--text-color-muted);
+      font-weight: var(--font-medium);
     }
 
     .hero-actions {
@@ -684,6 +789,106 @@
       color: white;
     }
 
+    /* Featured Content Section */
+    .featured-content-section {
+      padding: 5rem 1rem;
+      background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.02), rgba(var(--secondary-color-rgb), 0.02));
+    }
+
+    .featured-content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .featured-content-card {
+      background: var(--bg-color-alt);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-content-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .featured-content-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .featured-content-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .featured-content-card.highlight {
+      border: 1px solid rgba(var(--primary-color-rgb), 0.3);
+      background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.08), rgba(114,9,183,0.05));
+    }
+
+    .featured-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--gradient-primary);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: var(--font-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .featured-title {
+      font-size: 1.5rem;
+      font-weight: var(--font-bold);
+      margin-bottom: 1rem;
+      color: var(--text-color);
+    }
+
+    .featured-description {
+      color: var(--text-color-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .featured-btn {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: var(--font-semibold);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .featured-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(var(--primary-color-rgb), 0.4);
+      color: white;
+    }
+
     /* Updates Section */
     .updates-section {
       padding: 5rem 1rem;
@@ -831,6 +1036,11 @@
         grid-template-columns: 1fr;
       }
 
+      .featured-content-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
       .community-content {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -842,10 +1052,33 @@
         gap: 1rem;
       }
 
+      .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+
       .hero-actions {
         justify-content: center;
       }
     }
+
+    @media (max-width: 600px) {
+      .hero-stats {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+      }
+
+      .hero-stat-item {
+        padding: 0.75rem 0.25rem;
+      }
+
+      .hero-stat-number {
+        font-size: 1.25rem;
+      }
+
+      .hero-stat-label {
+        font-size: 0.75rem;
+      }
 
     @media (max-width: 480px) {
       .hero-btn {
