@@ -79,7 +79,7 @@
           
           <div class="hero-actions">
             <a href="game-content/fruits/fruits.html" class="hero-btn primary">
-              <span class="btn-icon">🍎</span>
+              <span class="btn-icon"><img src="assets/images/fruits_images/Flame_Fruit.webp" alt="Flame Fruit" width="24" height="24"></span>
               Explore Devil Fruits
             </a>
             <a href="tools-utilities/calculators/damage-calculator.html" class="hero-btn secondary">
@@ -90,11 +90,11 @@
         </div>
         <div class="hero-illustration">
           <div class="floating-elements">
-            <div class="floating-item item-1">🏴‍☠️</div>
-            <div class="floating-item item-2">⚔️</div>
-            <div class="floating-item item-3">🍎</div>
-            <div class="floating-item item-4">💎</div>
-            <div class="floating-item item-5">⚡</div>
+            <div class="floating-item item-1"><img src="assets/images/sitelogo/bloxtrex.png" alt="Bloxtreck Logo" width="48" height="48"></div>
+            <div class="floating-item item-2"><img src="assets/images/swords_images/Dark_Blade.webp" alt="Dark Blade" width="48" height="48"></div>
+            <div class="floating-item item-3"><img src="assets/images/fruits_images/Kitsune_Fruit.webp" alt="Kitsune Fruit" width="48" height="48"></div>
+            <div class="floating-item item-4"><img src="assets/images/fruits_images/Dragon_Fruit.png" alt="Dragon Fruit" width="48" height="48"></div>
+            <div class="floating-item item-5"><img src="assets/images/fruits_images/Lightning_Fruit.webp" alt="Lightning Fruit" width="48" height="48"></div>
           </div>
         </div>
       </div>
@@ -1063,6 +1063,71 @@
     }
 
     @media (max-width: 600px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .categories-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-content-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .community-content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .community-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {        
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {        
+        font-size: 1rem;                                                                                                                                                                                             
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .hero-stat-item {
+        padding: 0.75rem 0.25rem; 
+      }
+
+      .hero-stat-number {
+        font-size: 2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+      
       .hero-stats {
         grid-template-columns: repeat(4, 1fr);
         gap: 0.5rem;

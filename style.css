@@ -603,13 +603,13 @@ nav {
   position: sticky;
   top: calc(var(--header-height) + 5px);
   z-index: var(--z-fixed);
-  backdrop-filter: blur(10px);
+  : blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 nav a {
-  color: var(--text-color);
+  color: var(--texbackdrop-filtert-color);
   font-weight: var(--font-medium);
   padding: 0.5rem 1rem;
   border-radius: var(--border-radius);
