@@ -11,6 +11,41 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitBtn = document.getElementById('submitBtn');
     const messageDiv = document.getElementById('message');
 
+    // Contact method conditional fields handling
+    const contactRadios = document.querySelectorAll('input[name="preferredContact"]');
+    const contactFields = document.getElementById('contactFields');
+    const emailField = document.getElementById('emailField');
+    const phoneField = document.getElementById('phoneField');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+
+    function updateContactFields() {
+        const selected = document.querySelector('input[name="preferredContact"]:checked')?.value;
+
+        // Hide both by default
+        emailField.classList.remove('show');
+        phoneField.classList.remove('show');
+        emailInput.required = false;
+        phoneInput.required = false;
+
+        if (selected === 'Email') {
+            emailField.classList.add('show');
+            emailInput.required = true;
+        } else if (selected === 'Phone') {
+            phoneField.classList.add('show');
+            phoneInput.required = true;
+        } else if (selected === 'Both') {
+            emailField.classList.add('show');
+            phoneField.classList.add('show');
+            emailInput.required = true;
+            phoneInput.required = true;
+        }
+    }
+
+    // Initialize state
+    updateContactFields();
+    contactRadios.forEach(r => r.addEventListener('change', updateContactFields));
+
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -27,6 +62,8 @@ document.addEventListener('DOMContentLoaded', function() {
             username: document.getElementById('username').value.trim(),
             gender: document.getElementById('gender').value,
             preferredContact: document.querySelector('input[name="preferredContact"]:checked')?.value || '',
+            email: document.getElementById('email')?.value.trim() || '',
+            phone: document.getElementById('phone')?.value.trim() || '',
             location: document.getElementById('location').value.trim(),
             contactTime: document.getElementById('contactTime').value,
             serviceRating: document.querySelector('input[name="serviceRating"]:checked')?.value || '',
