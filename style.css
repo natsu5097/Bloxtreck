@@ -294,8 +294,8 @@ img {
   left: 0;
   z-index: var(--z-fixed);
   background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   transition: background-color 0.3s, border-color 0.3s;
   display: flex;
   justify-content: space-between;
@@ -603,13 +603,13 @@ nav {
   position: sticky;
   top: calc(var(--header-height) + 5px);
   z-index: var(--z-fixed);
-  : blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 nav a {
-  color: var(--texbackdrop-filtert-color);
+  color: var(--text-color);
   font-weight: var(--font-medium);
   padding: 0.5rem 1rem;
   border-radius: var(--border-radius);
@@ -694,8 +694,8 @@ nav a.active::before {
   transform: translateY(-10px);
   transition: all 0.3s ease;
   z-index: calc(var(--z-fixed) + 1);
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .nav-dropdown:hover .dropdown-menu {
@@ -772,8 +772,8 @@ nav a.active::before {
   transform: translateY(-10px);
   transition: all 0.3s ease;
   z-index: var(--z-tooltip);
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   max-height: 300px;
   overflow-y: auto;
 }
