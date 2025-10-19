@@ -422,7 +422,7 @@
         <div class="fan-content-grid">
           <div class="fan-video">
             <div class="video-wrapper">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/i0vUmqpk9VQ?feature=share" title="Featured Fan Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/tf2-JbEH0TI" title="Featured Fan Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="video-info">
               <h3>Community Spotlight</h3>
@@ -432,31 +432,13 @@
           
           <div class="fan-art">
             <div class="fanart-wrapper">
-              <img src="assets/images/sitelogo/fanart.jpg" alt="Dragon Fruit Fan Art" loading="lazy">
+              <img src="assets/images/sitelogo/fanart.png" alt="Dragon Fruit Fan Art" loading="lazy">
             </div>
             <div class="fanart-info">
               <h3>Featured Fan Art</h3>
               <p>Beautiful Dragon Fruit artwork by our talented community artist</p>
               <span class="artist-credit">Art by: CommunityArtist123</span>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Facts and Fan Featured Section -->
-    <section class="fan-featured-section">
-      <div class="container">
-        <h2 class="section-title">Facts and Fan Featured</h2>
-        <div class="fan-featured-content">
-          <div class="fan-featured-video">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/tf2-JbEH0TI" title="Featured Fan Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <div class="fan-featured-info">
-            <img src="assets/images/sitelogo/fanart.png" alt="Fan Art" class="fan-featured-image">
-            <h3>Community Spotlight</h3>
-            <p>Check out amazing fan creations and contribute your own artwork to be featured!</p>
-            <a href="community/fan-art.html" class="fan-featured-btn">Submit Your Art</a>
           </div>
         </div>
       </div>
@@ -591,62 +573,6 @@
 
   <!-- Custom styles for homepage -->
   <style>
-    /* Fan Featured Section */
-    .fan-featured-section {
-      padding: 4rem 0;
-      background: linear-gradient(to bottom, rgba(var(--bg-color-rgb), 1), rgba(var(--bg-color-rgb), 0.95));
-    }
-    
-    .fan-featured-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      align-items: center;
-    }
-    
-    .fan-featured-video {
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    }
-    
-    .fan-featured-video iframe {
-      width: 100%;
-      aspect-ratio: 16/9;
-      border-radius: 16px;
-    }
-    
-    .fan-featured-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    
-    .fan-featured-image {
-      width: 100%;
-      border-radius: 16px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1rem;
-    }
-    
-    .fan-featured-btn {
-      display: inline-block;
-      background: var(--gradient-primary);
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-weight: var(--font-bold);
-      text-decoration: none;
-      transition: all 0.3s ease;
-      margin-top: 1rem;
-      align-self: flex-start;
-    }
-    
-    .fan-featured-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.3);
-    }
-    
     /* Hero Section */
     .hero-section {
       background: radial-gradient(ellipse at top, rgba(var(--primary-color-rgb),0.1), transparent 60%),
@@ -1022,13 +948,15 @@
       width: 100%;
       height: 200px;
       overflow: hidden;
+      background: rgba(0,0,0,0.05);
       border-radius: 16px 16px 0 0;
     }
 
     .featured-image img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      padding: 0.5rem;
       transition: transform 0.3s ease;
     }
 
