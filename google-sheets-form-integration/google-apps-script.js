@@ -1,18 +1,11 @@
 /**
  * Google Apps Script for Bloxtreck Form Integration
- * This script receives form data and writes it to Google Sheets
- * 
- * Instructions:
- * 1. Create a new Google Apps Script project at script.google.com
- * 2. Replace the default code with this script
- * 3. Create or link a Google Sheets document
- * 4. Deploy as a web app with execute permissions set to "Anyone"
- * 5. Copy the web app URL to your form-script.js file
+ * Updated to match your existing spreadsheet format
  */
 
 // Configuration - Update these values
-const SPREADSHEET_ID = '17X56KlEbtXoqO07Wmi-cnaucl1s6SaV_D_3e01MiKqk'; // Get this from your Google Sheets URL
-const SHEET_NAME = 'Form Responses'; // Name of the sheet tab
+const SPREADSHEET_ID = '17X56KlEbtXoqO07Wmi-cnaucl1s6SaV_D_3e01MiKqk';
+const SHEET_NAME = 'Sheet1'; // Using your current sheet name
 
 /**
  * Handle POST requests from the form
@@ -53,36 +46,22 @@ function writeToSpreadsheet(data) {
   try {
     // Open the spreadsheet
     const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
+    const sheet = spreadsheet.getSheetByName(SHEET_NAME);
     
-    // Get or create the sheet
-    let sheet;
-    try {
-      sheet = spreadsheet.getSheetByName(SHEET_NAME);
-    } catch (e) {
-      sheet = spreadsheet.insertSheet(SHEET_NAME);
-    }
-    
-    // Check if headers exist, if not create them
-    if (sheet.getLastRow() === 0) {
-      setupHeaders(sheet);
-    }
-    
-    // Prepare the row data matching the headers
+    // Prepare the row data matching YOUR headers exactly
     const rowData = [
-      new Date(), // Timestamp
-      data.username || '',
-      data.gender || '',
-      data.preferredContact || '',
-      data.email || '',
-      data.phone || '',
-      data.location || '',
-      data.contactTime || '',
-      data.serviceRating || '',
-      data.websiteRating || '',
-      data.overallRating || '',
-      data.comments || '',
-      data.newsletter || 'No',
-      data.profilePicture || 'No file uploaded'
+      data.username || '',                    // Username/Nickname
+      data.gender || '',                      // Gender
+      data.email || '',                       // Email
+      data.phone || '',                       // Phone no
+      data.location || '',                    // Address/Location
+      data.profilePicture || 'No file uploaded', // Files
+      data.contactTime || '',                 // Preferred Time
+      data.serviceRating || '',               // Service Rating
+      data.websiteRating || '',               // Website Rating
+      data.overallRating || '',               // Overall Satisfaction
+      data.comments || '',                    // Additional Comments
+      data.newsletter || 'No'                 // Subscription
     ];
     
     // Add the row to the sheet
@@ -97,56 +76,14 @@ function writeToSpreadsheet(data) {
 }
 
 /**
- * Set up column headers in the spreadsheet
- */
-function setupHeaders(sheet) {
-  const headers = [
-    'Timestamp',
-    'Username/Nickname',
-    'Gender/Pronouns',
-    'Preferred Contact Method',
-    'Email Address',
-    'Phone Number',
-    'Location',
-    'Preferred Contact Time',
-    'Service Rating',
-    'Website Rating',
-    'Overall Satisfaction',
-    'Additional Comments',
-    'Newsletter Subscription',
-    'Profile Picture'
-  ];
-  
-  // Add headers to the first row
-  sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-  
-  // Style the header row
-  const headerRange = sheet.getRange(1, 1, 1, headers.length);
-  headerRange.setBackground('#4285f4');
-  headerRange.setFontColor('white');
-  headerRange.setFontWeight('bold');
-  headerRange.setFontSize(12);
-  
-  // Auto-resize columns
-  sheet.autoResizeColumns(1, headers.length);
-  
-  // Freeze the header row
-  sheet.setFrozenRows(1);
-  
-  console.log('Headers set up successfully');
-}
-
-/**
  * Test function to verify the script works
- * Run this function in the Apps Script editor to test
  */
 function testFormSubmission() {
   const testData = {
     username: 'TestUser123',
     gender: 'They/Them',
-    preferredContact: 'Email',
     email: 'test@example.com',
-    phone: '',
+    phone: '+1-555-0123',
     location: 'New York, USA',
     contactTime: 'Evening (6 PM - 12 AM)',
     serviceRating: '5',
