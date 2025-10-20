@@ -1,0 +1,2 @@
+/* Shim to support pages that reference /style.css at repo root */
+@import url("css/style.css");
