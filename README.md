@@ -2,6 +2,10 @@
 
 A comprehensive fan-made wiki for the popular Roblox game Blox Fruits. This wiki provides detailed information about fruits, swords, guns, fighting styles, and other game content.
 
+The data from the form can be viewed at :
+https://docs.google.com/spreadsheets/d/17X56KlEbtXoqO07Wmi-cnaucl1s6SaV_D_3e01MiKqk/edit?gid=0#gid=0
+Please Dont enlist any sensitive or harmful information
+
 ## 🌟 Features
 
 - **Comprehensive Content**: Detailed information about all Blox Fruits items
@@ -114,9 +118,9 @@ This project is for educational and fan purposes. All game content belongs to th
 
 ## 📞 Contact
 
-- GitHub: [Your GitHub Profile]
-- Discord: [Your Discord Server]
-- Email: [Your Email]
+- GitHub: natsu5097
+- Discord: natsu_5096
+- Email: manipuspak12@gmail.com
 
 ---
 
