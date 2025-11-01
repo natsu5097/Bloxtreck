@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>BloxTreck Blog</title>
+  <meta name="description" content="News, updates and developer posts for BloxTreck">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="alternate" type="application/rss+xml" title="BloxTreck Blog RSS" href="/blog/rss.xml">
+  <meta name="robots" content="index,follow">
+  <style>
+    /* Blog Styles */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .blog-card {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: var(--card-bg, #fff);
+    }
+    
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .blog-image {
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .blog-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .blog-card:hover .blog-image img {
+      transform: scale(1.05);
+    }
+    
+    .blog-content {
+      padding: 1.5rem;
+    }
+    
+    .blog-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--heading-color, #333);
+    }
+    
+    .blog-date {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--text-muted, #666);
+      margin-bottom: 1rem;
+    }
+    
+    .blog-excerpt {
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-color, #444);
+    }
+    
+    .blog-read-more {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: var(--primary-color, #3498db);
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+    
+    .blog-read-more:hover {
+      background: var(--primary-color-dark, #2980b9);
+    }
+    
+    /* Filter Buttons */
+    .blog-filter {
+      margin: 2rem 0;
+    }
+    
+    .filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border-color, #ddd);
+      background: transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .filter-btn.active {
+      background: var(--primary-color, #3498db);
+      color: white;
+      border-color: var(--primary-color, #3498db);
+    }
+    
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin: 3rem 0;
+      gap: 0.5rem;
+    }
+    
+    .page-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border-color, #ddd);
+      text-decoration: none;
+      color: var(--text-color, #333);
+      transition: all 0.3s ease;
+    }
+    
+    .page-link.active {
+      background: var(--primary-color, #3498db);
+      color: white;
+      border-color: var(--primary-color, #3498db);
+    }
+    
+    .page-link.next {
+      width: auto;
+      padding: 0 1rem;
+      border-radius: 20px;
+    }
+    
+    /* Subscribe Section */
+    .blog-subscribe {
+      background: var(--bg-accent, #f5f7fa);
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      margin: 2rem 0;
+    }
+    
+    .rss-btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary-color, #3498db);
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 1rem;
+      transition: background 0.3s ease;
+    }
+    
+    .rss-btn:hover {
+      background: var(--primary-color-dark, #2980b9);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header></header>
+  <nav></nav>
+  <main id="main-content" role="main" class="container">
+    <h1>The Blox Bulletin</h1>
+    <p>Latest news, updates, and developer notes from the official Blox Fruits team.</p>
+    
+    <div class="blog-filter">
+      <p>Filter by:</p>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="update">Updates</button>
+        <button class="filter-btn" data-filter="event">Events</button>
+        <button class="filter-btn" data-filter="guide">Guides</button>
+      </div>
+    </div>
+
+    <div class="blog-grid">
+      <!-- Blog Entry 1 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bulletin17.jpg" alt="The Blox Bulletin #017" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #017</h2>
+          <time datetime="2025-10-16" class="blog-date">October 16, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 017</p>
+          <a href="posts/bulletin-017.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 2 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bulletin16.jpg" alt="The Blox Bulletin #016" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #016</h2>
+          <time datetime="2025-07-25" class="blog-date">July 25, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 016</p>
+          <a href="posts/bulletin-016.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 3 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bulletin15.jpg" alt="The Blox Bulletin #015" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #015</h2>
+          <time datetime="2025-07-18" class="blog-date">July 18, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 015</p>
+          <a href="posts/bulletin-015.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 4 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bulletin14.jpg" alt="The Blox Bulletin #014" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #014</h2>
+          <time datetime="2025-07-11" class="blog-date">July 11, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 014</p>
+          <a href="posts/bulletin-014.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 5 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bulletin13.jpg" alt="The Blox Bulletin #013" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #013</h2>
+          <time datetime="2025-07-04" class="blog-date">July 4, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 013</p>
+          <a href="posts/bulletin-013.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 6 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bulletin12.jpg" alt="The Blox Bulletin #012" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #012</h2>
+          <time datetime="2025-06-26" class="blog-date">June 26, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 012</p>
+          <a href="posts/bulletin-012.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 7 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bulletin11.jpg" alt="The Blox Bulletin #011" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #011</h2>
+          <time datetime="2025-06-20" class="blog-date">June 20, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 011</p>
+          <a href="posts/bulletin-011.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 8 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bulletin10.jpg" alt="The Blox Bulletin #010" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #010</h2>
+          <time datetime="2025-06-13" class="blog-date">June 13, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 010</p>
+          <a href="posts/bulletin-010.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 9 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bulletin09.jpg" alt="The Blox Bulletin #009" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #009</h2>
+          <time datetime="2025-06-05" class="blog-date">June 5, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 009</p>
+          <a href="posts/bulletin-009.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 10 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bulletin08.jpg" alt="The Blox Bulletin #008" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #008</h2>
+          <time datetime="2025-05-30" class="blog-date">May 30, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 008</p>
+          <a href="posts/bulletin-008.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <a href="blog.html" class="page-link active">1</a>
+      <a href="blog-page2.html" class="page-link">2</a>
+      <a href="blog-page3.html" class="page-link">3</a>
+      <a href="blog-page2.html" class="page-link next">Next →</a>
+    </div>
+
+    <div class="blog-subscribe">
+      <h3>Stay Updated</h3>
+      <p>Subscribe to our blog updates via RSS or follow us on social media.</p>
+      <a href="/blog/rss.xml" class="rss-btn">Subscribe via RSS</a>
+    </div>
+  </main>
+  <footer></footer>
+  <script src="/script.js"></script>
+</body>
+</html>

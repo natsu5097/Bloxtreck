@@ -137,8 +137,12 @@ function renderGlobalChrome() {
       <a href="${base}content/about.html">📖 About</a>
       <a href="${base}content/tierlist.html">📊 Tier Lists</a>
       <a href="${base}community/quiz.html">🎮 Quiz</a>
+      <a href="${base}blog/blog.html">📝 Blog</a>
     </div>
   </div>
+  
+  <!-- Blog Link -->
+  <a href="${base}blog/blog.html">📝 Blog</a>
   
   <!-- Tools Dropdown -->
   <div class="nav-dropdown">

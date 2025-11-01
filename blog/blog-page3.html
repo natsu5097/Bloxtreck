@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>BloxTreck Blog - Page 3</title>
+  <meta name="description" content="News, updates and developer posts for BloxTreck">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="alternate" type="application/rss+xml" title="BloxTreck Blog RSS" href="/blog/rss.xml">
+  <meta name="robots" content="index,follow">
+  <style>
+    /* Blog Styles */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .blog-card {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: var(--card-bg, #fff);
+    }
+    
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .blog-image {
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .blog-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .blog-card:hover .blog-image img {
+      transform: scale(1.05);
+    }
+    
+    .blog-content {
+      padding: 1.5rem;
+    }
+    
+    .blog-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--heading-color, #333);
+    }
+    
+    .blog-date {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--text-muted, #666);
+      margin-bottom: 1rem;
+    }
+    
+    .blog-excerpt {
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-color, #444);
+    }
+    
+    .blog-read-more {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: var(--primary-color, #3498db);
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+    
+    .blog-read-more:hover {
+      background: var(--primary-color-dark, #2980b9);
+    }
+    
+    /* Filter Buttons */
+    .blog-filter {
+      margin: 2rem 0;
+    }
+    
+    .filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border-color, #ddd);
+      background: transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .filter-btn.active {
+      background: var(--primary-color, #3498db);
+      color: white;
+      border-color: var(--primary-color, #3498db);
+    }
+    
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin: 3rem 0;
+      gap: 0.5rem;
+    }
+    
+    .page-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border-color, #ddd);
+      text-decoration: none;
+      color: var(--text-color, #333);
+      transition: all 0.3s ease;
+    }
+    
+    .page-link.active {
+      background: var(--primary-color, #3498db);
+      color: white;
+      border-color: var(--primary-color, #3498db);
+    }
+    
+    .page-link.next {
+      width: auto;
+      padding: 0 1rem;
+      border-radius: 20px;
+    }
+    
+    /* Subscribe Section */
+    .blog-subscribe {
+      background: var(--bg-accent, #f5f7fa);
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      margin: 2rem 0;
+    }
+    
+    .rss-btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary-color, #3498db);
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 1rem;
+      transition: background 0.3s ease;
+    }
+    
+    .rss-btn:hover {
+      background: var(--primary-color-dark, #2980b9);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/blog" class="active">Blog</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container">
+      <h1>The Blox Bulletin</h1>
+      <p>Page 3 - Latest news, updates, and guides for BloxTreck</p>
+      
+      <div class="blog-filter">
+        <h3>Filter by Category</h3>
+        <div class="filter-buttons">
+          <button class="filter-btn active">All</button>
+          <button class="filter-btn">Updates</button>
+          <button class="filter-btn">Events</button>
+          <button class="filter-btn">Guides</button>
+        </div>
+      </div>
+      
+      <div class="blog-grid">
+        <!-- Blog Entry 1 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img src="/assets/images/blog-21.jpg" alt="BloxTreck Update">
+          </div>
+          <div class="blog-content">
+            <h2 class="blog-title">New Trading System Coming</h2>
+            <span class="blog-date">April 28, 2023</span>
+            <p class="blog-excerpt">We're excited to announce our new player-to-player trading system launching next month. Exchange items, currency, and more...</p>
+            <a href="/blog/trading-system" class="blog-read-more">Read more</a>
+          </div>
+        </article>
+        
+        <!-- Blog Entry 2 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img src="/assets/images/blog-22.jpg" alt="BloxTreck Guide">
+          </div>
+          <div class="blog-content">
+            <h2 class="blog-title">Mastering the New Boss Fight</h2>
+            <span class="blog-date">April 22, 2023</span>
+            <p class="blog-excerpt">Struggling with the Void Titan boss? This comprehensive guide covers attack patterns, recommended loadouts, and team strategies...</p>
+            <a href="/blog/void-titan-guide" class="blog-read-more">Read more</a>
+          </div>
+        </article>
+        
+        <!-- Blog Entry 3 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img src="/assets/images/blog-23.jpg" alt="BloxTreck Event">
+          </div>
+          <div class="blog-content">
+            <h2 class="blog-title">Spring Festival Results</h2>
+            <span class="blog-date">April 18, 2023</span>
+            <p class="blog-excerpt">The Spring Festival has concluded! Check out the winners, statistics, and highlights from our biggest seasonal event yet...</p>
+            <a href="/blog/spring-festival-results" class="blog-read-more">Read more</a>
+          </div>
+        </article>
+        
+        <!-- Blog Entry 4 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img src="/assets/images/blog-24.jpg" alt="BloxTreck Update">
+          </div>
+          <div class="blog-content">
+            <h2 class="blog-title">Mobile Version Beta Launch</h2>
+            <span class="blog-date">April 12, 2023</span>
+            <p class="blog-excerpt">BloxTreck is coming to mobile devices! Sign up for our closed beta testing phase and be among the first to play on the go...</p>
+            <a href="/blog/mobile-beta" class="blog-read-more">Read more</a>
+          </div>
+        </article>
+        
+        <!-- Blog Entry 5 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img src="/assets/images/blog-25.jpg" alt="BloxTreck Guide">
+          </div>
+          <div class="blog-content">
+            <h2 class="blog-title">Pet Companion Guide</h2>
+            <span class="blog-date">April 8, 2023</span>
+            <p class="blog-excerpt">Everything you need to know about the pet system: obtaining rare pets, leveling them up, and maximizing their bonuses...</p>
+            <a href="/blog/pet-guide" class="blog-read-more">Read more</a>
+          </div>
+        </article>
+        
+        <!-- Blog Entry 6 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img src="/assets/images/blog-26.jpg" alt="BloxTreck Event">
+          </div>
+          <div class="blog-content">
+            <h2 class="blog-title">Community Spotlight: April</h2>
+            <span class="blog-date">April 5, 2023</span>
+            <p class="blog-excerpt">Check out the amazing creations, achievements, and contributions from our talented community members this month...</p>
+            <a href="/blog/community-april" class="blog-read-more">Read more</a>
+          </div>
+        </article>
+        
+        <!-- Blog Entry 7 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img src="/assets/images/blog-27.jpg" alt="BloxTreck Update">
+          </div>
+          <div class="blog-content">
+            <h2 class="blog-title">Clan System Improvements</h2>
+            <span class="blog-date">April 1, 2023</span>
+            <p class="blog-excerpt">We're enhancing the clan system with new features including clan bases, exclusive challenges, and improved progression...</p>
+            <a href="/blog/clan-improvements" class="blog-read-more">Read more</a>
+          </div>
+        </article>
+        
+        <!-- Blog Entry 8 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img src="/assets/images/blog-28.jpg" alt="BloxTreck Guide">
+          </div>
+          <div class="blog-content">
+            <h2 class="blog-title">Hidden Achievements Guide</h2>
+            <span class="blog-date">March 28, 2023</span>
+            <p class="blog-excerpt">Unlock all those mysterious hidden achievements with this comprehensive guide. We reveal the secrets to earning every badge...</p>
+            <a href="/blog/hidden-achievements" class="blog-read-more">Read more</a>
+          </div>
+        </article>
+        
+        <!-- Blog Entry 9 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img src="/assets/images/blog-29.jpg" alt="BloxTreck Event">
+          </div>
+          <div class="blog-content">
+            <h2 class="blog-title">Speedrun Competition</h2>
+            <span class="blog-date">March 25, 2023</span>
+            <p class="blog-excerpt">Think you're fast? Join our first official speedrun competition with prizes for the quickest completion times across all dungeons...</p>
+            <a href="/blog/speedrun-competition" class="blog-read-more">Read more</a>
+          </div>
+        </article>
+        
+        <!-- Blog Entry 10 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img src="/assets/images/blog-30.jpg" alt="BloxTreck Update">
+          </div>
+          <div class="blog-content">
+            <h2 class="blog-title">March Update Highlights</h2>
+            <span class="blog-date">March 20, 2023</span>
+            <p class="blog-excerpt">A summary of all the new features, improvements, and fixes included in our massive March update. There's something for everyone...</p>
+            <a href="/blog/march-update" class="blog-read-more">Read more</a>
+          </div>
+        </article>
+      </div>
+      
+      <!-- Pagination -->
+      <div class="pagination">
+        <a href="/blog/blog.html" class="page-link">1</a>
+        <a href="/blog/blog-page2.html" class="page-link">2</a>
+        <a href="/blog/blog-page3.html" class="page-link active">3</a>
+        <a href="#" class="page-link next disabled">Next →</a>
+      </div>
+      
+      <!-- Subscribe Section -->
+      <div class="blog-subscribe">
+        <h2>Stay Updated</h2>
+        <p>Subscribe to our RSS feed to get the latest BloxTreck news delivered directly to you.</p>
+        <a href="/blog/rss.xml" class="rss-btn">Subscribe via RSS</a>
+      </div>
+    </section>
+  </main>
+  
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 BloxTreck. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <script>
+    // Filter functionality
+    document.querySelectorAll('.filter-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        button.classList.add('active');
+        
+        // Filter logic would go here in a real implementation
+      });
+    });
+  </script>
+</body>
+</html>
