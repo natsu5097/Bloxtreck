@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -12,198 +12,171 @@
   <script src="../script.js" defer></script>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/blog" class="active">Blog</a>
-    </nav>
-  </header>
-
-  <main>
-    <section class="container">
-      <h1>The Blox Bulletin</h1>
-      <p>Page 2 - Latest news, updates, and guides for BloxTreck</p>
-      
-      <div class="blog-filter">
-        <h3>Filter by Category</h3>
-        <div class="filter-buttons">
-          <button class="filter-btn active">All</button>
-          <button class="filter-btn">Updates</button>
-          <button class="filter-btn">Events</button>
-          <button class="filter-btn">Guides</button>
-        </div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header></header>
+  <nav></nav>
+  <main id="main-content" role="main" class="container">
+    <h1>The Blox Bulletin</h1>
+    <p>Latest news, updates, and developer notes from the official Blox Fruits team.</p>
+    
+    <div class="blog-filter">
+      <p>Filter by:</p>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="update">Updates</button>
+        <button class="filter-btn" data-filter="event">Events</button>
+        <button class="filter-btn" data-filter="guide">Guides</button>
       </div>
-      
-      <div class="blog-grid">
-        <!-- Blog Entry 1 -->
-        <article class="blog-card">
-          <div class="blog-image">
-            <img src="/assets/images/blog-11.jpg" alt="BloxTreck Update">
-          </div>
-          <div class="blog-content">
-            <h2 class="blog-title">New Weapon Skins Coming Soon</h2>
-            <span class="blog-date">June 15, 2023</span>
-            <p class="blog-excerpt">Get ready for an exciting collection of weapon skins that will transform your arsenal. From galaxy-themed designs to animated patterns...</p>
-            <a href="/blog/new-weapon-skins" class="blog-read-more">Read more</a>
-          </div>
-        </article>
-        
-        <!-- Blog Entry 2 -->
-        <article class="blog-card">
-          <div class="blog-image">
-            <img src="/assets/images/blog-12.jpg" alt="BloxTreck Event">
-          </div>
-          <div class="blog-content">
-            <h2 class="blog-title">Summer Event: Beach Bash</h2>
-            <span class="blog-date">June 10, 2023</span>
-            <p class="blog-excerpt">Join us for the ultimate summer celebration in BloxTreck! The Beach Bash event brings new maps, limited-time rewards, and special challenges...</p>
-            <a href="/blog/summer-beach-bash" class="blog-read-more">Read more</a>
-          </div>
-        </article>
-        
-        <!-- Blog Entry 3 -->
-        <article class="blog-card">
-          <div class="blog-image">
-            <img src="/assets/images/blog-13.jpg" alt="BloxTreck Guide">
-          </div>
-          <div class="blog-content">
-            <h2 class="blog-title">Advanced Combat Techniques</h2>
-            <span class="blog-date">June 5, 2023</span>
-            <p class="blog-excerpt">Master the art of combat with these pro-level techniques. Learn about animation canceling, optimal weapon combos, and movement strategies...</p>
-            <a href="/blog/advanced-combat" class="blog-read-more">Read more</a>
-          </div>
-        </article>
-        
-        <!-- Blog Entry 4 -->
-        <article class="blog-card">
-          <div class="blog-image">
-            <img src="/assets/images/blog-14.jpg" alt="BloxTreck Update">
-          </div>
-          <div class="blog-content">
-            <h2 class="blog-title">Performance Improvements</h2>
-            <span class="blog-date">May 28, 2023</span>
-            <p class="blog-excerpt">We've made significant optimizations to improve game performance across all devices. Enjoy smoother gameplay, faster loading times...</p>
-            <a href="/blog/performance-update" class="blog-read-more">Read more</a>
-          </div>
-        </article>
-        
-        <!-- Blog Entry 5 -->
-        <article class="blog-card">
-          <div class="blog-image">
-            <img src="/assets/images/blog-15.jpg" alt="BloxTreck Guide">
-          </div>
-          <div class="blog-content">
-            <h2 class="blog-title">Economy Guide: Making Coins Fast</h2>
-            <span class="blog-date">May 22, 2023</span>
-            <p class="blog-excerpt">Struggling to save up for that premium item? This comprehensive guide covers the most efficient ways to earn coins in BloxTreck...</p>
-            <a href="/blog/economy-guide" class="blog-read-more">Read more</a>
-          </div>
-        </article>
-        
-        <!-- Blog Entry 6 -->
-        <article class="blog-card">
-          <div class="blog-image">
-            <img src="/assets/images/blog-16.jpg" alt="BloxTreck Event">
-          </div>
-          <div class="blog-content">
-            <h2 class="blog-title">Community Spotlight: May</h2>
-            <span class="blog-date">May 18, 2023</span>
-            <p class="blog-excerpt">Check out the amazing creations, achievements, and contributions from our talented community members this month...</p>
-            <a href="/blog/community-may" class="blog-read-more">Read more</a>
-          </div>
-        </article>
-        
-        <!-- Blog Entry 7 -->
-        <article class="blog-card">
-          <div class="blog-image">
-            <img src="/assets/images/blog-17.jpg" alt="BloxTreck Update">
-          </div>
-          <div class="blog-content">
-            <h2 class="blog-title">New Map: Crystal Caverns</h2>
-            <span class="blog-date">May 12, 2023</span>
-            <p class="blog-excerpt">Explore the mysterious depths of Crystal Caverns, our newest map featuring unique environmental hazards and hidden treasures...</p>
-            <a href="/blog/crystal-caverns" class="blog-read-more">Read more</a>
-          </div>
-        </article>
-        
-        <!-- Blog Entry 8 -->
-        <article class="blog-card">
-          <div class="blog-image">
-            <img src="/assets/images/blog-18.jpg" alt="BloxTreck Guide">
-          </div>
-          <div class="blog-content">
-            <h2 class="blog-title">Beginner's Guide to Crafting</h2>
-            <span class="blog-date">May 8, 2023</span>
-            <p class="blog-excerpt">New to the crafting system? This guide walks you through the basics of gathering resources, crafting recipes, and upgrading items...</p>
-            <a href="/blog/crafting-guide" class="blog-read-more">Read more</a>
-          </div>
-        </article>
-        
-        <!-- Blog Entry 9 -->
-        <article class="blog-card">
-          <div class="blog-image">
-            <img src="/assets/images/blog-19.jpg" alt="BloxTreck Event">
-          </div>
-          <div class="blog-content">
-            <h2 class="blog-title">Weekend Double XP Event</h2>
-            <span class="blog-date">May 5, 2023</span>
-            <p class="blog-excerpt">Get ready to level up faster! This weekend, earn double XP in all game modes. Perfect time to unlock those high-level rewards...</p>
-            <a href="/blog/double-xp-weekend" class="blog-read-more">Read more</a>
-          </div>
-        </article>
-        
-        <!-- Blog Entry 10 -->
-        <article class="blog-card">
-          <div class="blog-image">
-            <img src="/assets/images/blog-20.jpg" alt="BloxTreck Update">
-          </div>
-          <div class="blog-content">
-            <h2 class="blog-title">Balance Changes: May Update</h2>
-            <span class="blog-date">May 1, 2023</span>
-            <p class="blog-excerpt">We're adjusting several weapons and abilities to ensure fair and balanced gameplay. Read the full details of what's changing...</p>
-            <a href="/blog/may-balance-changes" class="blog-read-more">Read more</a>
-          </div>
-        </article>
-      </div>
-      
-      <!-- Pagination -->
-      <div class="pagination">
-        <a href="/blog/blog.html" class="page-link">1</a>
-        <a href="/blog/blog-page2.html" class="page-link active">2</a>
-        <a href="/blog/blog-page3.html" class="page-link">3</a>
-        <a href="/blog/blog-page3.html" class="page-link next">Next →</a>
-      </div>
-      
-      <!-- Subscribe Section -->
-      <div class="blog-subscribe">
-        <h2>Stay Updated</h2>
-        <p>Subscribe to our RSS feed to get the latest BloxTreck news delivered directly to you.</p>
-        <a href="/blog/rss.xml" class="rss-btn">Subscribe via RSS</a>
-      </div>
-    </section>
-  </main>
-  
-  <footer>
-    <div class="container">
-      <p>&copy; 2023 BloxTreck. All rights reserved.</p>
     </div>
-  </footer>
-  
-  <script>
-    // Filter functionality
-    document.querySelectorAll('.filter-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        // Remove active class from all buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-          btn.classList.remove('active');
-        });
-        
-        // Add active class to clicked button
-        button.classList.add('active');
-        
-        // Filter logic would go here in a real implementation
-      });
-    });
-  </script>
+
+    <div class="blog-grid">
+      <!-- Blog Entry 1 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bf-dsn-blog-hero-tmp-game_update.webp" alt="The Blox Bulletin #007" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #007</h2>
+          <time datetime="2025-05-23" class="blog-date">May 23, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 007</p>
+          <a href="posts/the-blox-bulletin-007.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 2 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bf-dsn-blog-hero-tmp-game_update.webp" alt="The Blox Bulletin #006" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #006</h2>
+          <time datetime="2025-05-16" class="blog-date">May 16, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 006</p>
+          <a href="posts/the-blox-bulletin-006.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 3 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bf-dsn-blog-hero-tmp-game_update.webp" alt="The Blox Bulletin #005" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #005</h2>
+          <time datetime="2025-05-09" class="blog-date">May 9, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 005</p>
+          <a href="posts/the-blox-bulletin-005.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 4 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bf-dsn-blog-hero-tmp-game_update.webp" alt="The Blox Bulletin #004" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #004</h2>
+          <time datetime="2025-04-25" class="blog-date">April 25, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 004</p>
+          <a href="posts/the-blox-bulletin-004.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 5 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bf-dsn-blog-hero-tmp-game_update.webp" alt="The Blox Bulletin #003" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #003</h2>
+          <time datetime="2025-04-11" class="blog-date">April 11, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 003</p>
+          <a href="posts/the-blox-bulletin-003.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 6 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bf-dsn-blog-hero-tmp-game_update.webp" alt="The Blox Bulletin #002" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #002</h2>
+          <time datetime="2025-03-28" class="blog-date">March 28, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 002</p>
+          <a href="posts/the-blox-bulletin-002.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 7 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/fruity_e185f941-5938-4ba6-b89a-4e051143a7bd.png" alt="The Blox Bulletin #001" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">The Blox Bulletin #001</h2>
+          <time datetime="2025-03-20" class="blog-date">March 20, 2025</time>
+          <p class="blog-excerpt">The Blox Bulletin - Issue 001</p>
+          <a href="posts/the-blox-bulletin-001.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 8 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bf-dsn-blog-hero-tmp-game_update.webp" alt="Dragon Update" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">Dragon Update</h2>
+          <time datetime="2025-03-15" class="blog-date">March 15, 2025</time>
+          <p class="blog-excerpt">Major Dragon fruit update and new features</p>
+          <a href="posts/dragon-update.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 9 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/bf-dsn-blog-hero-tmp-game_update.webp" alt="Update 20" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">Update 20</h2>
+          <time datetime="2025-02-28" class="blog-date">February 28, 2025</time>
+          <p class="blog-excerpt">Major Version 20 update with new content</p>
+          <a href="posts/update-20.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+
+      <!-- Blog Entry 10 -->
+      <article class="blog-card">
+        <div class="blog-image">
+          <img src="../assets/images/blog/RipVSRed.png" alt="Valentine's Event" loading="lazy">
+        </div>
+        <div class="blog-content">
+          <h2 class="blog-title">Valentine's Event</h2>
+          <time datetime="2025-02-14" class="blog-date">February 14, 2025</time>
+          <p class="blog-excerpt">Special Valentine's Day event celebration</p>
+          <a href="posts/valentine-s-event.html" class="blog-read-more">Read more</a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <a href="blog.html" class="page-link">← Prev</a>
+      <a href="blog.html" class="page-link">1</a>
+      <a href="blog-page2.html" class="page-link active">2</a>
+      <a href="blog-page3.html" class="page-link">3</a>
+      <a href="blog-page3.html" class="page-link next">Next →</a>
+    </div>
+
+    <div class="blog-subscribe">
+      <h3>Stay Updated</h3>
+      <p>Subscribe to our blog updates via RSS or follow us on social media.</p>
+      <a href="/blog/rss.xml" class="rss-btn">Subscribe via RSS</a>
+    </div>
+  </main>
+  <footer></footer>
+  <script src="/script.js"></script>
 </body>
 </html>
