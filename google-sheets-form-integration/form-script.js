@@ -82,35 +82,50 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Send data to Google Apps Script
+        // Send data to Google Apps Script with a network + localStorage fallback
+        let didSucceed = false;
+
+        function finishSuccess() {
+            showMessage('✅ Form submitted successfully! Thank you for your feedback.', 'success');
+            form.reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function fallbackSave() {
+            try {
+                const key = 'bloxtreck_pending_submissions';
+                const existing = JSON.parse(localStorage.getItem(key) || '[]');
+                existing.push(formData);
+                localStorage.setItem(key, JSON.stringify(existing));
+                showMessage('⚠️ Could not submit online — saved locally and will retry later.', 'success');
+                form.reset();
+            } catch (e) {
+                console.error('Local save failed', e);
+                showMessage('❌ Submission failed and could not be saved locally.', 'error');
+            }
+        }
+
+        // Try to POST normally (no-cors kept for compatibility), but catch fetch/network errors.
         fetch(WEBAPP_URL, {
             method: 'POST',
-            mode: 'no-cors', // Google Apps Script requires no-cors mode
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
-        })
-        .then(response => {
-            // Note: With no-cors mode, we can't read the response
-            // but we can assume success if no error is thrown
-            showMessage('✅ Form submitted successfully! Thank you for your feedback.', 'success');
-            
-            // Reset form after successful submission
-            form.reset();
-            
-            // Scroll to top to show success message
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showMessage('❌ Error submitting form. Please try again or contact support.', 'error');
-        })
-        .finally(() => {
-            // Re-enable submit button
+        }).catch(err => {
+            console.warn('Network submit failed, saving locally', err);
+            fallbackSave();
+        }).finally(() => {
+            // Re-enable submit button regardless
             submitBtn.disabled = false;
             submitBtn.textContent = 'Submit Form';
         });
+
+        // Heuristic: if the page is offline, immediately fallback
+        if (!navigator.onLine) {
+            fallbackSave();
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Form';
+        }
     });
 
     /**
