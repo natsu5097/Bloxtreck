@@ -76,6 +76,7 @@
 /* Filter Buttons */
 .blog-filter {
   margin: 2rem 0;
+  color: white;
 }
 
 .filter-buttons {
@@ -92,6 +93,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
+  color: white;
 }
 
 .filter-btn.active {
@@ -140,6 +142,7 @@
   border-radius: 12px;
   text-align: center;
   margin: 2rem 0;
+  color: black;
 }
 
 .rss-btn {
